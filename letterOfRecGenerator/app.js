@@ -38,20 +38,28 @@ app.options('*', cors());
 app.use(cors());
 
 // Add headers for CORS
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
 
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    if (req.method === 'OPTIONS') {
+      res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+      return res.status(200).json({});
+    }
 
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'Authorization');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
+    // // Website you wish to allow to connect
+    // res.setHeader('Access-Control-Allow-Origin', '*');
+    //
+    // // Request methods you wish to allow
+    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    //
+    // // Request headers you wish to allow
+    // res.setHeader('Access-Control-Allow-Headers', 'Authorization');
+    //
+    // // Set to true if you need the website to include cookies in the requests sent
+    // // to the API (e.g. in case you use sessions)
+    // res.setHeader('Access-Control-Allow-Credentials', true);
 
     // Pass to next layer of middleware
     next();
