@@ -315,6 +315,7 @@ function saveTemplate() {
             url: 'http://128.125.100.147:80/template-editor/create',
             data: {template: template},
             type: 'POST',
+            mode: 'cors',
             complete: function () {
                 console.log('complete');
             },
