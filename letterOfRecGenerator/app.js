@@ -135,7 +135,7 @@ app.use(function (req, res, next) {
 
 // handle CORS policy
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "128.125.100.147:80.TLD"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", "http://recommendation.usc.edu.TLD"); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 })
