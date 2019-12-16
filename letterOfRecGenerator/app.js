@@ -31,6 +31,8 @@ var fs = require('fs');
 var request = require('request');
 //const expressLayouts = require('express-ejs-layouts');
 
+var app = express();
+
 // handle CORS policy
 app.options('*', cors());
 app.use(cors());
@@ -72,8 +74,6 @@ var response = require('./routes/response');
 var emailLetterPreview = require('./routes/email-letter-preview');
 var docxVar = require('./routes/docx');
 const flash = require('connect-flash');
-
-var app = express();
 
 // Middleware for authentication & express
 app.use(logger('dev'));
