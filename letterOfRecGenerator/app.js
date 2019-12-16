@@ -31,25 +31,6 @@ var fs = require('fs');
 var request = require('request');
 //const expressLayouts = require('express-ejs-layouts');
 
-var createTemplate = require('./routes/template-editor');
-var createEmailTemplate = require('./routes/email-template-editor');
-var formCompleted = require('./routes/form-completed');
-var formEntry = require('./routes/form-entry');
-var index = require('./routes/login');
-var letterPreview = require('./routes/letter-preview');
-var login = require('./routes/login');
-var recommenderDashboard = require('./routes/recommender-dashboard');
-var templateDashboard = require('./routes/template-dashboard');
-var users = require('./routes/users');
-var history = require('./routes/history');
-var archive = require('./routes/archive');
-var response = require('./routes/response');
-var emailLetterPreview = require('./routes/email-letter-preview');
-var docxVar = require('./routes/docx');
-const flash = require('connect-flash');
-
-var app = express();
-
 // handle CORS policy
 app.options('*', cors());
 app.use(cors());
@@ -73,6 +54,26 @@ app.use(function (req, res, next) {
     // Pass to next layer of middleware
     next();
 });
+
+
+var createTemplate = require('./routes/template-editor');
+var createEmailTemplate = require('./routes/email-template-editor');
+var formCompleted = require('./routes/form-completed');
+var formEntry = require('./routes/form-entry');
+var index = require('./routes/login');
+var letterPreview = require('./routes/letter-preview');
+var login = require('./routes/login');
+var recommenderDashboard = require('./routes/recommender-dashboard');
+var templateDashboard = require('./routes/template-dashboard');
+var users = require('./routes/users');
+var history = require('./routes/history');
+var archive = require('./routes/archive');
+var response = require('./routes/response');
+var emailLetterPreview = require('./routes/email-letter-preview');
+var docxVar = require('./routes/docx');
+const flash = require('connect-flash');
+
+var app = express();
 
 // Middleware for authentication & express
 app.use(logger('dev'));
