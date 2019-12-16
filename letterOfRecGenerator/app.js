@@ -19,6 +19,9 @@ require('./config/passport')(passport);
 //const exphbs = require('express-handlebars');
 const nodemailer = require('nodemailer');
 
+//CORS
+const cors = require('cors');
+
 var fileUpload = require('express-fileupload');
 var mammoth = require('mammoth');
 var opn = require('opn');
@@ -134,6 +137,7 @@ app.use(function (req, res, next) {
 });
 
 // handle CORS policy
+app.use(cors());
 // Add headers
 app.use(function (req, res, next) {
 
