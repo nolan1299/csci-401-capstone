@@ -33,7 +33,7 @@ function saveEmailTemplate() {
     if (id) {
 
         $.ajax({
-            url: 'http://recommendation.usc.edu/email-template-editor/update',
+            url: 'http://localhost:3000/email-template-editor/update',
             data: {
                 id: id,
                 Email: Email
@@ -45,7 +45,7 @@ function saveEmailTemplate() {
             success: function (data) {
                 id = data.id;
                 console.log('success');
-                window.location.href = 'http://recommendation.usc.edu/template-dashboard'
+                window.location.href = 'http://localhost:3000/template-dashboard'
             },
             error: function () {
                 console.log('error');
@@ -56,7 +56,7 @@ function saveEmailTemplate() {
     } else {
 
         $.ajax({
-            url: 'http://recommendation.usc.edu/email-template-editor/addEmailTemplate',
+            url: 'http://localhost:3000/email-template-editor/addEmailTemplate',
             data: {
                 id: id,
                 Email: Email
@@ -68,7 +68,7 @@ function saveEmailTemplate() {
             success: function (data) {
                 id = data.id;
                 console.log('success');
-                window.location.href = 'http://recommendation.usc.edu/template-dashboard'
+                window.location.href = 'http://localhost:3000/template-dashboard'
             },
             error: function () {
                 console.log('error');
