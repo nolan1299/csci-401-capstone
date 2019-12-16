@@ -70,7 +70,7 @@ router.post('/', function (req, res, next) {
             }
         });
 
-    var url = encodeURI('http://localhost:3000/form-entry/' + form.getLink());
+    var url = encodeURI('http://recommendation.usc.edu/form-entry/' + form.getLink());
 
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
@@ -150,7 +150,7 @@ router.post('/', function (req, res, next) {
 //             email_lines.push('MIME-Version: 1.0');
 //             email_lines.push('Subject: ' + subject);
 //             email_lines.push('');
-//             var url = encodeURI('http://localhost:3000/form-entry/' + form.getLink());
+//             var url = encodeURI('http://recommendation.usc.edu/form-entry/' + form.getLink());
 //             email_lines.push('<p>' + body + '<a href = "' + url + '"> link</a></p>');
 //
 //             var email = email_lines.join('\r\n').trim();
