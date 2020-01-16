@@ -326,6 +326,9 @@ function saveTemplate() {
             error: function (err) {
                 console.log('error in saveTemplate:' + err);
                 var textField = document.getElementById(NAME_CONTAINER_TEXT_FIELD_ID);
+
+                console.log(textField);
+
                 addError(textField, 0, 'template name already exists');
                 window.scrollTo(errorScrollCoordinates.x, errorScrollCoordinates.y);
                 emphasizeTags();
