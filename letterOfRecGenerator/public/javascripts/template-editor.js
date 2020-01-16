@@ -678,6 +678,7 @@ function getErrorContainer(field) {
 
     while (parentContainer) {
         if (parentContainer.classList.contains('error-container')) {
+            console.log('success in getErrorContainer');
             return parentContainer;
         }
 
