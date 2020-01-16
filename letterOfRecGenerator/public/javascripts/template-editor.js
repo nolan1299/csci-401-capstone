@@ -659,11 +659,11 @@ function addError(field, index, message) {
     field.classList.add('error');
     var container = getErrorContainer(field);
 
-    if (container !== null) {
-      console.log('Container is = ' + container);
+    if (container == null) {
+      console.log('Container is null');
     }
     else {
-      console.log('container is null');
+      console.log('container is not null');
     }
 
     var header = getSectionHeader(container);
