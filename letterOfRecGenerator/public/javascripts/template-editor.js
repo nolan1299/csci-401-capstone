@@ -693,6 +693,10 @@ function getErrorContainer(field) {
 }
 
 function getSectionHeader(container) {
+    if (container.previousElementSibling == null){
+      return null;
+    }
+
     if (container.previousElementSibling.classList.contains('section-header') || container.previousElementSibling.classList.contains('question-header')) {
         return container.previousElementSibling;
     }
