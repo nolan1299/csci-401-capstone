@@ -658,6 +658,9 @@ function isNotValid(field) {
 function addError(field, index, message) {
     field.classList.add('error');
     var container = getErrorContainer(field);
+
+    console.log('Container is = ' + container);
+
     var header = getSectionHeader(container);
     var errorElements = addErrorToContainer(container, index, message);
 
@@ -680,6 +683,8 @@ function getErrorContainer(field) {
 
         parentContainer = parentContainer.parentElement;
     }
+
+    console.log('success in getErrorContainer');
 
     return parentContainer;
 }
