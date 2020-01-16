@@ -659,7 +659,12 @@ function addError(field, index, message) {
     field.classList.add('error');
     var container = getErrorContainer(field);
 
-    console.log('Container is = ' + container);
+    if (container !== null) {
+      console.log('Container is = ' + container);
+    }
+    else {
+      console.log('container is null');
+    }
 
     var header = getSectionHeader(container);
     var errorElements = addErrorToContainer(container, index, message);
@@ -678,14 +683,11 @@ function getErrorContainer(field) {
 
     while (parentContainer) {
         if (parentContainer.classList.contains('error-container')) {
-            console.log('success in getErrorContainer');
             return parentContainer;
         }
 
         parentContainer = parentContainer.parentElement;
     }
-
-    console.log('success in getErrorContainer');
 
     return parentContainer;
 }
