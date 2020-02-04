@@ -159,6 +159,7 @@ router.post('/fileUpload', function (req,res, next) {
 })
 
 router.post('/create', function (req, res, next) {
+    console.log(req);
     req.user.addTemplate(req.body.template, function (err, id) {
         if (err) {
             if(err.message == "DUPLICATE NAME") {
