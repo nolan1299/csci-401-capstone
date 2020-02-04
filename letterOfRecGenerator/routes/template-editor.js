@@ -8,6 +8,7 @@ router.get('/', function (req, res, next) {
     var footerImg;
     var saveStatus = req.query.saveSwitch;
     var questions;
+    console.log(req.user)
     if (req.query.id) {
         if(saveStatus=="true"){
             letterheadImg = req.user.getTemplate(req.query.id).letterheadImg;
