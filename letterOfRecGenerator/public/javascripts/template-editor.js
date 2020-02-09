@@ -315,7 +315,7 @@ function saveTemplate() {
         $.ajax({
             url: 'http://128.125.100.147:80/template-editor/create',
             data: {template: template},
-            datatype: "json",
+            datatype: "jsonp",
             type: 'POST',
             complete: function () {
                 console.log('complete');
