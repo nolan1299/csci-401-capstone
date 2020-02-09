@@ -311,7 +311,6 @@ function saveTemplate() {
         });
     } else {
         console.log("creating template");
-        console.log("entering AJAX");
         $.ajax({
             url: 'http://128.125.100.147:80/template-editor/create',
             data: {template: template},
@@ -326,11 +325,13 @@ function saveTemplate() {
                 window.location.href = 'http://128.125.100.147:80/template-dashboard'
             },
             error: function (err) {
-                console.log(err);
-                console.log('error in saveTemplate:' + err);
+                alert();
+                console.log('data in saveTemplate: ', data);
+                console.log('error in saveTemplate: ', err);
+
                 var textField = document.getElementById(NAME_CONTAINER_TEXT_FIELD_ID);
 
-                console.log(textField);
+                //console.log(data);
 
                 addError(textField, 0, 'template name already exists');
                 window.scrollTo(errorScrollCoordinates.x, errorScrollCoordinates.y);
