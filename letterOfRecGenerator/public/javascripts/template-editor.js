@@ -325,8 +325,7 @@ function saveTemplate() {
                 window.location.href = 'http://128.125.100.147:80/template-dashboard'
             },
             error: function (err) {
-                alert();
-                console.log('data in saveTemplate: ', data);
+                //console.log('data in saveTemplate: ', data);
                 console.log('error in saveTemplate: ', err);
 
                 var textField = document.getElementById(NAME_CONTAINER_TEXT_FIELD_ID);
