@@ -311,10 +311,10 @@ function saveTemplate() {
         });
     } else {
         console.log("creating template");
-        $.ajax({
+        jQuery.ajax({
             url: 'http://128.125.100.147:80/template-editor/create',
             data: {template: template},
-            datatype: "jsonp",
+            datatype: "json",
             type: 'POST',
             complete: function () {
                 console.log('complete');
