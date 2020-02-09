@@ -163,6 +163,7 @@ router.post('/create', function (req, res, next) {
     console.log(req);
     req.user.addTemplate(req.body.template, function (err, id) {
         if (err) {
+            console.log("IN CREATE");
             if(err.message == "DUPLICATE NAME") {
                 console.log("error is duplicate name");
                 res.status(500).send({error: 'Duplicate Name'});
