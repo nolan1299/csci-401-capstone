@@ -72,6 +72,7 @@ UserSchema.methods.addTemplate = function (template, cb) {
             errorFlag = true;
         }
     }
+    console.log("IN ADD TEMPLATE")
     if(!errorFlag) {
         this.templates.push(template);
         var newTemplate = this.templates[this.templates.length - 1];
