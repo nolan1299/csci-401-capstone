@@ -312,7 +312,7 @@ function saveTemplate() {
     } else {
         console.log("creating template");
         jQuery.ajax({
-            url: 'http://128.125.100.147:80/template-editor/create',
+            url: 'http://128.125.100.147:80/template-editor',
             data: {template: template},
             datatype: "json",
             type: 'POST',
