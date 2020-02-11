@@ -10,8 +10,6 @@ router.get('/', function (req, res, next) {
         currLetterTemplate = '';
     }
 
-    console.log('TD')
-    console.log(req.user)
     res.render('pages/template-dashboard', {
         title: 'Templates',
         templates: req.user.getTemplates(),
