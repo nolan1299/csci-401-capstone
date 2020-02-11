@@ -292,7 +292,7 @@ function saveTemplate() {
                 template: template
             },
             type: 'POST',
-            cache: false,
+            // cache: false,
             complete: function (data) {
                 console.log('complete');
             },
@@ -312,10 +312,10 @@ function saveTemplate() {
     } else {
         console.log("creating template");
         $.ajax({
-            url: 'http://128.125.100.147:80/template-editor/create',
+            url: 'http://128.125.100.147:80/template-editor/create/',
             data: {template: template},
             type: 'POST',
-            cache: true,
+            // cache: true,
             complete: function () {
                 console.log('complete');
             },
@@ -338,6 +338,7 @@ function saveTemplate() {
                 return;
             }
         });
+        console.('after ajax code')
     }
 }
 
