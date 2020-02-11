@@ -8,7 +8,6 @@ router.get('/', function (req, res, next) {
     var footerImg;
     var saveStatus = req.query.saveSwitch;
     var questions;
-    console.log(req.user)
     if (req.query.id) {
         if(saveStatus=="true"){
             letterheadImg = req.user.getTemplate(req.query.id).letterheadImg;
@@ -165,8 +164,8 @@ router.post('/create', function (req, res, next) {
     console.log('User is: ', req.user);
 
     req.user.addTemplate(req.body.template, function (err, id) {
+        console.log("IN ADD TEMPLATE");
         if (err) {
-            console.log("IN CREATE");
             if(err.message == "DUPLICATE NAME") {
                 console.log("error is duplicate name");
                 res.status(500).send({error: 'Duplicate Name'});
