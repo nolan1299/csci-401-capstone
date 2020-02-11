@@ -178,6 +178,7 @@ app.use(function (err, req, res, next) {
     res.render('pages/error');
 });
 
+
 function isAuthenticated(req, res, next) {
   console.log(1)
     if (req.user) {
@@ -185,6 +186,7 @@ function isAuthenticated(req, res, next) {
         return next();
     }
     console.log(3)
+    return next();
     //res.redirect('/loginlocal');
 }
 
