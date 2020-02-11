@@ -172,6 +172,7 @@ router.post('/create', function (req, res, next) {
                 res.status(500).send({error: 'Duplicate Name'});
             }
         } else {
+          console.log('Successful')
             res.json({
                 success: "Created Successfully",
                 status: 200,
