@@ -183,7 +183,7 @@ function isAuthenticated(req, res, next) {
         return next();
     }
 
-    res.redirect('/loginlocal');
+    //res.redirect('/loginlocal');
 }
 
 
