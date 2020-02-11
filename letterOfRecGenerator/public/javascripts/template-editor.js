@@ -311,7 +311,7 @@ function saveTemplate() {
         });
     } else {
         console.log("creating template");
-        jQuery.ajax({
+        $.ajax({
             url: 'http://128.125.100.147:80/template-editor/create',
             data: {template: template},
             datatype: "json",
