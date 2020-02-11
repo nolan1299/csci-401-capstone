@@ -161,12 +161,9 @@ router.post('/fileUpload', function (req,res, next) {
 
 router.post('/create', function (req, res, next) {
     console.log('in create route');
+    console.log('Req body is: ', req.body);
+    console.log('User is: ', req.user);
 
-    if(req.query.id) {
-      var user = req.user;
-      console.log('User is: ', user);
-    }
-    //console.log(req.user);
     req.user.addTemplate(req.body.template, function (err, id) {
         if (err) {
             console.log("IN CREATE");
