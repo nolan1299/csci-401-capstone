@@ -17,12 +17,12 @@ router.get('/recommender-dashboard', ensureAuthenticated, (req, res) =>
   })
 );
 
-//Get Temp Editor page and pass in user
-router.get('/template-editor', ensureAuthenticated, (req, res) =>
-  res.render('pages/template-editor' {
-    user: req.user
-  })
-);
+// //Get Temp Editor page and pass in user
+// router.get('/template-editor', ensureAuthenticated, (req, res) =>
+//   res.render('pages/template-editor' {
+//     user: req.user
+//   })
+// );
 
 // Get Home Page
 router.get('/', function (req, res, next) {
