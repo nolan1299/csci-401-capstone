@@ -315,7 +315,7 @@ function saveTemplate() {
             url: 'http://128.125.100.147:80/template-editor/create/',
             data: {template: template},
             datatype: "json",
-            type: 'POST',
+            type: 'GET',
             complete: function () {
                 console.log('complete');
             },
