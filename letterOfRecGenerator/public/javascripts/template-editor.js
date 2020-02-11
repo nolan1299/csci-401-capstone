@@ -338,7 +338,7 @@ function saveTemplate() {
                 return;
             }
         });
-        console.('after ajax code')
+        console.log('after ajax code');
     }
 }
 
