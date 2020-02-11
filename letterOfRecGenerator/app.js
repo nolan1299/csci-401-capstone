@@ -74,7 +74,7 @@ var response = require('./routes/response');
 var emailLetterPreview = require('./routes/email-letter-preview');
 var docxVar = require('./routes/docx');
 const flash = require('connect-flash');
-var createTemp = require('./routes/template-editor/create');
+//var createTemp = require('./routes/template-editor/create');
 
 // Middleware for authentication & express
 app.use(logger('dev'));
@@ -152,7 +152,7 @@ app.use('/history', history);
 app.use('/archive', archive);
 app.use('/response', response);
 app.use('/docx', docxVar);
-app.use('/create', createTemp);
+//app.use('/create', createTemp);
 
 
 
