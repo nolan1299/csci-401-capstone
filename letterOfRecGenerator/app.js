@@ -139,7 +139,7 @@ app.use('/logout', (req, res) => {
 // Routes
 app.use('/', index);
 app.use('/users', users);
-app.use('/template-editor', createTemplate);
+app.use('/template-editor', isAuthenticated, createTemplate);
 app.use('/email-template-editor',isAuthenticated, createEmailTemplate);
 app.use('/form-completed', formCompleted);
 app.use('/form-entry', formEntry);
