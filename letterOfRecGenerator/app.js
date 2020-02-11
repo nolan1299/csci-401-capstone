@@ -179,10 +179,12 @@ app.use(function (err, req, res, next) {
 });
 
 function isAuthenticated(req, res, next) {
+  console.log(1)
     if (req.user) {
+      console.log(2)
         return next();
     }
-
+    console.log(3)
     //res.redirect('/loginlocal');
 }
 
