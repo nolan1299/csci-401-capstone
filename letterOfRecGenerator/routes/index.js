@@ -46,9 +46,7 @@ router.post('/', function (req, res) {
             last: req.body.lname
         }
     };
-
     User.createUser(user);
-
     res.render('pages/index', {
         title: 'Express',
         header: 'Add User',
