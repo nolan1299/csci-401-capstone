@@ -158,15 +158,6 @@ router.post('/fileUpload', function (req,res, next) {
 
 })
 
-router.post('/test', (req, res, next) => {
-      console.log(req.user)
-      res.json({
-          success: "Created Successfully",
-          status: 200,
-          id: '12312'
-      });
-})
-
 router.post('/create', function (req, res, next) {
     console.log('in create route');
     console.log('Req body is: ', req.body);

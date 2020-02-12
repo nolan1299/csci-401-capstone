@@ -186,7 +186,7 @@ function isAuthenticated(req, res, next) {
         return next();
     }
     console.log(3)
-    return next();
+    return next(); // added this to test
     //res.redirect('/loginlocal');
 }
 
