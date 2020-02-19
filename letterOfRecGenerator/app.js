@@ -91,7 +91,7 @@ app.use(session({
     secret: 'anything',
     resave: true,
     saveUninitialized: false
-}));
+})); 
 
 //Connect Flash
 app.use(flash());
