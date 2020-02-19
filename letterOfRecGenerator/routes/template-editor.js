@@ -25,7 +25,8 @@ router.get('/', function (req, res, next) {
                 letterheadImage: letterheadImg,
                 footerImage: footerImg,
                 saveSwitch: req.query.saveSwitch,
-                questions: questions
+                questions: questions,
+                user: req.user
             });
         } else {
             letterheadImg = req.user.getDeactivatedTemplate(req.query.id).letterheadImg;
@@ -38,7 +39,8 @@ router.get('/', function (req, res, next) {
                 letterheadImage: letterheadImg,
                 footerImage: footerImg,
                 saveSwitch: req.query.saveSwitch,
-                questions: questions
+                questions: questions,
+                user: req.user
             });
         }
 
@@ -47,6 +49,7 @@ router.get('/', function (req, res, next) {
             title: 'CREATE A NEW TEMPLATE',
             templateName: req.query.title,
             id: null,
+            user: req.user,
             letterheadImage: null,
             footerImage: null,
             saveSwitch: true,
