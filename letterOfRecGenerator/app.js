@@ -108,12 +108,12 @@ app.use((req, res, next) => {
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new LocalStrategy(user.authenticate()));
-passport.serializeUser(function(user, done) {
-    console.log('serializing user: ');
-    console.log(user);
-    done(null, user._id);
-  });
+// passport.use(new LocalStrategy(user.authenticate()));
+// passport.serializeUser(function(user, done) {
+//     console.log('serializing user: ');
+//     console.log(user);
+//     done(null, user._id);
+//   });
 // ADDeD
 
 app.use(fileUpload());
