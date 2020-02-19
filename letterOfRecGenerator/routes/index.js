@@ -24,7 +24,13 @@ router.get('/template-editor', ensureAuthenticated, (req, res) =>
   })
 );
 
-router.get('/template-edito/create', ensureAuthenticated, (req, res) =>
+router.get('/template-editor/create', ensureAuthenticated, (req, res) =>
+  res.render('pages/template-editor/create' {
+    user: req.user
+  })
+);
+
+router.post('/template-editor/create', ensureAuthenticated, (req, res) =>
   res.render('pages/template-editor/create' {
     user: req.user
   })
@@ -57,7 +63,8 @@ router.post('/', function (req, res) {
     res.render('pages/index', {
         title: 'Express',
         header: 'Add User',
-        userValue: user.name
+        userValue: user.name,
+        user: user
     });
 });
 
