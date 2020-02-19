@@ -79,7 +79,7 @@ const flash = require('connect-flash');
 //var createTemp = require('./routes/template-editor/create');
 
 // Middleware for authentication & express
-app.use(logger('dev'));
+app.use(logger('common'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -89,8 +89,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(session({
     secret: 'anything',
-    // resave: true,
-    // saveUninitialized: false
+    resave: true,
+    saveUninitialized: false
 }));
 
 //Connect Flash
