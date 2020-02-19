@@ -24,6 +24,13 @@ router.get('/template-editor', ensureAuthenticated, (req, res) =>
   })
 );
 
+router.get('/template-edito/create', ensureAuthenticated, (req, res) =>
+  res.render('pages/template-editor/create' {
+    user: req.user
+  })
+);
+
+
 //
 router.get('/template-dashboard', ensureAuthenticated, (req, res) =>
   res.render('pages/template-dashboard' {
