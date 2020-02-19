@@ -19,28 +19,31 @@ router.get('/recommender-dashboard', ensureAuthenticated, (req, res) =>
 
 //Get Temp Editor page and pass in user
 router.get('/template-editor', ensureAuthenticated, (req, res) =>
-  res.render('pages/template-editor' {
+  {
+    console.log('YYYYYYYYY')
+    res.render('pages/template-editor' {
     user: req.user
   })
+}
 );
 
-router.post('/template-editor', ensureAuthenticated, (req, res) =>
-  res.render('pages/template-editor' {
-    user: req.user
-  })
-);
-
-router.get('/template-editor/create', ensureAuthenticated, (req, res) =>
-  res.render('pages/template-editor/create' {
-    user: req.user
-  })
-);
-
-router.post('/template-editor/create', ensureAuthenticated, (req, res) =>
-  res.render('pages/template-editor/create' {
-    user: req.user
-  })
-);
+// router.post('/template-editor', ensureAuthenticated, (req, res) =>
+//   res.render('pages/template-editor' {
+//     user: req.user
+//   })
+// );
+//
+// router.get('/template-editor/create', ensureAuthenticated, (req, res) =>
+//   res.render('pages/template-editor/create' {
+//     user: req.user
+//   })
+// );
+//
+// router.post('/template-editor/create', ensureAuthenticated, (req, res) =>
+//   res.render('pages/template-editor/create' {
+//     user: req.user
+//   })
+// );
 
 
 //

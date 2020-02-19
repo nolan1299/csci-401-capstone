@@ -4,6 +4,11 @@ var User = require('../models/user');
 var router = express.Router();
 
 router.get('/', function (req, res, next) {
+
+
+  console.log('TE / ')
+  console.log(req.user)
+
     var letterheadImg;
     var footerImg;
     var saveStatus = req.query.saveSwitch;
