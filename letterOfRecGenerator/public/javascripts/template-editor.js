@@ -319,7 +319,7 @@ function saveTemplate() {
       $.ajax({
           url: 'http://128.125.100.147:80/template-editor/create',
           data: {template: template},
-          type: 'POST',
+          type: 'GET',
           complete: function () {
               console.log('complete');
           },
