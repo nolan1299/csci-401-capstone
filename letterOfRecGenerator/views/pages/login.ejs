@@ -1,30 +1,23 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title><%= title %></title>
-        <link rel="stylesheet" href="https://use.typekit.net/ebq4wgm.css">
-        <link rel="stylesheet" href="/stylesheets/style.css" />
-        <link rel="stylesheet" type="text/css" href="/css/login.css" />
-    </head>
-    <body>
-        <a href="https://www.usc.edu" target="_blank">
-            <img id ="usc-logo" src="/images/usc_logo_big.png" alt="University of Southern California" style="height:100px;"/>
-        </a>
-        <h1 class="title"><%= title %></h1>
-<!-- added this stuff -->
-        <div>
-          <p>Create an account or login</p>
-          <div>
-              <a href="/users/register" class="btn btn-primary btn-block mb-2">Register</a>
-              <a href="/users/loginlocal" class="btn btn-secondary btn-block">Login</a>
-<!-- end here -->
-              <button class="sign-in-button" onclick="location.href='<%= url %>';">
-                  <img src="/images/google_logo.svg" height="24" width="24"/>
-                  <span>Sign in with Google</span>
-              </button>
-<!-- added this stuff -->
-          </div>
-        </div>
-<!-- end here -->
-    </body>
+  <link rel="stylesheet" href="https://use.typekit.net/ebq4wgm.css">
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <link rel="stylesheet" type="text/css" href="/css/login.css" />
+  <head>
+      <a href="https://www.usc.edu" target="_blank">
+          <img id ="usc-logo" src="/images/usc_logo_big.png" alt="University of Southern California" style="height:100px;"/>
+      </a>
+      <h1 align="center" class="title">Letter of Recommendation Generator</h1>
+  </head>
+    <div class="login-page">
+      <div class="form">
+      <% include ./partials/messages %>
+        <form class="login-form" action="/users/login" method="POST">
+          <input type="email" id="email" name="email" class="form-control" placeholder="email"/>
+          <input type="password" id="password" name="password" class="form-control" placeholder="password"/>
+          <button type="submit">Sign in</button>
+          <p class="message">Not registered? <a href="/users/register">Create an account</a></p>
+        </form>
+      </div>
+    </div>
 </html>

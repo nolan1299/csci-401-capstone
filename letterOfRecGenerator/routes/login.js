@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET login page. */
 router.get('/', function (req, res, next) {
-    res.render('pages/login', {
+    res.render('login', {
         title: 'Letter of Recommendation Generator',
         subtitle: '',
         url: '/auth/google'

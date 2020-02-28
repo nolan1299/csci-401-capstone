@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
 router.get('/register', (req, res) => res.render('register'));
 
 // Get Login page
-router.get('/loginlocal', (req, res) => res.render('loginlocal'));
+router.get('/login', (req, res) => res.render('login'));
 
 //Register handle
 router.post('/register', (req, res) => {
@@ -84,7 +84,7 @@ router.post('/register', (req, res) => {
                   'success_msg',
                   'You are now registered and can log in'
                 );
-                res.redirect('/users/loginlocal');
+                res.redirect('/users/login');
               })
               .catch(err => console.log(err));
           });
@@ -95,10 +95,10 @@ router.post('/register', (req, res) => {
 });
 
 // Login handle
-router.post('/loginlocal', (req, res, next) => {
+router.post('/login', (req, res, next) => {
   passport.authenticate('local', {
     successRedirect: '/recommender-dashboard',
-    failureRedirect: '/users/loginlocal',
+    failureRedirect: '/users/login',
     failureFlash: true
   })(req, res, next);
 });
@@ -107,7 +107,7 @@ router.post('/loginlocal', (req, res, next) => {
 router.get('/logout', (req, res) => {
   req.logout();
   req.flash('success_msg', 'You are logged out');
-  res.redirect('/users/loginlocal');
+  res.redirect('/users/login');
 });
 
 module.exports = router;

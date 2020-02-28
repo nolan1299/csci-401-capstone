@@ -91,7 +91,7 @@ app.use(session({
     secret: 'anything',
     resave: true,
     saveUninitialized: false
-})); 
+}));
 
 //Connect Flash
 app.use(flash());
@@ -144,7 +144,7 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
 
 app.use('/logout', (req, res) => {
     req.logOut();
-    res.redirect('/loginlocal');
+    res.redirect('/login');
 });
 
 // Routes
@@ -198,7 +198,7 @@ function isAuthenticated(req, res, next) {
     }
     console.log(3)
     return next(); // added this to test
-    //res.redirect('/loginlocal');
+    res.redirect('/login');
 }
 
 
