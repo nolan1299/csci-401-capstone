@@ -27,6 +27,27 @@
     outline-style: none;
 }
 
+.add-btn {
+    background-color: #990000;
+    color: white;
+    cursor: pointer;
+    /* display: table-cell; */
+    font-size: 15px;
+    height: 20px;
+    width:180px;
+    /* border: 0.1px solid black; */
+    position: relative;
+    float: right;
+    right: 8px;
+    padding: 9px 0px 5px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.add-btn:hover {
+    color: #FFCC00;
+}
+
 /* The Close Button */
 .close {
     color: #aaa;
@@ -34,6 +55,8 @@
     font-size: 28px;
     font-weight: bold;
     line-height: 20px;
+    float: right;
+    padding-right: 45px;
 }
 
 .close:hover,
