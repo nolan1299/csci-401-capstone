@@ -55,8 +55,6 @@
     font-size: 28px;
     font-weight: bold;
     line-height: 20px;
-    float: right;
-    padding-right: 45px;
 }
 
 .close:hover,
@@ -109,6 +107,8 @@ img.icon {
     width: 25px;
     opacity: 1;
     transition: 0.6s;
+    float: right;
+    padding-right: 45px;
 }
 
 img.icon:hover {
