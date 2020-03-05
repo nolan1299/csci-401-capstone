@@ -76,7 +76,7 @@ var archive = require('./routes/archive');
 var response = require('./routes/response');
 var emailLetterPreview = require('./routes/email-letter-preview');
 var docxVar = require('./routes/docx');
-var about = require('/.routes/about');
+var about = require('./routes/about');
 //var createTemp = require('./routes/template-editor/create');
 
 // Middleware for authentication & express
