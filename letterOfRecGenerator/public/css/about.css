@@ -1,3 +1,7 @@
 #about-table td {
     height: 60px;
 }
+
+p {
+  padding: 10px;
+}
