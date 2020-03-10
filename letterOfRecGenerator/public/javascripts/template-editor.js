@@ -11,7 +11,7 @@ var footerImgData = parseAttribute('footerImgData');
 var saveSwitchData = parseAttribute('saveSwitchData');
 const TRIX_EDITOR = "trix-editor";
 
-var User = require('../models/user');
+//var User = require('../models/user');
 
 
 /**
