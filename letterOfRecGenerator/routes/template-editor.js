@@ -177,7 +177,7 @@ router.post('/create', function (req, res, next) {
     //id =
     console.log('Session Store: ', req.sessionStore);
     //console.log('Memory Store: ', req.sessionStore.MemoryStore);
-    console.log('Sessions id: ', req.sessionStore.sessions.id);
+    console.log('Session: ', req.session);
     console.log('Sessions Cookie: ', req.session.cookie);
 
     req.user.addTemplate(req.body.template, function (err, id) {
