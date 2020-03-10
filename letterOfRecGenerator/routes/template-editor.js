@@ -177,7 +177,9 @@ router.post('/create', function (req, res, next) {
     //id =
     console.log('Session Store: ', req.sessionStore);
     //console.log('Memory Store: ', req.sessionStore.MemoryStore);
-    console.log('Sessions: ', req.sessionStore.sessions);
+    console.log('Sessions Passport: ', req.sessionStore.sessions.passport);
+    console.log('Sessions Passport 2: ', req.sessionStore.sessions['passport']);
+    console.log('Sessions Passport 3: ', req.session['passport']);
 
 
     User.findById(id, function(err, user) {
