@@ -177,14 +177,8 @@ router.post('/create', function (req, res, next) {
     //id =
     console.log('Session Store: ', req.sessionStore);
     //console.log('Memory Store: ', req.sessionStore.MemoryStore);
-    console.log('Sessions Passport: ', req.sessionStore.sessions.passport);
-    console.log('Sessions Passport 2: ', req.sessionStore.sessions['passport']);
-    console.log('Sessions Passport 3: ', req.session['passport']);
-
-
-    User.findById(id, function(err, user) {
-      req.user = user;
-    });
+    console.log('Sessions id: ', req.sessionStore.sessions.id);
+    console.log('Sessions Cookie: ', req.sessionStore.sessions.cookie);
 
     req.user.addTemplate(req.body.template, function (err, id) {
         console.log("IN ADD TEMPLATE");
