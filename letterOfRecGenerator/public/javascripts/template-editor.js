@@ -270,6 +270,9 @@ function saveTemplate() {
         questions: getQuestions()
     };
 
+    var user = document.getElementById("user").value;
+    console.log('User is: ', user);
+
     if (!validate(template)) {
         window.scrollTo(errorScrollCoordinates.x, errorScrollCoordinates.y);
         emphasizeTags();
