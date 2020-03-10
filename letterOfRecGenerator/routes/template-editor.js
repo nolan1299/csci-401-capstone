@@ -171,8 +171,19 @@ router.post('/create', function (req, res, next) {
     console.log('in create route');
     // console.log('Req body is: ', req.body);
     // console.log('User is: ', req.user);
-    console.log('Req session is: ', req.session);
-    console.log('Req is: ', req);
+    // console.log('Req session is: ', req.session);
+    // console.log('Req is: ', req);
+
+    //id =
+    console.log('Session Store: ', req.sessionStore);
+    console.log('Memory Store: ', req.sessionStore.MemoryStore);
+    console.log('Sessions: ', req.sessionStore.MemoryStore.sessions);
+
+
+    User.findById(id, function(err, user) {
+      req.user = user;
+    });
+
     req.user.addTemplate(req.body.template, function (err, id) {
         console.log("IN ADD TEMPLATE");
         if (err) {
