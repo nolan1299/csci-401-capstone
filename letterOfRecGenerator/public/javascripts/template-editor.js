@@ -11,6 +11,9 @@ var footerImgData = parseAttribute('footerImgData');
 var saveSwitchData = parseAttribute('saveSwitchData');
 const TRIX_EDITOR = "trix-editor";
 
+var User = require('../models/user');
+
+
 /**
  * Prototype class for Questions
  */
@@ -270,7 +273,7 @@ function saveTemplate() {
         questions: getQuestions()
     };
 
-    //var user = document.getElementById("user").value;
+    //var user = findUser()
     //console.log('User is: ', user);
 
     if (!validate(template)) {
