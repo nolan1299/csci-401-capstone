@@ -178,10 +178,15 @@ router.post('/create', function (req, res, next) {
     var sessionString = JSON.stringify(req.sessionStore.sessions);
     var id_index = sessionString.search('id') + 7;
     var id_index_lastNum = id_index + 24;
-    var id = sessionString.slice(id_index, id_index_lastNum);
+    var userID = sessionString.slice(id_index, id_index_lastNum);
 
-    console.log('ID: ', id);
+    console.log('User ID: ', userID);
     console.log('Session String: ', sessionString);
+
+    var cb = null;
+    var user = User.findUser(userID, cb);
+
+    console.log('User Email: ', user.email);
 
     req.user.addTemplate(req.body.template, function (err, id) {
         console.log("IN ADD TEMPLATE");
