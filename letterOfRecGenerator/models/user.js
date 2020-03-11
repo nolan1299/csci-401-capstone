@@ -48,6 +48,10 @@ UserSchema.statics.findUser = function (id, cb) {
     });
 };
 
+// UserSchema.statics.findUser2 = function (id) {
+//     db.model('User').findOne({'id': id});
+// };
+
 UserSchema.statics.createUser = function (id, cb) {
     User.create({id: id,
         linkTemplate_subject: 'Invitation to Fill Recommendation Letter Questionnaire',
