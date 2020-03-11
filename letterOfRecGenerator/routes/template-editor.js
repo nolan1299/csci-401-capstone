@@ -183,8 +183,9 @@ router.post('/create', function (req, res, next) {
     console.log('User ID: ', userID);
     console.log('Session String: ', sessionString);
 
-    var cb = null;
-    var user = User.findUser(userID, cb);
+    var user = User.findUser(userID, function(err, user) {
+                  done(err, user); });
+               );
 
     console.log('User Email: ', user.email);
 
