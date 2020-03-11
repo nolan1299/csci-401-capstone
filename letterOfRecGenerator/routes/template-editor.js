@@ -175,9 +175,10 @@ router.post('/create', function (req, res, next) {
     // console.log('Req is: ', req);
 
     var sessionString = JSON.stringify(req.sessionStore.sessions);
-    var id = sessionString.search("_id");
+    var id = sessionString.search('_id');
 
-    console.log('Text before ID: ', id);
+    console.log('Includes ID T/F: ', sessionString.includes('_id'));
+    console.log('ID: ', id);
     console.log('Session String: ', sessionString);
 
     req.user.addTemplate(req.body.template, function (err, id) {
