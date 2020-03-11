@@ -176,7 +176,7 @@ router.post('/create', function (req, res, next) {
     // console.log('Req is: ', req);
 
     //id =
-    console.log('Session String: ', String(req.sessionStore.sessions));
+    console.log('Session String: ', JSON.stringify(req.sessionStore.sessions));
     console.log('Session ID: ', req.sessionID);
 
     req.user.addTemplate(req.body.template, function (err, id) {
