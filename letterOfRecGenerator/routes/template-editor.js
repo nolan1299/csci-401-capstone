@@ -170,14 +170,15 @@ router.post('/fileUpload', function (req,res, next) {
 router.post('/create', function (req, res, next) {
 
     console.log('in create route');
-    console.log('Req body is: ', req.body);
     // console.log('User is: ', req.user);
     // console.log('Req session is: ', req.session);
     // console.log('Req is: ', req);
 
-    //id =
-    console.log('Session String: ', JSON.stringify(req.sessionStore.sessions));
-    console.log('Session ID: ', req.sessionID);
+    var sessionString = JSON.stringify(req.sessionStore.sessions);
+    var id = sessionString.search("_id");
+
+    console.log('Text before ID: ', id);
+    console.log('Session String: ', sessionString);
 
     req.user.addTemplate(req.body.template, function (err, id) {
         console.log("IN ADD TEMPLATE");
