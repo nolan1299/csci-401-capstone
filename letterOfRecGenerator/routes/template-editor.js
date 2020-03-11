@@ -167,7 +167,7 @@ router.post('/fileUpload', function (req,res, next) {
 
 })
 
-router.post('/create', function (req, res, next) {
+router.post('/create', function (req, res, next, done) {
 
     console.log('in create route');
     // console.log('User is: ', req.user);
@@ -183,7 +183,7 @@ router.post('/create', function (req, res, next) {
     console.log('User ID: ', userID);
     console.log('Session String: ', sessionString);
 
-    var user = User.findUser(userID, return());
+    var user = User.findUser(userID, function(err, user) { done(err, user); });
 
     console.log('User Email: ', user.email);
 
