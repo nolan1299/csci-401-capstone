@@ -176,7 +176,7 @@ router.post('/create', function (req, res, next) {
 
     // Searching through session info to find User ID number
     var sessionString = JSON.stringify(req.sessionStore.sessions);
-    var id_index = sessionString.search('id');
+    var id_index = sessionString.search('id') + 7;
     var id_index_lastNum = id_index + 24;
     var id = sessionString.slice(id_index, id_index_lastNum);
 
