@@ -52,6 +52,8 @@ UserSchema.statics.findUser2 = function (id) {
       db.model('User').findOne({
         'id': id
       }).then(user => {
+
+        console.log('UserID is: ', id);
         if (!user) {
           console.log('That userID does not exist');
         }
