@@ -57,7 +57,7 @@ UserSchema.statics.findUser2 = function (id) {
         }
         else {
           return user;
-        }
+        })
 };
 
 UserSchema.statics.createUser = function (id, cb) {
