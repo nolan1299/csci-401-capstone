@@ -48,9 +48,17 @@ UserSchema.statics.findUser = function (id, cb) {
     });
 };
 
-// UserSchema.statics.findUser2 = function (id) {
-//     db.model('User').findOne({'id': id});
-// };
+UserSchema.statics.findUser2 = function (id) {
+      db.model('User').findOne({
+        'id': id
+      }).then(user => {
+        if (!user) {
+          return done(null, false, { message: 'That userID does not exist' });
+        }
+        else {
+          return user;
+        }
+};
 
 UserSchema.statics.createUser = function (id, cb) {
     User.create({id: id,
