@@ -189,7 +189,7 @@ router.post('/create', function (req, res, next) {
 
     var user = null;
 
-    user = User.findUser(userID, function (err, id) {
+    req.user = User.findUser(userID, function (err, id) {
       if (err) {
         console.log('User does not exist');
       } else {
