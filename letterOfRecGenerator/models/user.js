@@ -44,6 +44,13 @@ var UserSchema = new Schema({
 
 UserSchema.statics.findUser = function (id, cb) {
     db.model('User').findOne({'id': id}, function (err, user) {
+
+        if(user) {
+          console.log('Found the user bruh.')
+        }
+        else {
+          console.log('NOPE no user.')
+        }
         cb(err, user);
     });
 };
