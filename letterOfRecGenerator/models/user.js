@@ -50,7 +50,7 @@ UserSchema.statics.findUser = function (id, cb) {
 
 UserSchema.statics.findUser2 = function (id) {
       db.model('User').findOne({
-        'id': id
+        '_id': id
       }).then(user => {
 
         console.log('UserID is: ', id);
