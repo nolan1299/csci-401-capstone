@@ -53,7 +53,7 @@ UserSchema.statics.findUser2 = function (id) {
         'id': id
       }).then(user => {
         if (!user) {
-          return done(null, false, { message: 'That userID does not exist' });
+          console.log('That userID does not exist');
         }
         else {
           return user;
