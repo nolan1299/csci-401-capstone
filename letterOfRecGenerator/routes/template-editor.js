@@ -167,7 +167,7 @@ router.post('/fileUpload', function (req,res, next) {
 
 })
 
-router.post('/create', function (req, res, next, cb) {
+router.post('/create', function (req, res, next) {
 
     console.log('in create route');
     // console.log('User is: ', req.user);
