@@ -16,7 +16,6 @@ router.get('/', function (req, res, next) {
     if (err) {
       console.log('Error finding User.');
     } else {
-      console.log('Got em! (in TE 1): ', user.email);
 
       var letterheadImg;
       var footerImg;
@@ -92,7 +91,6 @@ router.get('/edit', function (req, res, next) {
     if (err) {
       console.log('Error finding User.');
     } else {
-      console.log('Got em! (in TE 2): ', user.email);
 
     if (req.query.id) {
         var templateName = user.getTemplate(req.query.id).getName();
@@ -138,7 +136,6 @@ router.get('/deactivated-edit', function (req, res, next) {
     if (err) {
       console.log('Error finding User.');
     } else {
-      console.log('Got em!: ', user.email);
 
       if (req.query.id) {
           var templateName = user.getDeactivatedTemplate(req.query.id).getName();
@@ -184,7 +181,6 @@ router.get('/template', function (req, res, next) {
     if (err) {
       console.log('Error finding User.');
     } else {
-      console.log('Got em! (in TE 1): ', user.email);
 
       if(req.query.saveSwitchData == "true") {
           res.json({
@@ -233,7 +229,6 @@ router.post('/create', function (req, res, next) {
       if (err) {
         console.log('Error finding User.');
       } else {
-        console.log('Got em!: ', user.email);
 
         user.addTemplate(req.body.template, function (err, id) {
             console.log("IN ADD TEMPLATE");
@@ -267,7 +262,6 @@ router.post('/update', function (req, res, next) {
     if (err) {
       console.log('Error finding User.');
     } else {
-      console.log('Got em!: ', user.email);
 
       user.updateTemplate(req.body.id, req.body.template, function (err, template) {
           if (err) {
@@ -284,8 +278,6 @@ router.post('/update', function (req, res, next) {
 });
 
 router.post('/uploadLetterTemplate', function(req,res,next){
-
-
 
     console.log(req.files.file);
     // console.log(req)
