@@ -46,8 +46,8 @@ UserSchema.statics.findUser = function (id, cb) {
     db.model('User').findOne({'_id': id}, function (err, user) {
 
         if(user) {
-          console.log('Found the user bruh.');
-          cb(user);
+          console.log('Found the user bruh. Email is: ', user.email);
+          cb(null, user);
         }
         else {
           console.log('NOPE no user.');
