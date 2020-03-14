@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var db = require('../db')
 var fs = require('fs')
+var User = require('../models/user');
 
 /* GET Templates page. */
 router.get('/', function (req, res, next) {
