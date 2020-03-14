@@ -197,7 +197,7 @@ router.post('/create', function (req, res, next) {
     //   }
     // });
 
-    console.log('User Email: ', user.email);
+    console.log('User: ', user);
 
     req.user.addTemplate(req.body.template, function (err, id) {
         console.log("IN ADD TEMPLATE");

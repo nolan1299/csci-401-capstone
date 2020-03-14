@@ -55,7 +55,7 @@ UserSchema.statics.findUser = function (id, cb) {
     });
 };
 
-UserSchema.statics.findUser2 = function (id) {
+UserSchema.methods.findUser2 = function (id) {
       db.model('User').findOne({'_id': id}).then(user => {
 
         console.log('UserID is: ', id);
