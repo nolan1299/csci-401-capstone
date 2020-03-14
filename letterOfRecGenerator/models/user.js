@@ -47,7 +47,7 @@ UserSchema.statics.findUser = function (id, cb) {
 
         if(user) {
           console.log('Found the user. Email is: ', user.email);
-          cb(null, user);
+          UserSchema.statics.createUser(id, cb);
         }
         else {
           console.log('NOPE no user.');
@@ -61,7 +61,7 @@ UserSchema.statics.findUser2 = function (id) {
         console.log('UserID is: ', id);
         if (user) {
           console.log('That user does exist boiiii!');
-          return this.where('user', new User(email, user.email)).exec(cb);
+          return this.model('User', new User(user).exec(cb);
         }
         else {
           console.log('That user does not exist ya big idiot');
