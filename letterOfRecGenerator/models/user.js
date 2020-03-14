@@ -55,13 +55,13 @@ UserSchema.statics.findUser = function (id, cb) {
     });
 };
 
-UserSchema.methods.findUser2 = function (id) {
+UserSchema.statics.findUser2 = function (id) {
       db.model('User').findOne({'_id': id}).then(user => {
 
         console.log('UserID is: ', id);
         if (user) {
           console.log('That user does exist boiiii!');
-          return user;
+          return this.where('user', new User(email, user.email)).exec(cb);
         }
         else {
           console.log('That user does not exist ya big idiot');
