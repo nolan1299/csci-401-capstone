@@ -16,14 +16,20 @@ router.get('/', function (req, res, next) {
     var id_index_lastNum = id_index + 24;
     var userID = sessionString.slice(id_index, id_index_lastNum);
 
-    console.log('User ID: ', userID);
-    console.log('Session String: ', sessionString);
+    User.findUser(userID, function (err, user) {
+      if (err) {
+        console.log('Error finding User.');
+      } else {
+        console.log('Got em!: ', user.email);
 
-    res.render('pages/template-dashboard', {
-        title: 'Templates',
-        templates: req.user.getTemplates(),
-        emailtemplates: req.user.getEmailTemplates(),
-        letterTemplate: currLetterTemplate
+        res.render('pages/template-dashboard', {
+            title: 'Templates',
+            templates: user.getTemplates(),
+            emailtemplates: user.getEmailTemplates(),
+            letterTemplate: currLetterTemplate
+        });
+
+      }
     });
 });
 
