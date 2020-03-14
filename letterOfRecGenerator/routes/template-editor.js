@@ -71,9 +71,22 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/edit', function (req, res, next) {
+
+  // Searching through session info to find User ID number
+  var sessionString = JSON.stringify(req.sessionStore.sessions);
+  var id_index = sessionString.search('id') + 7;
+  var id_index_lastNum = id_index + 24;
+  var userID = sessionString.slice(id_index, id_index_lastNum);
+
+  User.findUser(userID, function (err, user) {
+    if (err) {
+      console.log('Error finding User.');
+    } else {
+      console.log('Got em! (in TE): ', user.email);
+
     if (req.query.id) {
-        var templateName = req.user.getTemplate(req.query.id).getName();
-        var questions = req.user.getTemplate(req.query.id).getQuestions();
+        var templateName = user.getTemplate(req.query.id).getName();
+        var questions = user.getTemplate(req.query.id).getQuestions();
         res.json({
             title: templateName,
             id: req.query.id,
@@ -98,7 +111,9 @@ router.get('/edit', function (req, res, next) {
                         { question: "What organizations are you applying to?",
                             tag: "<!ORG>"}]
         });
+      }
     }
+  });
 });
 
 router.get('/deactivated-edit', function (req, res, next) {
