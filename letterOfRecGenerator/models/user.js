@@ -47,7 +47,7 @@ UserSchema.statics.findUser = function (id, cb) {
 
         if(user) {
           console.log('Found the user. Email is: ', user.email);
-          UserSchema.statics.createUser(id, cb);
+          cb(err, user);
         }
         else {
           console.log('NOPE no user.');
