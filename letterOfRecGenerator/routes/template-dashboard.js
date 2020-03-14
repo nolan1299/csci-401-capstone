@@ -10,7 +10,14 @@ router.get('/', function (req, res, next) {
         currLetterTemplate = '';
     }
 
-    console.log('Session Store in TD: ', req.sessionStore);
+    // Searching through session info to find User ID number
+    var sessionString = JSON.stringify(req.sessionStore.sessions);
+    var id_index = sessionString.search('id') + 7;
+    var id_index_lastNum = id_index + 24;
+    var userID = sessionString.slice(id_index, id_index_lastNum);
+
+    console.log('User ID: ', userID);
+    console.log('Session String: ', sessionString);
 
     res.render('pages/template-dashboard', {
         title: 'Templates',
