@@ -56,17 +56,17 @@ UserSchema.statics.findUser = function (id, cb) {
 };
 
 UserSchema.statics.findUser2 = function (id) {
-      db.model('User').findOne({'_id': id}).then(user => {
-
-        console.log('UserID is: ', id);
-        if (user) {
-          console.log('That user does exist boiiii!');
-          return this.model('User', new User(user).exec(cb);
-        }
-        else {
-          console.log('That user does not exist ya big idiot');
-        }
-      });
+      // db.model('User').findOne({'_id': id}).then(user => {
+      //
+      //   console.log('UserID is: ', id);
+      //   if (user) {
+      //     console.log('That user does exist boiiii!');
+      //     return this.model('User', new User(user).exec(cb);
+      //   }
+      //   else {
+      //     console.log('That user does not exist ya big idiot');
+      //   }
+      // });
 };
 
 UserSchema.statics.createUser = function (id, cb) {
