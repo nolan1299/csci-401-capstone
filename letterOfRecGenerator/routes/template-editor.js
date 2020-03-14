@@ -6,10 +6,6 @@ var router = express.Router();
 
 router.get('/', function (req, res, next) {
 
-
-  console.log('TE / ')
-  console.log(req.user)
-
   // Searching through session info to find User ID number
   var sessionString = JSON.stringify(req.sessionStore.sessions);
   var id_index = sessionString.search('id') + 7;
@@ -62,7 +58,7 @@ router.get('/', function (req, res, next) {
               title: 'CREATE A NEW TEMPLATE',
               templateName: req.query.title,
               id: null,
-              user: req.user,
+              user: user,
               letterheadImage: null,
               footerImage: null,
               saveSwitch: true,
@@ -131,57 +127,86 @@ router.get('/edit', function (req, res, next) {
 });
 
 router.get('/deactivated-edit', function (req, res, next) {
-    if (req.query.id) {
-        var templateName = req.user.getDeactivatedTemplate(req.query.id).getName();
-        var questions = req.user.getDeactivatedTemplate(req.query.id).getQuestions();
-        res.json({
-            title: templateName,
-            id: req.query.id,
-            saveSwitch: false,
-            questions: questions
-        });
+
+  // Searching through session info to find User ID number
+  var sessionString = JSON.stringify(req.sessionStore.sessions);
+  var id_index = sessionString.search('id') + 7;
+  var id_index_lastNum = id_index + 24;
+  var userID = sessionString.slice(id_index, id_index_lastNum);
+
+  User.findUser(userID, function (err, user) {
+    if (err) {
+      console.log('Error finding User.');
     } else {
-        res.json({
-            title: null,
-            id: null,
-            saveSwitch: false,
-            questions: [{ question: "What is your first name?",
-                            tag: "<!FNAME>"},
-                        { question: "What is your last name?",
-                            tag: "<!LNAME>"},
-                        { question: "What is your preferred personal pronoun (subject)?",
-                            tag: "<!SUB_PRONOUN>"},
-                        { question: "What is your preferred personal pronoun (object)",
-                            tag: "<!OBJ_PRONOUN>"},
-                        { question: "What is your preferred possessive pronoun?",
-                            tag: "<!POS_PRONOUN>"},
-                        { question: "What organizations are you applying to?",
-                            tag: "<!ORG>"}]
-        });
+      console.log('Got em!: ', user.email);
+
+      if (req.query.id) {
+          var templateName = user.getDeactivatedTemplate(req.query.id).getName();
+          var questions = user.getDeactivatedTemplate(req.query.id).getQuestions();
+          res.json({
+              title: templateName,
+              id: req.query.id,
+              saveSwitch: false,
+              questions: questions
+          });
+      } else {
+          res.json({
+              title: null,
+              id: null,
+              saveSwitch: false,
+              questions: [{ question: "What is your first name?",
+                              tag: "<!FNAME>"},
+                          { question: "What is your last name?",
+                              tag: "<!LNAME>"},
+                          { question: "What is your preferred personal pronoun (subject)?",
+                              tag: "<!SUB_PRONOUN>"},
+                          { question: "What is your preferred personal pronoun (object)",
+                              tag: "<!OBJ_PRONOUN>"},
+                          { question: "What is your preferred possessive pronoun?",
+                              tag: "<!POS_PRONOUN>"},
+                          { question: "What organizations are you applying to?",
+                              tag: "<!ORG>"}]
+          });
+      }
     }
+  });
 });
 
 router.get('/template', function (req, res, next) {
-    if(req.query.saveSwitchData == "true") {
-        res.json({
-            letter: req.user.getTemplate(req.query.id).getText(),
-            questions: req.user.getTemplate(req.query.id).getQuestions(),
-            letterheadImg: req.user.getTemplate(req.query.id).getLetterheadImg(),
-            footerImg: req.user.getTemplate(req.query.id).getFooterImg(),
-            saveSwitch: req.query.saveSwitchData,
-            questions: req.user.getTemplate(req.query.id).getQuestions()
-        });
-    } else {
-        res.json({
-            letter: req.user.getDeactivatedTemplate(req.query.id).getText(),
-            questions: req.user.getDeactivatedTemplate(req.query.id).getQuestions(),
-            letterheadImg: req.user.getDeactivatedTemplate(req.query.id).getLetterheadImg(),
-            footerImg: req.user.getDeactivatedTemplate(req.query.id).getFooterImg(),
-            saveSwitch: req.query.saveSwitchData,
-            questions: req.user.getDeactivatedTemplate(req.query.id).getQuestions()
-        });
-    }
 
+  // Searching through session info to find User ID number
+  var sessionString = JSON.stringify(req.sessionStore.sessions);
+  var id_index = sessionString.search('id') + 7;
+  var id_index_lastNum = id_index + 24;
+  var userID = sessionString.slice(id_index, id_index_lastNum);
+
+  User.findUser(userID, function (err, user) {
+    if (err) {
+      console.log('Error finding User.');
+    } else {
+      console.log('Got em! (in TE 1): ', user.email);
+
+      if(req.query.saveSwitchData == "true") {
+          res.json({
+              letter: user.getTemplate(req.query.id).getText(),
+              questions: user.getTemplate(req.query.id).getQuestions(),
+              letterheadImg: user.getTemplate(req.query.id).getLetterheadImg(),
+              footerImg: user.getTemplate(req.query.id).getFooterImg(),
+              saveSwitch: req.query.saveSwitchData,
+              questions: user.getTemplate(req.query.id).getQuestions()
+          });
+      } else {
+          res.json({
+              letter: user.getDeactivatedTemplate(req.query.id).getText(),
+              questions: user.getDeactivatedTemplate(req.query.id).getQuestions(),
+              letterheadImg: user.getDeactivatedTemplate(req.query.id).getLetterheadImg(),
+              footerImg: user.getDeactivatedTemplate(req.query.id).getFooterImg(),
+              saveSwitch: req.query.saveSwitchData,
+              questions: user.getDeactivatedTemplate(req.query.id).getQuestions()
+          });
+      }
+    }
+  });
 });
 
 router.post('/fileUpload', function (req,res, next) {
@@ -231,19 +256,37 @@ router.post('/create', function (req, res, next) {
 });
 
 router.post('/update', function (req, res, next) {
-    req.user.updateTemplate(req.body.id, req.body.template, function (err, template) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json({
-                success: "Updated Successfully",
-                status: 200
-            });
-        }
-    });
+
+  // Searching through session info to find User ID number
+  var sessionString = JSON.stringify(req.sessionStore.sessions);
+  var id_index = sessionString.search('id') + 7;
+  var id_index_lastNum = id_index + 24;
+  var userID = sessionString.slice(id_index, id_index_lastNum);
+
+  User.findUser(userID, function (err, user) {
+    if (err) {
+      console.log('Error finding User.');
+    } else {
+      console.log('Got em!: ', user.email);
+
+      user.updateTemplate(req.body.id, req.body.template, function (err, template) {
+          if (err) {
+              console.log(err);
+          } else {
+              res.json({
+                  success: "Updated Successfully",
+                  status: 200
+              });
+          }
+      });
+    }
+  });
 });
 
 router.post('/uploadLetterTemplate', function(req,res,next){
+
+
+
     console.log(req.files.file);
     // console.log(req)
     var file = req.files.file;
