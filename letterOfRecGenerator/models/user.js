@@ -51,7 +51,7 @@ UserSchema.statics.findUser = function (id, cb) {
         else {
           console.log('NOPE no user.')
         }
-        cb(null, user);
+        cb(user);
     });
 };
 
