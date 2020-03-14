@@ -195,9 +195,9 @@ router.post('/create', function (req, res, next) {
       }
     });
 
-    console.log('User: ', user);
+    console.log('Got em again!: ', user.email);
 
-    req.user.addTemplate(req.body.template, function (err, id) {
+    user.addTemplate(req.body.template, function (err, id) {
         console.log("IN ADD TEMPLATE");
         if (err) {
             if(err.message == "DUPLICATE NAME") {
