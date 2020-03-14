@@ -187,32 +187,30 @@ router.post('/create', function (req, res, next) {
     //   email: User.findUser2(userID).email
     // });
 
-    var user = User.findUser(userID, function (err, user) {
+    User.findUser(userID, function (err, user) {
       if (err) {
         console.log('Error finding User.');
       } else {
         console.log('Got em!: ', user.email);
-      }
-    });
 
-    console.log('Got em again!: ', user.email);
-
-    user.addTemplate(req.body.template, function (err, id) {
-        console.log("IN ADD TEMPLATE");
-        if (err) {
-            if(err.message == "DUPLICATE NAME") {
-                console.log("error is duplicate name");
-                res.status(500).send({error: 'Duplicate Name'});
+        user.addTemplate(req.body.template, function (err, id) {
+            console.log("IN ADD TEMPLATE");
+            if (err) {
+                if(err.message == "DUPLICATE NAME") {
+                    console.log("error is duplicate name");
+                    res.status(500).send({error: 'Duplicate Name'});
+                }
+            } else {
+              console.log('Successful')
+                res.json({
+                    success: "Created Successfully",
+                    status: 200,
+                    id: id
+                });
             }
-        } else {
-          console.log('Successful')
-            res.json({
-                success: "Created Successfully",
-                status: 200,
-                id: id
-            });
+          });
         }
-    });
+      });
 });
 
 router.post('/update', function (req, res, next) {
