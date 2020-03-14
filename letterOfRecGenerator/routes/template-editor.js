@@ -10,64 +10,78 @@ router.get('/', function (req, res, next) {
   console.log('TE / ')
   console.log(req.user)
 
-    var letterheadImg;
-    var footerImg;
-    var saveStatus = req.query.saveSwitch;
-    var questions;
-    if (req.query.id) {
-        if(saveStatus=="true"){
-            letterheadImg = req.user.getTemplate(req.query.id).letterheadImg;
-            footerImg = req.user.getTemplate(req.query.id).footerImg;
-            questions = req.user.getTemplate(req.query.id).getQuestions();
-            res.render('pages/template-editor', {
-                title: 'EDITING TEMPLATE',
-                templateName: req.query.title,
-                id: req.query.id,
-                letterheadImage: letterheadImg,
-                footerImage: footerImg,
-                saveSwitch: req.query.saveSwitch,
-                questions: questions,
-                user: req.user
-            });
-        } else {
-            letterheadImg = req.user.getDeactivatedTemplate(req.query.id).letterheadImg;
-            footerImg = req.user.getDeactivatedTemplate(req.query.id).footerImg;
-            questions = req.user.getDeactivatedTemplate(req.query.id).getQuestions();
-            res.render('pages/template-editor', {
-                title: 'VIEWING ARCHIVED TEMPLATE',
-                templateName: req.query.title,
-                id: req.query.id,
-                letterheadImage: letterheadImg,
-                footerImage: footerImg,
-                saveSwitch: req.query.saveSwitch,
-                questions: questions,
-                user: req.user
-            });
-        }
+  // Searching through session info to find User ID number
+  var sessionString = JSON.stringify(req.sessionStore.sessions);
+  var id_index = sessionString.search('id') + 7;
+  var id_index_lastNum = id_index + 24;
+  var userID = sessionString.slice(id_index, id_index_lastNum);
 
+  User.findUser(userID, function (err, user) {
+    if (err) {
+      console.log('Error finding User.');
     } else {
-        res.render('pages/template-editor', {
-            title: 'CREATE A NEW TEMPLATE',
-            templateName: req.query.title,
-            id: null,
-            user: req.user,
-            letterheadImage: null,
-            footerImage: null,
-            saveSwitch: true,
-            questions: [{ question: "What is your first name?",
-                          tag: "<!FNAME>"},
-                        { question: "What is your last name?",
-                          tag: "<!LNAME>"},
-                        { question: "What is your preferred personal pronoun (subject)?",
-                          tag: "<!SUB_PRONOUN>"},
-                        { question: "What is your preferred personal pronoun (object)",
-                          tag: "<!OBJ_PRONOUN>"},
-                        { question: "What is your preferred possessive pronoun?",
-                          tag: "<!POS_PRONOUN>"},
-                        { question: "What organizations are you applying to?",
-                          tag: "<!ORG>"}]
-        });
-    }
+      console.log('Got em! (in TE 1): ', user.email);
+
+      var letterheadImg;
+      var footerImg;
+      var saveStatus = req.query.saveSwitch;
+      var questions;
+      if (req.query.id) {
+          if(saveStatus=="true"){
+              letterheadImg = user.getTemplate(req.query.id).letterheadImg;
+              footerImg = user.getTemplate(req.query.id).footerImg;
+              questions = user.getTemplate(req.query.id).getQuestions();
+              res.render('pages/template-editor', {
+                  title: 'EDITING TEMPLATE',
+                  templateName: req.query.title,
+                  id: req.query.id,
+                  letterheadImage: letterheadImg,
+                  footerImage: footerImg,
+                  saveSwitch: req.query.saveSwitch,
+                  questions: questions,
+                  user: user
+              });
+          } else {
+              letterheadImg = user.getDeactivatedTemplate(req.query.id).letterheadImg;
+              footerImg = user.getDeactivatedTemplate(req.query.id).footerImg;
+              questions = user.getDeactivatedTemplate(req.query.id).getQuestions();
+              res.render('pages/template-editor', {
+                  title: 'VIEWING ARCHIVED TEMPLATE',
+                  templateName: req.query.title,
+                  id: req.query.id,
+                  letterheadImage: letterheadImg,
+                  footerImage: footerImg,
+                  saveSwitch: req.query.saveSwitch,
+                  questions: questions,
+                  user: user
+              });
+          }
+
+      } else {
+          res.render('pages/template-editor', {
+              title: 'CREATE A NEW TEMPLATE',
+              templateName: req.query.title,
+              id: null,
+              user: req.user,
+              letterheadImage: null,
+              footerImage: null,
+              saveSwitch: true,
+              questions: [{ question: "What is your first name?",
+                            tag: "<!FNAME>"},
+                          { question: "What is your last name?",
+                            tag: "<!LNAME>"},
+                          { question: "What is your preferred personal pronoun (subject)?",
+                            tag: "<!SUB_PRONOUN>"},
+                          { question: "What is your preferred personal pronoun (object)",
+                            tag: "<!OBJ_PRONOUN>"},
+                          { question: "What is your preferred possessive pronoun?",
+                            tag: "<!POS_PRONOUN>"},
+                          { question: "What organizations are you applying to?",
+                            tag: "<!ORG>"}]
+          });
+        }
+      }
+    });
 });
 
 router.get('/edit', function (req, res, next) {
@@ -82,7 +96,7 @@ router.get('/edit', function (req, res, next) {
     if (err) {
       console.log('Error finding User.');
     } else {
-      console.log('Got em! (in TE): ', user.email);
+      console.log('Got em! (in TE 2): ', user.email);
 
     if (req.query.id) {
         var templateName = user.getTemplate(req.query.id).getName();
