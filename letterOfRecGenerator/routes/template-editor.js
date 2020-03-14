@@ -169,23 +169,11 @@ router.post('/fileUpload', function (req,res, next) {
 
 router.post('/create', function (req, res, next) {
 
-    console.log('in create route');
-    // console.log('User is: ', req.user);
-    // console.log('Req session is: ', req.session);
-    // console.log('Req is: ', req);
-
     // Searching through session info to find User ID number
     var sessionString = JSON.stringify(req.sessionStore.sessions);
     var id_index = sessionString.search('id') + 7;
     var id_index_lastNum = id_index + 24;
     var userID = sessionString.slice(id_index, id_index_lastNum);
-
-    console.log('User ID: ', userID);
-    console.log('Session String: ', sessionString);
-
-    // var user = new User ({
-    //   email: User.findUser2(userID).email
-    // });
 
     User.findUser(userID, function (err, user) {
       if (err) {

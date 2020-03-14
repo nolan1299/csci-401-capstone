@@ -10,6 +10,8 @@ router.get('/', function (req, res, next) {
         currLetterTemplate = '';
     }
 
+    console.log('Session Store in TD: ', req.sessionStore);
+
     res.render('pages/template-dashboard', {
         title: 'Templates',
         templates: req.user.getTemplates(),
