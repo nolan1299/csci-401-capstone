@@ -187,7 +187,7 @@ router.post('/create', function (req, res, next) {
     //   email: User.findUser2(userID).email
     // });
 
-    User.findUser(userID, function (err, user) {
+    var user = User.findUser(userID, function (err, user) {
       if (err) {
         console.log('Error finding User.');
       } else {
