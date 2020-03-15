@@ -6,16 +6,16 @@ var router = express.Router();
 
 router.get('/', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
-
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
 
       var letterheadImg;
       var footerImg;
@@ -23,9 +23,9 @@ router.get('/', function (req, res, next) {
       var questions;
       if (req.query.id) {
           if(saveStatus=="true"){
-              letterheadImg = user.getTemplate(req.query.id).letterheadImg;
-              footerImg = user.getTemplate(req.query.id).footerImg;
-              questions = user.getTemplate(req.query.id).getQuestions();
+              letterheadImg = req.user.getTemplate(req.query.id).letterheadImg;
+              footerImg = req.user.getTemplate(req.query.id).footerImg;
+              questions = req.user.getTemplate(req.query.id).getQuestions();
               res.render('pages/template-editor', {
                   title: 'EDITING TEMPLATE',
                   templateName: req.query.title,
@@ -34,7 +34,7 @@ router.get('/', function (req, res, next) {
                   footerImage: footerImg,
                   saveSwitch: req.query.saveSwitch,
                   questions: questions,
-                  user: user
+                  user: req.user
               });
           } else {
               letterheadImg = user.getDeactivatedTemplate(req.query.id).letterheadImg;
@@ -48,7 +48,7 @@ router.get('/', function (req, res, next) {
                   footerImage: footerImg,
                   saveSwitch: req.query.saveSwitch,
                   questions: questions,
-                  user: user
+                  user: req.user
               });
           }
 
@@ -57,7 +57,7 @@ router.get('/', function (req, res, next) {
               title: 'CREATE A NEW TEMPLATE',
               templateName: req.query.title,
               id: null,
-              user: user,
+              user: req.user,
               letterheadImage: null,
               footerImage: null,
               saveSwitch: true,
@@ -75,8 +75,8 @@ router.get('/', function (req, res, next) {
                             tag: "<!ORG>"}]
           });
         }
-      }
-    });
+    //   }
+    // });
 });
 
 router.get('/edit', function (req, res, next) {
