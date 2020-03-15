@@ -24,8 +24,8 @@ router.get('/', function (req, res, next) {
     //     console.log('User is: ', user.email);
         res.render('pages/template-dashboard', {
             title: 'Templates',
-            templates: user.getTemplates(),
-            emailtemplates: user.getEmailTemplates(),
+            templates: req.user.getTemplates(),
+            emailtemplates: req.user.getEmailTemplates(),
             letterTemplate: currLetterTemplate
         });
 
