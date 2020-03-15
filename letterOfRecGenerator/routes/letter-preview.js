@@ -13,6 +13,7 @@ var Docxtemplater = require('docxtemplater');
 
 var fs = require('fs');
 var path = require('path');
+var User = require('../models/user');
 
 
 //const Readable = require('stream').Readable;
@@ -27,31 +28,60 @@ const { Document, Paragraph, Packer } = docx;
 
 
 router.get('/', function (req, res, next) {
-    req.user.getForm(req.query.id, function (err, form) {
-        if (err) {
-            console.log("get /  error in letter-preivew: " + err );
-        } else {
-            res.render('pages/letter-preview', {
-                title: form.email,
-                id: req.query.id,
-                form: form,
-            });
-        }
+
+    // Searching through session info to find User ID number
+    var sessionString = JSON.stringify(req.sessionStore.sessions);
+    var id_index = sessionString.search('id') + 7;
+    var id_index_lastNum = id_index + 24;
+    var userID = sessionString.slice(id_index, id_index_lastNum);
+
+    User.findUser(userID, function (err, user) {
+      if (err) {
+        console.log('Error finding User.');
+      } else {
+
+        user.getForm(req.query.id, function (err, form) {
+            if (err) {
+                console.log("get /  error in letter-preivew: " + err );
+            } else {
+                res.render('pages/letter-preview', {
+                    title: form.email,
+                    id: req.query.id,
+                    form: form,
+                });
+            }
+        });
+      }
     });
 });
 
 router.get('/form', function (req, res, next) {
-    req.user.getForm(req.query.id, function (err, form) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.json(form);
-        }
-    });
+
+  // Searching through session info to find User ID number
+  var sessionString = JSON.stringify(req.sessionStore.sessions);
+  var id_index = sessionString.search('id') + 7;
+  var id_index_lastNum = id_index + 24;
+  var userID = sessionString.slice(id_index, id_index_lastNum);
+
+  User.findUser(userID, function (err, user) {
+    if (err) {
+      console.log('Error finding User.');
+    } else {
+
+      user.getForm(req.query.id, function (err, form) {
+          if (err) {
+              console.log(err);
+          } else {
+              res.json(form);
+          }
+      });
+    }
+  });
 });
 
 
 router.post('/save', function (req, res, next) {
+
     Form.completeForm(req.body.id, req.body.letter, function (err, form) {
         if (err) {
             console.log(err);
@@ -66,257 +96,277 @@ router.post('/save', function (req, res, next) {
 });
 
 router.post('/templateUpload', function (req,res, next) {
-    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-    const filePath = __dirname + '/uploads/' + 'letterTemplate';
-    try{
-        if(fs.existsSync(filePath)){
-            console.log("IT EXISTS");
-                    //template is uploaded
-            console.log("Template uploaded!");
 
-            console.log(req.body.formID);
-            var user = req.user;
-            console.log("user:**********************");
-            console.log(user._id);
+  // Searching through session info to find User ID number
+  var sessionString = JSON.stringify(req.sessionStore.sessions);
+  var id_index = sessionString.search('id') + 7;
+  var id_index_lastNum = id_index + 24;
+  var userID = sessionString.slice(id_index, id_index_lastNum);
 
-            var pulled_text; //text that were getting and moving to docxtemplater
-            //console.log(req.query.id);
-            //console.log(req);
-            console.log("^^^^^^^");
-           // console.log(req.user.forms);
+  User.findUser(userID, function (err, user) {
+    if (err) {
+      console.log('Error finding User.');
+    } else {
 
-            user.getForm(req.body.formID, function (err, form) {
-            if (err) {
-                console.log(err);
-            } else {
+      console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+      const filePath = __dirname + '/uploads/' + 'letterTemplate';
+      try{
+          if(fs.existsSync(filePath)){
+              console.log("IT EXISTS");
+                      //template is uploaded
+              console.log("Template uploaded!");
 
-                //console.log(form);
-                pulled_text = form.letter;
-                res.json(form);
+              console.log(req.body.formID);
+              console.log("user:**********************");
+              console.log(user._id);
 
-                console.log(pulled_text);
-                var formatted_text = letterParser.htmlstuff(pulled_text);
+              var pulled_text; //text that were getting and moving to docxtemplater
+              //console.log(req.query.id);
+              //console.log(req);
+              console.log("^^^^^^^");
 
-                var content = fs
-                        .readFileSync(filePath, 'binary');
+              user.getForm(req.body.formID, function (err, form) {
+              if (err) {
+                  console.log(err);
+              } else {
 
-                var zip = new PizZip(content);
+                  //console.log(form);
+                  pulled_text = form.letter;
+                  res.json(form);
 
-                var doc = new Docxtemplater();
-                doc.loadZip(zip);
-                //enable linebreaks
-                doc.setOptions({linebreaks:true});
+                  console.log(pulled_text);
+                  var formatted_text = letterParser.htmlstuff(pulled_text);
 
-                console.log("2");
-                //set the templateVariables
-                var date_raw = req.body.date;
-                var actual_date = letterParser.getDate(date_raw);
-                doc.setData({
+                  var content = fs
+                          .readFileSync(filePath, 'binary');
 
-                    //text with the line breaks included
-                    date: actual_date,
-                    description: formatted_text
-                });
+                  var zip = new PizZip(content);
 
-                try {
-                    // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
-                    doc.render()
-                }
-                catch (error) {
-                    var e = {
-                        message: error.message,
-                        name: error.name,
-                        stack: error.stack,
-                        properties: error.properties,
-                    }
-                    console.log(JSON.stringify({error: e}));
-                    // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
-                    throw error;
-                }
-                console.log("3");
-                var buf = doc.getZip()
-                 .generate({type: 'nodebuffer'});
+                  var doc = new Docxtemplater();
+                  doc.loadZip(zip);
+                  //enable linebreaks
+                  doc.setOptions({linebreaks:true});
 
-                // buf is a nodejs buffer, you can either write it to a file or do anything else with it.
-                fs.writeFileSync(path.resolve('./routes/uploads', 'output.docx'), buf);
+                  console.log("2");
+                  //set the templateVariables
+                  var date_raw = req.body.date;
+                  var actual_date = letterParser.getDate(date_raw);
+                  doc.setData({
 
-                console.log("4");
-            }
-            });
-        }
-        else{
-            //it doesnt exist
-            //create file using blank page
-        console.log("Template not uploaded");
-        console.log(req.body.formID);
-        var user = req.user;
-        console.log("user:**********************");
-        console.log(user._id);
+                      //text with the line breaks included
+                      date: actual_date,
+                      description: formatted_text
+                  });
 
-        var pulled_text; //text that were getting and moving to docxtemplater
+                  try {
+                      // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
+                      doc.render()
+                  }
+                  catch (error) {
+                      var e = {
+                          message: error.message,
+                          name: error.name,
+                          stack: error.stack,
+                          properties: error.properties,
+                      }
+                      console.log(JSON.stringify({error: e}));
+                      // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
+                      throw error;
+                  }
+                  console.log("3");
+                  var buf = doc.getZip()
+                   .generate({type: 'nodebuffer'});
 
-        //console.log(req.body.formID);
-        user.getForm(req.body.formID, function (err, form) {
-        if (err) {
-            console.log(err);
-        } else {
+                  // buf is a nodejs buffer, you can either write it to a file or do anything else with it.
+                  fs.writeFileSync(path.resolve('./routes/uploads', 'output.docx'), buf);
 
-            //console.log(form.letter);
-            pulled_text = form.letter;
-            res.json(form);
+                  console.log("4");
+              }
+              });
+          }
+          else{
+              //it doesnt exist
+              //create file using blank page
+          console.log("Template not uploaded");
+          console.log(req.body.formID);
+          console.log("user:**********************");
+          console.log(user._id);
 
-            console.log(pulled_text);
-            var formatted_text = letterParser.htmlstuff(pulled_text);
+          var pulled_text; //text that were getting and moving to docxtemplater
 
-            var content = fs
-                    .readFileSync(path.resolve('./routes/uploads', 'input.docx'), 'binary');
+          //console.log(req.body.formID);
+          user.getForm(req.body.formID, function (err, form) {
+          if (err) {
+              console.log(err);
+          } else {
 
-            var zip = new PizZip(content);
+              //console.log(form.letter);
+              pulled_text = form.letter;
+              res.json(form);
 
-            var doc = new Docxtemplater();
-            doc.loadZip(zip);
-            //enable linebreaks
-            doc.setOptions({linebreaks:true});
+              console.log(pulled_text);
+              var formatted_text = letterParser.htmlstuff(pulled_text);
 
-            console.log("2");
-            //set the templateVariables
-            doc.setData({
+              var content = fs
+                      .readFileSync(path.resolve('./routes/uploads', 'input.docx'), 'binary');
 
-                //text with the line breaks included
-                description: formatted_text
-            });
+              var zip = new PizZip(content);
 
-            try {
-                // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
-                doc.render()
-            }
-            catch (error) {
-                var e = {
-                    message: error.message,
-                    name: error.name,
-                    stack: error.stack,
-                    properties: error.properties,
-                }
-                console.log(JSON.stringify({error: e}));
-                // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
-                throw error;
-            }
-            console.log("3");
-            var buf = doc.getZip()
-             .generate({type: 'nodebuffer'});
+              var doc = new Docxtemplater();
+              doc.loadZip(zip);
+              //enable linebreaks
+              doc.setOptions({linebreaks:true});
 
-            // buf is a nodejs buffer, you can either write it to a file or do anything else with it.
-            fs.writeFileSync(path.resolve('./routes/uploads', 'output.docx'), buf);
-            console.log("4");
-        }
-        });
+              console.log("2");
+              //set the templateVariables
+              doc.setData({
 
-        }
-    } catch(err){
-        console.log(err);
+                  //text with the line breaks included
+                  description: formatted_text
+              });
+
+              try {
+                  // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
+                  doc.render()
+              }
+              catch (error) {
+                  var e = {
+                      message: error.message,
+                      name: error.name,
+                      stack: error.stack,
+                      properties: error.properties,
+                  }
+                  console.log(JSON.stringify({error: e}));
+                  // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
+                  throw error;
+              }
+              console.log("3");
+              var buf = doc.getZip()
+               .generate({type: 'nodebuffer'});
+
+              // buf is a nodejs buffer, you can either write it to a file or do anything else with it.
+              fs.writeFileSync(path.resolve('./routes/uploads', 'output.docx'), buf);
+              console.log("4");
+          }
+          });
+          }
+      } catch(err){
+          console.log(err);
+      }
     }
-})
+  });
+});
 
 router.post('/drive', function(req,res,next) {
-    console.log("DRIVE DRIVE DRIVE DRIVE DRIVE DRIVE")
-    var user = req.user;
-    user.getForm(req.body.id, function(err, form) {
-        if(err){
-            console.log(err)
-        } else {
-            var break_lines = "<br><br>";
-            var smaller_break_lines = "<br><br>";
-            var date_raw = req.body.date;
-            var actual_date = letterParser.getDate(date_raw);
-            var formatted_date = break_lines + actual_date + smaller_break_lines;
-            var letter = req.body.letter;
-            var formatted_letter = formatted_date + letter;
-            var template = form.getTemplate();
-            var templateName = template.name;
-           // console.log("THIS IS FORMATTED:" + formatted_letter);
 
-            var text = letterParser.htmlstuff(formatted_letter);
-            var longText = text.replace(/(\r\n|\n|\r)/gm, "<br>");
-            //text = text.replace(/(\n)/gm, '')
-            var fname = form.responses[0].response;
-            var lname = form.responses[1].response;
-            var length = longText.length;
-            //console.log("TEXT:" + text)
-            //var stringWords = longText.split(' ');
-           // console.log("words: " + stringWords)
-            var para = longText.split("<br>"); //split para into an array of paragraphs
-            //var para2 = longText.replace(/<br\s*[\/]?>/gi, "\n");
+  // Searching through session info to find User ID number
+  var sessionString = JSON.stringify(req.sessionStore.sessions);
+  var id_index = sessionString.search('id') + 7;
+  var id_index_lastNum = id_index + 24;
+  var userID = sessionString.slice(id_index, id_index_lastNum);
 
-           //create doc for docx
-          /* const doc = new Document();
+  User.findUser(userID, function (err, user) {
+    if (err) {
+      console.log('Error finding User.');
+    } else {
 
-            //loop through para array and make a paragraph for each
-            for (var x in para) {
-                const temp_paragraph = new Paragraph(para[x]);
-                doc.addParagraph(temp_paragraph);
-                console.log(para[x]);
-            }
+      console.log("DRIVE DRIVE DRIVE DRIVE DRIVE DRIVE")
+      user.getForm(req.body.id, function(err, form) {
+          if(err){
+              console.log(err)
+          } else {
+              var break_lines = "<br><br>";
+              var smaller_break_lines = "<br><br>";
+              var date_raw = req.body.date;
+              var actual_date = letterParser.getDate(date_raw);
+              var formatted_date = break_lines + actual_date + smaller_break_lines;
+              var letter = req.body.letter;
+              var formatted_letter = formatted_date + letter;
+              var template = form.getTemplate();
+              var templateName = template.name;
+             // console.log("THIS IS FORMATTED:" + formatted_letter);
 
-            //place header, footer signature
+              var text = letterParser.htmlstuff(formatted_letter);
+              var longText = text.replace(/(\r\n|\n|\r)/gm, "<br>");
+              //text = text.replace(/(\n)/gm, '')
+              var fname = form.responses[0].response;
+              var lname = form.responses[1].response;
+              var length = longText.length;
+              //console.log("TEXT:" + text)
+              //var stringWords = longText.split(' ');
+             // console.log("words: " + stringWords)
+              var para = longText.split("<br>"); //split para into an array of paragraphs
+              //var para2 = longText.replace(/<br\s*[\/]?>/gi, "\n");
 
+             //create doc for docx
+            /* const doc = new Document();
 
+              //loop through para array and make a paragraph for each
+              for (var x in para) {
+                  const temp_paragraph = new Paragraph(para[x]);
+                  doc.addParagraph(temp_paragraph);
+                  console.log(para[x]);
+              }
 
-            const packer = new docx.Packer();
-
-            packer.toBuffer(doc).then((buffer) => {
-            fs.writeFileSync("MyDocument4.docx", buffer);
-            });
-            */
-
-            //load the docx file as a binary
-			var content = fs
-			    .readFileSync(path.resolve('./routes/uploads', 'input.docx'), 'binary');
-
-			var zip = new PizZip(content);
-
-			var doc = new Docxtemplater();
-			doc.loadZip(zip);
-			//enable linebreaks
-			doc.setOptions({linebreaks:true});
-
-
-			//set the templateVariables
-			doc.setData({
-
-			    //text with the line breaks included
-			    description: text
-			});
-
-			try {
-			    // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
-			    doc.render()
-			}
-			catch (error) {
-			    var e = {
-			        message: error.message,
-			        name: error.name,
-			        stack: error.stack,
-			        properties: error.properties,
-			    }
-			    console.log(JSON.stringify({error: e}));
-			    // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
-			    throw error;
-			}
-			var buf = doc.getZip()
-             .generate({type: 'nodebuffer'});
-
-			// buf is a nodejs buffer, you can either write it to a file or do anything else with it.
-			fs.writeFileSync(path.resolve('./routes/uploads', 'output.docx'), buf);
-
-            console.log("we made it");
+              //place header, footer signature
 
 
 
-            res.redirect('/recommender-dashboard');
-        }
+              const packer = new docx.Packer();
 
-    });
-})
+              packer.toBuffer(doc).then((buffer) => {
+              fs.writeFileSync("MyDocument4.docx", buffer);
+              });
+              */
+
+              //load the docx file as a binary
+  			var content = fs
+  			    .readFileSync(path.resolve('./routes/uploads', 'input.docx'), 'binary');
+
+  			var zip = new PizZip(content);
+
+  			var doc = new Docxtemplater();
+  			doc.loadZip(zip);
+  			//enable linebreaks
+  			doc.setOptions({linebreaks:true});
+
+
+  			//set the templateVariables
+  			doc.setData({
+
+  			    //text with the line breaks included
+  			    description: text
+  			});
+
+  			try {
+  			    // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
+  			    doc.render()
+  			}
+  			catch (error) {
+  			    var e = {
+  			        message: error.message,
+  			        name: error.name,
+  			        stack: error.stack,
+  			        properties: error.properties,
+  			    }
+  			    console.log(JSON.stringify({error: e}));
+  			    // The error thrown here contains additional information when logged with JSON.stringify (it contains a property object).
+  			    throw error;
+  			}
+  			var buf = doc.getZip()
+               .generate({type: 'nodebuffer'});
+
+  			// buf is a nodejs buffer, you can either write it to a file or do anything else with it.
+  			fs.writeFileSync(path.resolve('./routes/uploads', 'output.docx'), buf);
+
+              console.log("we made it");
+
+              res.redirect('/recommender-dashboard');
+          }
+      });
+    }
+  });
+});
 
 router.get('/downloads', function(req, res) {
     console.log("Hi its Jerry");

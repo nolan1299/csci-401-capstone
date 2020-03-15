@@ -21,7 +21,6 @@ router.get('/', function (req, res, next) {
       if (err) {
         console.log('Error finding User.');
       } else {
-        console.log('Got em! (in TD): ', user.email);
 
         res.render('pages/template-dashboard', {
             title: 'Templates',
@@ -35,33 +34,59 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/delete', function (req, res, next) {
-    var user = req.user;
-    user.deactivateTemplate(req.body.id, function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            res.render('pages/template-dashboard', {
-                title: 'Templates',
-                templates: req.user.getTemplates(),
-                emailtemplates: req.user.getEmailTemplates(),
-            });
-        }
-    });
+
+  // Searching through session info to find User ID number
+  var sessionString = JSON.stringify(req.sessionStore.sessions);
+  var id_index = sessionString.search('id') + 7;
+  var id_index_lastNum = id_index + 24;
+  var userID = sessionString.slice(id_index, id_index_lastNum);
+
+  User.findUser(userID, function (err, user) {
+    if (err) {
+      console.log('Error finding User.');
+    } else {
+
+      user.deactivateTemplate(req.body.id, function (err) {
+          if (err) {
+              console.log(err);
+          } else {
+              res.render('pages/template-dashboard', {
+                  title: 'Templates',
+                  templates: user.getTemplates(),
+                  emailtemplates: user.getEmailTemplates(),
+              });
+          }
+      });
+    }
+  });
 });
 
 router.post('/delete-email', function (req, res, next) {
-    var user = req.user;
+
+  // Searching through session info to find User ID number
+  var sessionString = JSON.stringify(req.sessionStore.sessions);
+  var id_index = sessionString.search('id') + 7;
+  var id_index_lastNum = id_index + 24;
+  var userID = sessionString.slice(id_index, id_index_lastNum);
+
+  User.findUser(userID, function (err, user) {
+    if (err) {
+      console.log('Error finding User.');
+    } else {
+
     user.deactivateEmailTemplate(req.body.id, function (err) {
         if (err) {
             console.log(err);
         } else {
             res.render('pages/template-dashboard', {
                 title: 'Templates',
-                templates: req.user.getTemplates(),
-                emailtemplates: req.user.getEmailTemplates(),
+                templates: user.getTemplates(),
+                emailtemplates: user.getEmailTemplates(),
             });
-        }
-    });
+          }
+      });
+    }
+  });
 });
 
 router.post('/uploadLetterTemplate', function(req,res,next){

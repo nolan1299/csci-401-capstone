@@ -193,13 +193,10 @@ app.use(function (err, req, res, next) {
 
 
 function isAuthenticated(req, res, next) {
-  console.log(1)
     if (req.user) {
-      console.log(2)
         return next();
     }
-    console.log(3)
-    return next(); // added this to test
+//    return next(); // added this to test
     res.redirect('/login');
 }
 

@@ -27,26 +27,7 @@ router.get('/template-editor', ensureAuthenticated, (req, res) =>
 }
 );
 
-// router.post('/template-editor', ensureAuthenticated, (req, res) =>
-//   res.render('pages/template-editor' {
-//     user: req.user
-//   })
-// );
-//
-// router.get('/template-editor/create', ensureAuthenticated, (req, res) =>
-//   res.render('pages/template-editor/create' {
-//     user: req.user
-//   })
-// );
-//
-// router.post('/template-editor/create', ensureAuthenticated, (req, res) =>
-//   res.render('pages/template-editor/create' {
-//     user: req.user
-//   })
-// );
 
-
-//
 router.get('/template-dashboard', ensureAuthenticated, (req, res) =>
   res.render('pages/template-dashboard' {
     user: req.user
