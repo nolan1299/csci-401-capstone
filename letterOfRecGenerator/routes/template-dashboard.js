@@ -11,17 +11,17 @@ router.get('/', function (req, res, next) {
         currLetterTemplate = '';
     }
 
-    // Searching through session info to find User ID number
-    var sessionString = JSON.stringify(req.sessionStore.sessions);
-    var id_index = sessionString.search('id') + 7;
-    var id_index_lastNum = id_index + 24;
-    var userID = sessionString.slice(id_index, id_index_lastNum);
-
-    User.findUser(userID, function (err, user) {
-      if (err) {
-        console.log('Error finding User.');
-      } else {
-        console.log('User is: ', user.email);
+    // // Searching through session info to find User ID number
+    // var sessionString = JSON.stringify(req.sessionStore.sessions);
+    // var id_index = sessionString.search('id') + 7;
+    // var id_index_lastNum = id_index + 24;
+    // var userID = sessionString.slice(id_index, id_index_lastNum);
+    //
+    // User.findUser(userID, function (err, user) {
+    //   if (err) {
+    //     console.log('Error finding User.');
+    //   } else {
+    //     console.log('User is: ', user.email);
         res.render('pages/template-dashboard', {
             title: 'Templates',
             templates: user.getTemplates(),
@@ -29,64 +29,64 @@ router.get('/', function (req, res, next) {
             letterTemplate: currLetterTemplate
         });
 
-      }
-    });
+    //   }
+    // });
 });
 
 router.post('/delete', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
 
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
-
-      user.deactivateTemplate(req.body.id, function (err) {
+      req.user.deactivateTemplate(req.body.id, function (err) {
           if (err) {
               console.log(err);
           } else {
               res.render('pages/template-dashboard', {
                   title: 'Templates',
-                  templates: user.getTemplates(),
-                  emailtemplates: user.getEmailTemplates(),
+                  templates: req.user.getTemplates(),
+                  emailtemplates: req.user.getEmailTemplates(),
               });
           }
       });
-    }
-  });
+  //   }
+  // });
 });
 
 router.post('/delete-email', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
 
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
-
-    user.deactivateEmailTemplate(req.body.id, function (err) {
+    req.user.deactivateEmailTemplate(req.body.id, function (err) {
         if (err) {
             console.log(err);
         } else {
             res.render('pages/template-dashboard', {
                 title: 'Templates',
-                templates: user.getTemplates(),
-                emailtemplates: user.getEmailTemplates(),
+                templates: req.user.getTemplates(),
+                emailtemplates: req.user.getEmailTemplates(),
             });
           }
       });
-    }
-  });
+  //   }
+  // });
 });
 
 router.post('/uploadLetterTemplate', function(req,res,next){
@@ -101,7 +101,7 @@ router.post('/uploadLetterTemplate', function(req,res,next){
         }
     });
 
-    console.log("about to print file;::");
+    console.log("about to print file;");
     console.log(file);
 
 })
