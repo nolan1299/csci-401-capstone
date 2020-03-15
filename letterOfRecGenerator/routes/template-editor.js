@@ -81,20 +81,20 @@ router.get('/', function (req, res, next) {
 
 router.get('/edit', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
-
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
 
     if (req.query.id) {
-        var templateName = user.getTemplate(req.query.id).getName();
-        var questions = user.getTemplate(req.query.id).getQuestions();
+        var templateName = req.user.getTemplate(req.query.id).getName();
+        var questions = req.user.getTemplate(req.query.id).getQuestions();
         res.json({
             title: templateName,
             id: req.query.id,
@@ -120,26 +120,26 @@ router.get('/edit', function (req, res, next) {
                             tag: "<!ORG>"}]
         });
       }
-    }
-  });
+  //   }
+  // });
 });
 
 router.get('/deactivated-edit', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
-
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
 
       if (req.query.id) {
-          var templateName = user.getDeactivatedTemplate(req.query.id).getName();
-          var questions = user.getDeactivatedTemplate(req.query.id).getQuestions();
+          var templateName = req.user.getDeactivatedTemplate(req.query.id).getName();
+          var questions = req.user.getDeactivatedTemplate(req.query.id).getQuestions();
           res.json({
               title: templateName,
               id: req.query.id,
@@ -165,44 +165,44 @@ router.get('/deactivated-edit', function (req, res, next) {
                               tag: "<!ORG>"}]
           });
       }
-    }
-  });
+  //   }
+  // });
 });
 
 router.get('/template', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
-
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
 
       if(req.query.saveSwitchData == "true") {
           res.json({
-              letter: user.getTemplate(req.query.id).getText(),
-              questions: user.getTemplate(req.query.id).getQuestions(),
-              letterheadImg: user.getTemplate(req.query.id).getLetterheadImg(),
-              footerImg: user.getTemplate(req.query.id).getFooterImg(),
+              letter: req.user.getTemplate(req.query.id).getText(),
+              questions: req.user.getTemplate(req.query.id).getQuestions(),
+              letterheadImg: req.user.getTemplate(req.query.id).getLetterheadImg(),
+              footerImg: req.user.getTemplate(req.query.id).getFooterImg(),
               saveSwitch: req.query.saveSwitchData,
-              questions: user.getTemplate(req.query.id).getQuestions()
+              questions: req.user.getTemplate(req.query.id).getQuestions()
           });
       } else {
           res.json({
-              letter: user.getDeactivatedTemplate(req.query.id).getText(),
-              questions: user.getDeactivatedTemplate(req.query.id).getQuestions(),
-              letterheadImg: user.getDeactivatedTemplate(req.query.id).getLetterheadImg(),
-              footerImg: user.getDeactivatedTemplate(req.query.id).getFooterImg(),
+              letter: req.user.getDeactivatedTemplate(req.query.id).getText(),
+              questions: req.user.getDeactivatedTemplate(req.query.id).getQuestions(),
+              letterheadImg: req.user.getDeactivatedTemplate(req.query.id).getLetterheadImg(),
+              footerImg: req.user.getDeactivatedTemplate(req.query.id).getFooterImg(),
               saveSwitch: req.query.saveSwitchData,
-              questions: user.getDeactivatedTemplate(req.query.id).getQuestions()
+              questions: req.user.getDeactivatedTemplate(req.query.id).getQuestions()
           });
       }
-    }
-  });
+  //   }
+  // });
 });
 
 router.post('/fileUpload', function (req,res, next) {
