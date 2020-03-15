@@ -197,7 +197,7 @@ router.post('/update', function (req, res, next) {
               console.log("error in update_linkTemplate_subject: " + err);
               res.send(err);
           } else {
-              user.update_linkTemplate_body(req.body.body, function (err) {
+              req.user.update_linkTemplate_body(req.body.body, function (err) {
                   if (err) {
                       console.log("error in update_linkTemplate_body: " + err);
                       res.send(err);

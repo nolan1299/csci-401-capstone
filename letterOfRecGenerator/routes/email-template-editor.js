@@ -5,21 +5,21 @@ var router = express.Router();
 
 router.get('/', function (req, res, next) {
 
-    // Searching through session info to find User ID number
-    var sessionString = JSON.stringify(req.sessionStore.sessions);
-    var id_index = sessionString.search('id') + 7;
-    var id_index_lastNum = id_index + 24;
-    var userID = sessionString.slice(id_index, id_index_lastNum);
-
-    User.findUser(userID, function (err, user) {
-      if (err) {
-        console.log('Error finding User.');
-      } else {
+    // // Searching through session info to find User ID number
+    // var sessionString = JSON.stringify(req.sessionStore.sessions);
+    // var id_index = sessionString.search('id') + 7;
+    // var id_index_lastNum = id_index + 24;
+    // var userID = sessionString.slice(id_index, id_index_lastNum);
+    //
+    // User.findUser(userID, function (err, user) {
+    //   if (err) {
+    //     console.log('Error finding User.');
+    //   } else {
 
         if (req.query.id) {
-            templateName = user.getEmailTemplate(req.query.id).title;
-            subject = user.getEmailTemplate(req.query.id).subject;
-            body = user.getEmailTemplate(req.query.id).body_text;
+            templateName = req.user.getEmailTemplate(req.query.id).title;
+            subject = req.user.getEmailTemplate(req.query.id).subject;
+            body = req.user.getEmailTemplate(req.query.id).body_text;
 
             res.render('pages/email-template-editor', {
                 title: 'EDIT TEMPLATE',
@@ -45,7 +45,7 @@ router.get('/', function (req, res, next) {
                 res.render('pages/email-template-editor', {
                     title: 'EDIT TEMPLATE',
                     templateName: req.query.title,
-                    templates: user.getEmailTemplates(),
+                    templates: req.user.getEmailTemplates(),
                     id: req.query.id,
                     subject: null,
                     body: null,
@@ -63,24 +63,24 @@ router.get('/', function (req, res, next) {
                               tag: "<!ORG>"}]
                 });
             }
-      }
-    });
+    //   }
+    // });
 });
 
 router.post('/addEmailTemplate', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
 
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
-
-      user.addEmailTemplate(req.body.Email, function (err, id) {
+      req.user.addEmailTemplate(req.body.Email, function (err, id) {
           if (err) {
               console.log(err);
           } else {
@@ -91,27 +91,27 @@ router.post('/addEmailTemplate', function (req, res, next) {
               });
           }
       });
-    }
-  });
+  //   }
+  // });
 });
 
 router.get('/edit', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
-
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
 
       if (req.query.id) {
-          var templateName = user.getEmailTemplate(req.query.id).getTitle();
-          var subject = user.getEmailTemplate(req.query.id).getSubject();
-          var body = user.getEmailTemplate(req.query.id).getBodyText();
+          var templateName = req.user.getEmailTemplate(req.query.id).getTitle();
+          var subject = req.user.getEmailTemplate(req.query.id).getSubject();
+          var body = req.user.getEmailTemplate(req.query.id).getBodyText();
           res.json({
               title: 'EDIT AN EMAIL TEMPLATE',
               templateName: templateName,
@@ -137,24 +137,24 @@ router.get('/edit', function (req, res, next) {
                 id: null,
             });
         }
-      }
-  });
+  //     }
+  // });
 });
 
 router.post('/update', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
 
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
-
-      user.updateEmailTemplate(req.body.id, req.body.Email, function (err) {
+      req.user.updateEmailTemplate(req.body.id, req.body.Email, function (err) {
           if (err) {
               console.log(err);
           } else {
@@ -164,8 +164,8 @@ router.post('/update', function (req, res, next) {
               });
           }
       });
-    }
-  });
+  //   }
+  // });
 });
 
 
