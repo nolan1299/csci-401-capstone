@@ -21,7 +21,7 @@ router.get('/', function (req, res, next) {
       if (err) {
         console.log('Error finding User.');
       } else {
-
+        console.log('User is: ', user.email);
         res.render('pages/template-dashboard', {
             title: 'Templates',
             templates: user.getTemplates(),
