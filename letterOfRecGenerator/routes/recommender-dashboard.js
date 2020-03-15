@@ -30,51 +30,51 @@ router.use(function (req, res, next) {
  */
 router.get('/', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
+  //     console.log('Got em! (in RD): ', user.email);
 
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
-      console.log('Got em! (in RD): ', user.email);
-
-      user.getForms(function (err, forms) {
+      req.user.getForms(function (err, forms) {
           if (err) {
               console.log(`error: ${err}`);
           } else {
               res.render('pages/recommender-dashboard', {
-                  title: user.displayName,
-                  templates: user.getTemplates(),
+                  title: req.user.displayName,
+                  templates: req.user.getTemplates(),
                   forms: forms,
-                  subject: user.getLinkTemplateSubject(),
-                  body: user.getLinkTemplateBody()
+                  subject: req.user.getLinkTemplateSubject(),
+                  body: req.user.getLinkTemplateBody()
               });
           }
       });
-    }
-  });
+  //   }
+  // });
 });
 
 router.post('/', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
+  //     console.log('Got em! (in RD): ', user.email);
 
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
-      console.log('Got em! (in RD): ', user.email);
 
-
-      var currentUser = user;
+      var currentUser = req.user;
       var userId = currentUser._id;
       var subject = req.body.subject_text;
       var toEmail = req.body.email;
@@ -88,11 +88,11 @@ router.post('/', function (req, res, next) {
           return;
       }
 
-      Form.createForm(toEmail, user.getTemplate(req.body.templateId), userId, function (err, form) {
+      Form.createForm(toEmail, req.user.getTemplate(req.body.templateId), userId, function (err, form) {
         if (err) {
             console.log(`error: ${err}`);
         } else {
-            user.addForm(form, function (err) {
+            req.user.addForm(form, function (err) {
                 if (err) {
                     console.log(`error: ${err}`);
                     return;
@@ -138,63 +138,61 @@ router.post('/', function (req, res, next) {
         res.redirect('/recommender-dashboard');
         }
       });
-    }
-  });
+  //   }
+  // });
 });
 
 
 router.post('/delete', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
+  //     console.log('Got em! (in RD): ', user.email);
 
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
-      console.log('Got em! (in RD): ', user.email);
-
-
-
-      user.removeForm(req.body.id, function (err) {
+      req.user.removeForm(req.body.id, function (err) {
           if (err) {
               console.log(err);
           } else {
-              user.getForms(function (err, forms) {
+              req.user.getForms(function (err, forms) {
                   if (err) {
                       console.log(`error: ${err}`);
                   } else {
                       res.render('pages/recommender-dashboard', {
-                          title: 'Welcome ' + user.displayName + '!',
-                          templates: user.getTemplates(),
+                          title: 'Welcome ' + req.user.displayName + '!',
+                          templates: req.user.getTemplates(),
                           forms: forms,
                       });
                   }
               });
           }
       });
-    }
-  });
+  //   }
+  // });
 });
 
 router.post('/update', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
+  //     console.log('Got em! (in RD): ', user.email);
 
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
-      console.log('Got em! (in RD): ', user.email);
-
-      user.update_linkTemplate_subject(req.body.subject, function (err) {
+      req.user.update_linkTemplate_subject(req.body.subject, function (err) {
           if (err) {
               console.log("error in update_linkTemplate_subject: " + err);
               res.send(err);
@@ -212,8 +210,8 @@ router.post('/update', function (req, res, next) {
               });
           }
       });
-    }
-  });
+  //   }
+  // });
 });
 
 module.exports = router;
