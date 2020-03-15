@@ -196,7 +196,7 @@ function isAuthenticated(req, res, next) {
     if (req.user) {
         return next();
     }
-//    return next(); // added this to test
+    return next(); // added this to test
     res.redirect('/login');
 }
 
