@@ -6,9 +6,6 @@ var router = express.Router();
 
 router.get('/', function (req, res, next) {
 
-    console.log('TE / ')
-    console.log(req.user)
-
   // // Searching through session info to find User ID number
   // var sessionString = JSON.stringify(req.sessionStore.sessions);
   // var id_index = sessionString.search('id') + 7;
