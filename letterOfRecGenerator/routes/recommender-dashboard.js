@@ -13,10 +13,10 @@ var Docxtemplater = require('docxtemplater');
 var DocxMerger = require('docx-merger');
 var Readable = require('stream').Readable;
 var path = require('path');
-var builder = require('docx-builder');
+var builder = require('docx-builder')
 var docx = new builder.Document();
-var dt = require('./letter-parser');
-var User = require('../models/user');
+var dt = require('./letter-parser')
+//var User = require('../models/user');
 
 "use strict";
 
