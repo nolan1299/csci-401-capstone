@@ -11,17 +11,18 @@ router.get('/', function (req, res, next) {
         currLetterTemplate = '';
     }
 
-    // Searching through session info to find User ID number
-    var sessionString = JSON.stringify(req.sessionStore.sessions);
-    var id_index = sessionString.search('id') + 7;
-    var id_index_lastNum = id_index + 24;
-    var userID = sessionString.slice(id_index, id_index_lastNum);
+    // // Searching through session info to find User ID number
+    // var sessionString = JSON.stringify(req.sessionStore.sessions);
+    // var id_index = sessionString.search('id') + 7;
+    // var id_index_lastNum = id_index + 24;
+    // var userID = sessionString.slice(id_index, id_index_lastNum);
+    // 
+    // User.findUser(userID, function (err, user) {
+    //   if (err) {
+    //     console.log('Error finding User.');
+    //   } else {
+    //     console.log('User is: ', user.email);
 
-    User.findUser(userID, function (err, user) {
-      if (err) {
-        console.log('Error finding User.');
-      } else {
-        console.log('User is: ', user.email);
         res.render('pages/template-dashboard', {
             title: 'Templates',
             templates: req.user.getTemplates(),
@@ -29,8 +30,8 @@ router.get('/', function (req, res, next) {
             letterTemplate: currLetterTemplate
         });
 
-      }
-    });
+    //   }
+    // });
 });
 
 router.post('/delete', function (req, res, next) {
