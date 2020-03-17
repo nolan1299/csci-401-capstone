@@ -7,76 +7,76 @@ var googleAuth = require('google-auth-library');
 var { google } = require('googleapis');
 var OAuth2 = google.auth.OAuth2;
 var letterParser = require('./letter-parser');
-var User = require('../models/user');
+//var User = require('../models/user');
 
 router.get('/', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
 
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
 
-
-      user.getForm(req.query.id, function (err, form) {
+      req.user.getForm(req.query.id, function (err, form) {
           if (err) {
               console.log("get /  error in letter-preivew: " + err );
           } else {
               res.render('pages/email-letter-preview', {
                   title: form.email,
-                  templates: user.getEmailTemplates(),
+                  templates: req.user.getEmailTemplates(),
                   id: req.query.id,
                   form: form,
               });
           }
       });
-    }
-  });
+  //   }
+  // });
 });
 
 router.get('/form', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
 
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
-
-      user.getForm(req.query.id, function (err, form) {
+      req.user.getForm(req.query.id, function (err, form) {
           if (err) {
               console.log(err);
           } else {
               res.json(form);
           }
       });
-    }
-  });
+  //   }
+  // });
 });
 
 router.get('/emailForm', function (req, res, next) {
 
-    // Searching through session info to find User ID number
-    var sessionString = JSON.stringify(req.sessionStore.sessions);
-    var id_index = sessionString.search('id') + 7;
-    var id_index_lastNum = id_index + 24;
-    var userID = sessionString.slice(id_index, id_index_lastNum);
+    // // Searching through session info to find User ID number
+    // var sessionString = JSON.stringify(req.sessionStore.sessions);
+    // var id_index = sessionString.search('id') + 7;
+    // var id_index_lastNum = id_index + 24;
+    // var userID = sessionString.slice(id_index, id_index_lastNum);
+    //
+    // User.findUser(userID, function (err, user) {
+    //   if (err) {
+    //     console.log('Error finding User.');
+    //   } else {
 
-    User.findUser(userID, function (err, user) {
-      if (err) {
-        console.log('Error finding User.');
-      } else {
-
-        user.getForm(req.query.id, function (err, form) {
+        req.user.getForm(req.query.id, function (err, form) {
             if (err) {
                 console.log("/form error:  "  + err);
             } else {
@@ -86,22 +86,22 @@ router.get('/emailForm', function (req, res, next) {
                 });
             }
         });
-      }
-    });
+    //   }
+    // });
 });
 
 router.post('/save', function (req, res, next) {
 
-    // Searching through session info to find User ID number
-    var sessionString = JSON.stringify(req.sessionStore.sessions);
-    var id_index = sessionString.search('id') + 7;
-    var id_index_lastNum = id_index + 24;
-    var userID = sessionString.slice(id_index, id_index_lastNum);
-
-    User.findUser(userID, function (err, user) {
-      if (err) {
-        console.log('Error finding User.');
-      } else {
+    // // Searching through session info to find User ID number
+    // var sessionString = JSON.stringify(req.sessionStore.sessions);
+    // var id_index = sessionString.search('id') + 7;
+    // var id_index_lastNum = id_index + 24;
+    // var userID = sessionString.slice(id_index, id_index_lastNum);
+    //
+    // User.findUser(userID, function (err, user) {
+    //   if (err) {
+    //     console.log('Error finding User.');
+    //   } else {
 
         Form.completeForm(req.body.id, req.body.letter, function (err, form) {
             if (err) {
@@ -109,35 +109,35 @@ router.post('/save', function (req, res, next) {
             } else {
                 res.render('pages/letter-preview', {
                     title: form.email,
-                    templates: user.getEmailTemplates(),
+                    templates: req.user.getEmailTemplates(),
                     id: req.query.id,
                     form: form,
                 });
             }
         });
-      }
-    });
+    //   }
+    // });
 });
 
 router.post('/', function (req, res, next) {
 
-  // Searching through session info to find User ID number
-  var sessionString = JSON.stringify(req.sessionStore.sessions);
-  var id_index = sessionString.search('id') + 7;
-  var id_index_lastNum = id_index + 24;
-  var userID = sessionString.slice(id_index, id_index_lastNum);
+  // // Searching through session info to find User ID number
+  // var sessionString = JSON.stringify(req.sessionStore.sessions);
+  // var id_index = sessionString.search('id') + 7;
+  // var id_index_lastNum = id_index + 24;
+  // var userID = sessionString.slice(id_index, id_index_lastNum);
+  //
+  // User.findUser(userID, function (err, user) {
+  //   if (err) {
+  //     console.log('Error finding User.');
+  //   } else {
 
-  User.findUser(userID, function (err, user) {
-    if (err) {
-      console.log('Error finding User.');
-    } else {
-
-      user.addEmailHistory(req.body.Email, function (err, form){
+      req.user.addEmailHistory(req.body.Email, function (err, form){
           if (err) {
               console.log("get form in /addEmailHistory " + err);
           }
       }),
-      user.getForm(req.body.id, function (err, form) {
+      req.user.getForm(req.body.id, function (err, form) {
           if (err) {
               console.log("get form in / " + err);
           } else {
@@ -173,7 +173,7 @@ router.post('/', function (req, res, next) {
                               oauth2Client.setCredentials(user.accessToken);
 
                               gmailClass.users.messages.send({
-                                  access_token: user.accessToken,
+                                  access_token: req.user.accessToken,
                                   userId: 'me',
                                   resource: {
                                       raw: base64EncodedEmail
@@ -188,8 +188,8 @@ router.post('/', function (req, res, next) {
               });
           }
       });
-    }
-  });
+  //   }
+  // });
 });
 
 module.exports = router;
