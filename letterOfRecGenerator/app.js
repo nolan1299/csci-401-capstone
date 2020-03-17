@@ -32,7 +32,6 @@ var docx = require('docx');
 var fs = require('fs');
 var request = require('request');
 const flash = require('connect-flash');
-var jq = require('jquery');
 //const expressLayouts = require('express-ejs-layouts');
 
 var app = express();
