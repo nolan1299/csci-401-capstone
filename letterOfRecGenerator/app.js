@@ -18,7 +18,7 @@ const passport = require('passport');
 require('./config/passport')(passport);
 
 //Email stuff
-const exphbs = require('express-handlebars');
+//const exphbs = require('express-handlebars');
 const nodemailer = require('nodemailer');
 
 //CORS
@@ -121,8 +121,8 @@ app.use(fileUpload());
 
 // view engine setup
 
-app.use(expressLayouts);
-app.engine('handlebars', exphbs());
+// app.use(expressLayouts);
+// app.engine('handlebars', exphbs());
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
