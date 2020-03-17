@@ -198,8 +198,14 @@
         JSON.parse('<%- JSON.stringify(templates) %>'),
         JSON.parse('<%- JSON.stringify(emailtemplates) %>')
     ];
+
+    console.log('Data is: ', data); 
     // Get the modal
     var modal = document.getElementById('myModal');
+
+    console.log('Modal is: ', modal);
+
+
     var modal_email = document.getElementById('myModal_email');
 
     // When the user clicks on the button, open the modal
