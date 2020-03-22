@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
         currLetterTemplate = '';
     }
 
-    console.log("User TD is: ", req.user);
+    console.log("User templates are: ", req.user.getTemplates());
 
     // // Searching through session info to find User ID number
     // var sessionString = JSON.stringify(req.sessionStore.sessions);
