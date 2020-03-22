@@ -42,6 +42,8 @@ router.get('/', function (req, res, next) {
   //   } else {
   //     console.log('Got em! (in RD): ', user.email);
 
+  console.log("User RD is: ", req.user);
+
       req.user.getForms(function (err, forms) {
           if (err) {
               console.log(`error: ${err}`);
