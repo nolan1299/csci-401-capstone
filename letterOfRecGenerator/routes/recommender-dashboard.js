@@ -103,46 +103,41 @@ router.post('/', function (req, res, next) {
 
         var url = encodeURI('http://128.125.100.147:80/form-entry/' + form.getLink());
 
-        // create reusable transporter object using the default SMTP transport
-        let transporter = nodemailer.createTransport({
-          host: 'smtp.gmail.com',
-          port: 465,
-          secure: true, // true for 465, false for other ports
-          auth: {
-              user: 'letterofrecgenerator@gmail.com', // generated ethereal user
-              pass: 'siqtam-3dabqa-pepxaV'  // generated ethereal password
-          },
-          tls:{
-            rejectUnauthorized:false
-          }
-        });
-
-        // setup email data with unicode symbols
-        let mailOptions = {
-            from: '"Letter of Rec Generator" <letterofrecgenerator@gmail.com>', // sender address
-            to: req.body.email, // list of receivers
-            subject: req.body.subject_text, // Subject line
-            text: req.body.body_text + ' ' + url, // plain text body
-            html: '<p>' + req.body.body_text + ' ' + url + '</p>'// html body
-        };
-
-        // send mail with defined transport object
-        transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                return console.log(error);
-            }
-            console.log('Message sent: %s', info.messageId);
-            console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-
-            res.render('contact', {msg:'Email has been sent'});
-        });
-
-        res.redirect('/recommender-dashboard');
+    // create reusable transporter object using the default SMTP transport
+    let transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true, // true for 465, false for other ports
+        auth: {
+            user: 'letterrecommender@gmail.com', // generated ethereal user
+            pass: 'USCPassword123!'  // generated ethereal password
+        },
+        tls:{
+          rejectUnauthorized:false
         }
       });
-  //   }
-  // });
-});
+  
+      // setup email data with unicode symbols
+      let mailOptions = {
+          from: '"Letter of Recommendation Generator" <letterrecommender@gmail.com>', // sender address
+          to: req.body.email, // list of receivers
+          subject: req.body.subject_text, // Subject line
+          text: req.body.body_text + ' ' + url, // plain text body
+          html: '<p>' + req.body.body_text + ' ' + url + '</p>'// html body
+      };
+  
+      // send mail with defined transport object
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              return console.log(error);
+          }
+          res.render('contact', {msg:'Email has been sent'});
+      });
+  
+      res.redirect('/recommender-dashboard');
+      }
+    });
+  });
 
 
 router.post('/delete', function (req, res, next) {
