@@ -68,5 +68,4 @@ function parseLetter(form) {
     }
 
     return noCapitalization.join("");
-
 }

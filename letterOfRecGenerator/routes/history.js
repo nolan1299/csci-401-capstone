@@ -5,25 +5,11 @@ var Form = require('../models/form');
 
 /* GET Templates page. */
 router.get('/', function (req, res, next) {
-
-  // // Searching through session info to find User ID number
-  // var sessionString = JSON.stringify(req.sessionStore.sessions);
-  // var id_index = sessionString.search('id') + 7;
-  // var id_index_lastNum = id_index + 24;
-  // var userID = sessionString.slice(id_index, id_index_lastNum);
-  //
-  // User.findUser(userID, function (err, user) {
-  //   if (err) {
-  //     console.log('Error finding User.');
-  //   } else {
-  //
-      res.render('pages/history', {
-          title: req.query.email,
-          emailHistory: req.user.getEmailHistory(),
-          id: req.query.id,
-      });
-  //   }
-  // });
+    res.render('pages/history', {
+        title: req.query.email,
+        emailHistory: req.user.getEmailHistory(),
+        id: req.query.id,
+    });
 });
 
 module.exports = router;

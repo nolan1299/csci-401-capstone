@@ -1,16 +1,3 @@
-// var express = require('express');
-// var router = express.Router();
-
-// /* GET login page. */
-// router.get('/', function (req, res, next) {
-//     res.render('pages/docx', {
-//         title: 'DOCX DEMO',
-//         subtitle: '', 
-//         url: 'pages/docx'
-//     });
-// });
-
-// module.exports = router;
 var Form = require('../models/form');
 var credentials = require('../config/auth');
 var googleAuth = require('google-auth-library');
@@ -25,15 +12,6 @@ const express = require('express');
 const router = express.Router();
 
 const { Document, Paragraph, Packer } = docx;
-
-// https://stackoverflow.com/questions/12740659/downloading-images-with-node-js
-/*const download = (uri, filename, callback) => {
-  request.head(uri, (err, res, body) => {
-    request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-  });
-};*/
-
-//const URL = 'https://raw.githubusercontent.com/dolanmiu/docx/ccd655ef8be3828f2c4b1feb3517a905f98409d9/demo/images/cat.jpg';
 
 router.get('/', async(req, res) => {
     
@@ -59,7 +37,7 @@ router.get('/', async(req, res) => {
     const image = doc.createImage(fs.readFileSync('./signatureexample.jpg'), 200,200);
 
     doc.Header.createImage(fs.readFileSync('./headerexample.jpg'), 1200,250);
-	doc.Footer.createImage(fs.readFileSync('./footerexample.jpg'), 1200,250);
+	  doc.Footer.createImage(fs.readFileSync('./footerexample.jpg'), 1200,250);
     
     const packer = new Packer();
 
@@ -68,8 +46,6 @@ router.get('/', async(req, res) => {
     res.setHeader('Content-Disposition', 'attachment; filename=My Document.docx');
     res.send(Buffer.from(b64string, 'base64'));
    
-
-
 });
 
 module.exports = router;
