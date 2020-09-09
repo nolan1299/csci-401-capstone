@@ -69,7 +69,7 @@ router.post('/', function (req, res, next) {
             }
       });
 
-    var url = encodeURI('http://localhost:3000/form-entry/' + form.getLink());
+    var url = encodeURI('/form-entry/' + form.getLink());
 
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
