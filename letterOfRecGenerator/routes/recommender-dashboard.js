@@ -69,7 +69,12 @@ router.post('/', function (req, res, next) {
             }
       });
 
-    var url = encodeURI('/form-entry/' + form.getLink());
+    // potentially janky way to determine if local or on server
+    // if $PORT is defined as 80, assume we are on the server
+    // otherwise provide localhost address
+    const port = process.env.PORT || '3000';
+    const domain = (port === "80" ? 'recommendation.usc.edu' : 'localhost:' + port);
+    var url = encodeURI('http://' + domain +'/form-entry/' + form.getLink());
 
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
