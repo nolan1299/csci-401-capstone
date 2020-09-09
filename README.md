@@ -2,9 +2,11 @@
 Repo for hosting Letter of Recommendation Generator Capstone Project as of Fall 2019.
 
 Team members:
-+ Alexander Volcy – volcy@usc.edu
-+ Jerry Tejada – jmtejada@usc.edu 
-+ Matt van Niekerk – vannieke@usc.edu
++ Nolan Jimenez – najimene@usc.edu
++ Roopal Kondepudi – kondepud@usc.edu 
++ Scott Mai – scottmai@usc.edu
++ Dhivya Senthil Murugan – senthilm@usc.edu
+
 
 ## How to Run Locally
 + Enter letterOfRecGenerator folder
