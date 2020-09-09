@@ -150,7 +150,7 @@
 
                       // Http Request
                       var request = new XMLHttpRequest();
-                      request.open('POST', "http://localhost:3000/template-dashboard/uploadLetterTemplate");
+                      request.open('POST', "/template-dashboard/uploadLetterTemplate");
                       request.send(formData);
 
                       //Submit success
@@ -223,13 +223,13 @@
 
     function editTemplate(id) {
         $.ajax({
-            url: 'http://localhost:3000/template-editor/edit',
+            url: '/template-editor/edit',
             data: {id},
             type: 'GET',
             complete: function (data) {
                 var params = data.responseJSON;
                 console.log('complete');
-                window.location.href = getDestinationRoute('http://localhost:3000/template-editor', params);
+                window.location.href = getDestinationRoute('/template-editor', params);
             },
             error: function () {
                 console.log('error');
@@ -239,13 +239,13 @@
 
     function editEmailTemplate(id) {
         $.ajax({
-            url: 'http://localhost:3000/email-template-editor/edit',
+            url: '/email-template-editor/edit',
             data: {id},
             type: 'GET',
             complete: function (data) {
                 var params = data.responseJSON;
                 console.log('complete');
-                window.location.href = getDestinationRoute('http://localhost:3000/email-template-editor', params);
+                window.location.href = getDestinationRoute('/email-template-editor', params);
             },
             error: function () {
                 console.log('error');
@@ -256,7 +256,7 @@
     // On click for trash icon
     function deleteRow(id) {
         $.ajax({
-            url: 'http://localhost:3000/template-dashboard/delete',
+            url: '/template-dashboard/delete',
             data: {id},
             type: 'POST',
             complete: function () {
@@ -271,7 +271,7 @@
 
      function deleteEmailRow(id) {
         $.ajax({
-            url: 'http://localhost:3000/template-dashboard/delete-email',
+            url: '/template-dashboard/delete-email',
             data: {id},
             type: 'POST',
             complete: function () {
