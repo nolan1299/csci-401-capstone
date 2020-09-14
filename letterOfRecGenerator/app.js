@@ -1,14 +1,14 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var {google} = require('googleapis');
-var querystring = require('querystring');
-var url = require('url');
-var OAuth2 = google.auth.OAuth2;
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const {google} = require('googleapis');
+const querystring = require('querystring');
+const url = require('url');
+const OAuth2 = google.auth.OAuth2;
 
 const passport = require('passport');
 
@@ -19,34 +19,34 @@ require('./config/passport')(passport);
 //const exphbs = require('express-handlebars');
 const nodemailer = require('nodemailer');
 
-var fileUpload = require('express-fileupload');
-var mammoth = require('mammoth');
-var opn = require('opn');
-var downloadsFolder = require('downloads-folder');
-var docx = require('docx');
-var fs = require('fs');
-var request = require('request');
+const fileUpload = require('express-fileupload');
+const mammoth = require('mammoth');
+const opn = require('opn');
+const downloadsFolder = require('downloads-folder');
+const docx = require('docx');
+const fs = require('fs');
+const request = require('request');
 const flash = require('connect-flash');
 
-var createTemplate = require('./routes/template-editor');
-var createEmailTemplate = require('./routes/email-template-editor');
-var formCompleted = require('./routes/form-completed');
-var formEntry = require('./routes/form-entry');
-var index = require('./routes/login');
-var letterPreview = require('./routes/letter-preview');
-var login = require('./routes/login');
-var recommenderDashboard = require('./routes/recommender-dashboard');
-var templateDashboard = require('./routes/template-dashboard');
-var users = require('./routes/users');
-var history = require('./routes/history');
-var archive = require('./routes/archive');
-var response = require('./routes/response');
-var emailLetterPreview = require('./routes/email-letter-preview');
-var docxVar = require('./routes/docx');
-var about = require('./routes/about');
+const createTemplate = require('./routes/template-editor');
+const createEmailTemplate = require('./routes/email-template-editor');
+const formCompleted = require('./routes/form-completed');
+const formEntry = require('./routes/form-entry');
+const letterPreview = require('./routes/letter-preview');
+const login = require('./routes/login');
+const recommenderDashboard = require('./routes/recommender-dashboard');
+const templateDashboard = require('./routes/template-dashboard');
+const users = require('./routes/users');
+const history = require('./routes/history');
+const archive = require('./routes/archive');
+const response = require('./routes/response');
+const emailLetterPreview = require('./routes/email-letter-preview');
+const docxVar = require('./routes/docx');
+const about = require('./routes/about');
+const index = recommenderDashboard;
 
 
-var app = express();
+const app = express();
 
 // Middleware for authentication & express
 app.use(logger('dev'));
@@ -130,7 +130,7 @@ app.use('/about', isAuthenticated, about);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-    var err = new Error('Not Found');
+    const err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
