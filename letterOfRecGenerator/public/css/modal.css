@@ -12,7 +12,9 @@
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-
+.modal-background {
+    background-color: #990000;
+}
 /* Modal Content/Box */
 .modal-content {
     background-color: #FFFFFF;
@@ -26,9 +28,7 @@
 }
 
 .modal-title {
-    /*color: #EB5757;*/
-    font-size: 20px;
-    /*margin: 0;*/
+    font-size: 30px;
     font-weight: bold;
     margin: 0px 0px 20px 0px;
 
@@ -61,12 +61,10 @@
 }
 
 .input-text {
-    font-size: 15px;
+    font-size: 10px;
     line-height: 20px;
-    flex: 1;
     padding: 3px 15px;
     height: 30px;
-
     /*border: 0.5px solid grey;
     border-radius: 4px;*/
 }
@@ -78,3 +76,13 @@
     padding: 3px 15px;
     height: 300px;
 }
+
+.template-picker {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #FFFFFF;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+

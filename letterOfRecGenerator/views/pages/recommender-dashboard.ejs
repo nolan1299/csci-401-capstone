@@ -37,29 +37,32 @@
                 <span class="close" onclick="closeModal()">&times;</span>
             </div>
             <p class="modal-title">Send Email</p>
-            <form class="input-form" method="POST" action="/recommender-dashboard">
-                <div class="input-container">
-                    <input class="input-text" type="text" name="email" placeholder="Enter email address" autofocus>
-                    <select class="input-dropdown" name="templateId">
+            <div class = "modal-background">
+                <form class="input-form" method="POST" action="/recommender-dashboard">
+                    <div class="input-container">
+                        <select class="input-dropdown" name="templateId">
+                        <option value="" disabled selected>Select a template to send</option>
                         <% for (var template of templates) { %>
                         <option value=<%= template._id %>><%= template.name %></option>
                         <% } %>
-                    </select>
-                </div>
-                <br>
-                <br>
-                <div class="email-container">
-                    <div class="input-container">
-                        <p class="subject-text"> Subject: </p>
-                        <input class="input-text" id="subject" type="text" name="subject_text" value="<%= subject%>" >
-                        <!-- <button id = "Edit"> Edit </button> -->
-                        <button id = "Save" type="button" onclick="openSaveDefaultEmailModal()" > Save </button>
+                        </select>
+                        <input class="input-text" type="text" name="email" placeholder="To" autofocus>
                     </div>
                     <br>
-                    <textarea id="body-text" name="body_text" value = "<%= body%>" ><%= body %></textarea>
-                </div>
-                <input class="input-submit" type="submit" value="Send">
-            </form>
+                    <br>
+                    <div class="email-container">
+                        <div class="input-container">
+                            <p class="subject-text"> Subject: </p>
+                            <input class="input-text" id="subject" type="text" name="subject_text" value="<%= subject%>" >
+                            <!-- <button id = "Edit"> Edit </button> -->
+                            <button id = "Save" type="button" onclick="openSaveDefaultEmailModal()" > Save </button>
+                        </div>
+                        <br>
+                        <textarea id="body-text" name="body_text" value = "<%= body%>" ><%= body %></textarea>
+                    </div>
+                    <input class="input-submit" type="submit" value="Send">
+                </form>
+            </div>
         </div>
     </div>
 
