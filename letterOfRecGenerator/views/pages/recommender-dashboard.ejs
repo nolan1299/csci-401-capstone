@@ -40,11 +40,11 @@
             <div class = "modal-background">
                 <form class="input-form" method="POST" action="/recommender-dashboard">
                     <div class="input-container">
-                        <select class="input-dropdown" name="templateId">
-                        <option value="" disabled selected>Select a template to send</option>
-                        <% for (var template of templates) { %>
-                        <option value=<%= template._id %>><%= template.name %></option>
-                        <% } %>
+                        <select class="input-dropdown" name="templateId" id="template-select">
+                            <option value="" disabled selected>Select a template to send</option>
+                            <% for (var template of templates) { %>
+                            <option class="template-select-option" value=<%= template._id %>><%= template.name %></option>
+                            <% } %>
                         </select>
                         <input class="input-text" type="text" name="email" placeholder="To" autofocus>
                     </div>

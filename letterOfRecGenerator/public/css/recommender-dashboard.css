@@ -150,3 +150,15 @@ img.clickable:hover {
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
+#template-select{
+    color: gray;
+}
+
+.template-select-option{
+    color: black;
+}
+
+/* #template-select-placeholder #template-select-placeholder{
+    color: gray !important;
+} */
