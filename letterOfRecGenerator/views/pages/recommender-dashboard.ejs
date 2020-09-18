@@ -109,6 +109,10 @@
     var templateSortOrder = -1;
     var statusSortOrder = -1;
 
+    document.getElementById("template-select").onchange = function(){
+        this.style.color = 'black';
+    }
+
     function sortByTime(tableNumber) {
         timeSortOrder *= -1;
 

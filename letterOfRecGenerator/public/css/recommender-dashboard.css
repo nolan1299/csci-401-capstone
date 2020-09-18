@@ -153,12 +153,10 @@ img.clickable:hover {
 
 #template-select{
     color: gray;
+    font-size: 18px;
 }
 
 .template-select-option{
     color: black;
 }
 
-/* #template-select-placeholder #template-select-placeholder{
-    color: gray !important;
-} */
