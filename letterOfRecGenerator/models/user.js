@@ -249,10 +249,9 @@ UserSchema.methods.addForm = function (form, cb) {
 };
 
 UserSchema.methods.getForms = function (cb) {
-    // try getting all forms under this user id
-    User.findOne({id: this.id}).populate('forms').exec(function (err, user) {
+    User.findOne({'_id': this._id}).populate('forms').exec((err, user) => {
         cb(err, user.forms);
-    })
+    });
 };
 
 UserSchema.methods.getForm = function (id, cb) {
