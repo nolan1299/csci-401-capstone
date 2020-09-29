@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= title %></title>
+    <title>LETTER OF RECOMMENDATION QUESTIONNAIRE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="/stylesheets/style.css"/>
     <link rel="stylesheet" type="text/css" href="/css/form-entry.css"/>
     <link rel="stylesheet" type="text/css" href="/css/all.css"/>
@@ -10,96 +12,95 @@
     </script>
 </head>
 <body>
-<div class="header"></div>
-<p class="title"><%= title %></p>
-<div class = "form-entry">
-<div class="optional-message">Questions marked with an * are required.</div>
-<form id="RecommendeeForm">
-    <% for (var q of questions) { %>
-    <div class="question" id=<%= q.type %>>
-        <% if (q.optional) { %>
-            <p><%= q.question %></p>
-        <% } else { %>
-            <p>*<%= q.question %></p>
-        <% } %>
-        <% switch(q.type) {
-        case 'Text': %>
-        <div class="error-container">
-            <textarea form="RecommendeeForm" placeholder="Enter response..."
-                      id=<%= q.number %> name=<%= q.number %>></textarea>
-        </div>
-        <% break;
-        case 'Radio Button': %>
-        <div class="error-container">
-            <div class="options-container">
-                <% for (var option of q.options) { %>
-                <div class="option-container">
-                    <input type="radio" value="<%= option.fill %>" name=<%= q.number %>>
-                    <label><%= option.option %></label>
-                </div>
-                <% } %>
-            </div>
-        </div>
-        <% break;
-        case 'Checkbox': %>
-        <div class="error-container">
-            <div class="options-container">
-                <% for (var option of q.options) { %>
-                <div class="option-container">
-                    <input type="checkbox" value="<%= option.fill %>" name=<%= q.number %>>
-                    <label class="block"><%= option.option %></label>
-                </div>
-                <% } %>
-            </div>
-        </div>
-
-        <% break;
-        case 'Custom': %>
-        <div class="error-container">
-            <div class="options-container">
-                <%
-                    var numOptions = q.options.length;
-                    var qNum = q.number;
-                %>
-                <button type="button" onclick="addOrganizationRowHTML('<%= numOptions %>', '<%= qNum %>')">
-                    Add Organization
-                </button>
-                <table id="customTable">
-                    <tr>
-                    <% for (var option of q.options) { %>
-                        <th><%= option.option %></th>
-                    <% } %>
-                    </tr>
-                    <tr>
-                        <% for (var option of q.options) { %>
-                            <td><input type="text" name=<%= q.number %>></td>
-                        <% } %>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <% break;
-            default: %>
-        <%
-        } %>
+<div class="container-fluid" id="header"></div>
+<div class="container">
+    <div class="row">
+        <p id="form-title">LETTER OF RECOMMENDATION QUESTIONNAIRE</p>
     </div>
-    <% } %>
-    <input class="input-submit" type="button" value="Submit" onclick="openModal()"/>
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <div class="close-container">
-                <span class="close" onclick="closeModal()">&times;</span>
-            </div>
-            <p class="modal-title">Confirm Submission?</p>
-            <button class="input-submit" type="button" value="Confirm" onclick="submitForm('<%= form._id %>')">Confirm
-            </button>
-        </div>
+    <div class="row">
+        <p id="mandatory-question-reminder">Questions marked with an * are required. </p>
     </div>
-</form>
 </div>
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<div class="container-fluid" id="form-background">
+    <form id="recommendee-form" class="recommendee-form needs-validation">
+        <% for (var q of questions) { %>
+            <div class="row">
+                <div class="col-md-4">
+                    <% if (q.optional) { %>
+                        <p class="question"><%= q.question %></p>
+                    <% } else { %>
+                        <p class="question">*<%= q.question %></p>
+                    <% } %>
+                </div>
+                <% switch(q.type) { case 'Text': %>
+                    <div class="col-md-8">
+                        <textarea class="form-control" rows="1" id=<%= q.number %> name=<%= q.number %>></textarea>
+                    </div>
+                <% break; case 'Radio Button': %>
+                    <div class="form-check form-check-inline">
+                        <% for (var option of q.options) { %>
+                            <div class="col-md-6">
+                                <input class="form-check-input" type="radio" value="<%= option.fill %>" name=<%= q.number %>>
+                                <label class="form-check-label"><%= option.option %></label>
+                            </div>
+                        <% } %>
+                    </div>
+                <% break; case 'Checkbox': %>
+                    <div class="form-check form-check-inline">
+                        <% for (var option of q.options) { %>
+                        <div class="col-md-8">
+                            <input class="form-check-input" type="checkbox" value="<%= option.fill %>" name=<%= q.number %>>
+                            <label class="form-check-label"><%= option.option %></label>
+                        </div>
+                        <% } %>
+                    </div>
+                    <% break; case 'Custom': %>
+                        <div class="col-md-8">
+                            <div class="row no-gutters">
+                                <div class="col-md-8">
+                                    <table id="customTable">
+                                        <tr>
+                                            <% for (var option of q.options) { %>
+                                                <td><input type="text" name=<%= q.number %>></td>
+                                            <% } %>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-4">
+                                    <%
+                                    var numOptions = q.options.length;
+                                    var qNum = q.number;
+                                    %>
+                                    <button type="button" onclick="addOrganizationRowHTML('<%= numOptions %>', '<%= qNum %>')">
+                                        Add Organization
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    <% break; default: %>
+                <%}%>
+            </div>
+        <% } %>
+        <div class="d-flex flex-row-reverse">
+            <input class="input-submit" type="button" value="Submit" onclick="openModal()"/>
+        </div>
+    </form>
+</div>
+</div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="close-container">
+            <span class="close" onclick="closeModal()">&times;</span>
+        </div>
+        <p class="modal-title">Confirm Submission?</p>
+        <button class="input-submit" type="button" value="Confirm" onclick="submitForm('<%= form._id %>')">Confirm
+        </button>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <script>
     // adds a new organization row
     function addOrganizationRowHTML(numOptions, qNum) {
@@ -137,8 +138,8 @@
         return false;
     }
 
-    // validates form, makes sure optional questions are answers, else shows errors
-    function validate() {
+     // validates form, makes sure optional questions are answers, else shows errors
+     function validate() {
         clearErrors();
         var status = true;
 
@@ -295,4 +296,5 @@
         }
     }
 </script>
+</body>
 </html>
