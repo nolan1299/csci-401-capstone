@@ -10,11 +10,34 @@ router.get('/', function(req, res, next) {
         currLetterTemplate = '';
     }
 
-    res.render('pages/template-dashboard', {
-        title: 'Templates',
-        templates: req.user.getTemplates(),
-        emailtemplates: req.user.getEmailTemplates(),
-        letterTemplate: currLetterTemplate
+    req.user.getForms((err, forms) => {
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        var templates = req.user.getTemplates().toObject();
+        var tmp_metric = {};
+        for (var i = 0; i < forms.length; i++) {
+            var tmp_id = forms[i].template._id;
+            if (!tmp_metric[tmp_id]) {
+                tmp_metric[tmp_id] = 0;
+            }
+            tmp_metric[tmp_id]++;
+        }
+        for (var i = 0; i < templates.length; i++) {
+            var tmp_id = templates[i]._id;
+            templates[i].metric = tmp_metric[tmp_id.toString()] ?
+                tmp_metric[tmp_id.toString()] :
+                0;
+        }
+
+        res.render('pages/template-dashboard', {
+            title: 'Templates',
+            templates: templates,
+            emailtemplates: req.user.getEmailTemplates(),
+            letterTemplate: currLetterTemplate,
+        });
     });
 });
 
