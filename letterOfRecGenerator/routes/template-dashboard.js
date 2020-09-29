@@ -4,9 +4,9 @@ var db = require('../db')
 var fs = require('fs')
 
 /* GET Templates page. */
-router.get('/', function (req, res, next) {
+router.get('/', function(req, res, next) {
     var currLetterTemplate = __dirname + '/uploads/' + 'letterTemplate';
-    if(!fs.existsSync(currLetterTemplate)){
+    if (!fs.existsSync(currLetterTemplate)) {
         currLetterTemplate = '';
     }
 
@@ -18,9 +18,9 @@ router.get('/', function (req, res, next) {
     });
 });
 
-router.post('/delete', function (req, res, next) {
+router.post('/delete', function(req, res, next) {
     var user = req.user;
-    user.deactivateTemplate(req.body.id, function (err) {
+    user.deactivateTemplate(req.body.id, function(err) {
         if (err) {
             console.log(err);
         } else {
@@ -33,9 +33,9 @@ router.post('/delete', function (req, res, next) {
     });
 });
 
-router.post('/delete-email', function (req, res, next) {
+router.post('/delete-email', function(req, res, next) {
     var user = req.user;
-    user.deactivateEmailTemplate(req.body.id, function (err) {
+    user.deactivateEmailTemplate(req.body.id, function(err) {
         if (err) {
             console.log(err);
         } else {
@@ -48,14 +48,14 @@ router.post('/delete-email', function (req, res, next) {
     });
 });
 
-router.post('/uploadLetterTemplate', function(req,res,next){
+router.post('/uploadLetterTemplate', function(req, res, next) {
     console.log(req.files.file);
     // console.log(req)
     var file = req.files.file;
 
     var filePath = __dirname + '/uploads/' + 'letterTemplate';
-    file.mv(filePath, function(err){
-        if(err){
+    file.mv(filePath, function(err) {
+        if (err) {
             return res.status(500).send(err);
         }
     });
