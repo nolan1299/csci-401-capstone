@@ -112,6 +112,8 @@
     margin-left: 15px;
     margin-right: 15px;
     height: 40px;
+    border-radius: 10px;
+    outline: none;
 }
 
 .input-container {
@@ -130,6 +132,7 @@
     height: 40px;
     width: 200px;
     font-family: National;
+    outline: none;
 }
 
 img.icon {
