@@ -26,6 +26,21 @@ p.question {
     margin-right: 60px;
 }
 
+.confirm {
+    background-color: #900000;
+}
+
+.add-organization {
+    width: 150px;
+    height: 45px;
+    border: none;
+    border-radius: 15px;
+}
+
+.invalid-feedback {
+    color: black;
+}
+
 input[type=text] {
     height: 45px;
     width: 95%;
@@ -42,13 +57,6 @@ label {
 
 table {
     width: 95%;
-}
-
-button {
-    width: 150px;
-    height: 45px;
-    border: none;
-    border-radius: 15px;
 }
 
 #header {
