@@ -3,6 +3,7 @@
     font-size: 30px;
     margin: 0;
     padding: 20px 50px;
+    display: inline-block;
 }
 
 body {
@@ -14,6 +15,6 @@ body {
     max-width: 992px;
 }
 
-.background{
+.background {
     background-color: #FFFFFF;
 }

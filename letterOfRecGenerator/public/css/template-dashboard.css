@@ -1,18 +1,26 @@
-#templates-page0, #templates-page1 {
+#templates-page0,
+#templates-page1 {
     padding: 20px;
     display: flex;
 }
 
-#templates-buttons0, #templates-buttons1 {
+#templates-buttons0,
+#templates-buttons1 {
     display: flex;
     margin: auto;
 }
 
-#templates-table0 td, #templates-table1 td {
+#tmp-header {
+    display: inline-block;
+    width: 100%;
+}
+
+#templates-table0 td,
+#templates-table1 td {
     height: 60px;
 }
 
-.templates{
+.templates {
     background-color: #FFFFFF;
 }
 
@@ -23,7 +31,7 @@
     /* display: table-cell; */
     font-size: 15px;
     height: 20px;
-    width:180px;
+    width: 180px;
     /* border: 0.1px solid black; */
     position: relative;
     float: right;
@@ -31,13 +39,16 @@
     padding: 9px 0px 5px;
     text-align: center;
     margin-top: 20px;
+    margin-right: 1.5em;
 }
 
 .add-btn:hover {
     color: #FFCC00;
 }
 
+
 /* The Close Button */
+
 .close {
     color: #aaa;
     float: right;
@@ -81,8 +92,6 @@
     color: #FFCC00;
     /* opacity: 0.6; */
 }
-
-
 
 .image-container {
     position: absolute;

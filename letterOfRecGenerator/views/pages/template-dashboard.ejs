@@ -20,9 +20,12 @@
         <% include ../partials/header %>
     </header>
     <div class="templates body">
-        <p class="title">
-            <%= title %>
-        </p>
+        <div id="tmp-header">
+            <p class="title">
+                <%= title %>
+            </p>
+            <div class="add-btn" onclick="openModal()">+ Create Template</div>
+        </div>
 
         <div id="myModal" class="modal">
             <div class="modal-content template-modal">
@@ -39,10 +42,6 @@
                 </form>
             </div>
         </div>
-
-        <br>
-        <br>
-
         <table id="templates-table0">
             <thead>
                 <tr>
@@ -50,7 +49,6 @@
                         <b class="subtitle">Recommendation Templates</b>
                     </td>
                     <td>
-                        <div class="add-btn" onclick="openModal()">+ Create Template</div>
                     </td>
                 </tr>
             </thead>
@@ -80,8 +78,6 @@
 <script type="text/javascript">
     var recommendation_button = document.getElementById("recommendation-button");
     recommendation_button.innerHTML = '<img src="/images/add_template.png" />';
-    // var email_button = document.getElementById("email-button");
-    // email_button.innerHTML = '<img src="/images/add_email_template.png" />';
 </script>
 
 <script>
