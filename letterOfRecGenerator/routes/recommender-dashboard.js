@@ -28,6 +28,9 @@ router.use(function (req, res, next) {
  * data needed to render recommender-dashboard
  */
 router.get('/', function (req, res, next) {
+    if (!req.user) {
+        res.render('login', {});
+    }
     req.user.getForms(function (err, forms) {
         if (err) {
             console.log(`error: ${err}`);
