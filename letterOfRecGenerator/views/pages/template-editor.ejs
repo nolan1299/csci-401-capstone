@@ -11,19 +11,164 @@
     <script src="//sortablejs.github.io/Sortable/Sortable.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.1/trix.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.1/trix.js"></script>
-
+    <script type="text/javascript" src="http://livejs.com/live.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 <body>
 <div id="tmp-editor-cont" class = "templates">
     <header>
         <% include ../partials/header %>
     </header>
+    <!-- start of bootstrap overhaul -->
+    <p class="title"><%= title %></p>
+    <div class="container py-3 my-3 section">
+        <div class="row my-3 section">
+            <div class="col d-flex align-items-center" >
+                <div class="text-white">Template Name</div>
+                <div class="ml-2 col-6">
+                    <input type="text" class="form-control" value="<%= templateName %>" placeholder="e.g. Graduate School Recommendation Form"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container py-3 my-3 section">
+        <div class="row">
+            <div class="col-12 text-white">Custom Questions</div>
+        </div>
+        <div id="custom-questions-section">
+            <div class="row d-flex align-items-center my-4">
+                <div class="ml-4">
+                    <img class="icon-effects\" src="/images/hamburger_white.svg">
+                </div>
+                <div class="col-5">
+                    <input type="text" class="form-control" placeholder="e.g. What is your first name?"/>
+                </div>
+                <div class="col-2">
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Text Answer</option>
+                        <option>Radio Button</option>
+                        <option>Checkbox</option>
+                    </select>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="text-white mr-2">Required?</span>
+                    <input type="checkbox" class="big-checkbox">
+                </div>
+                <div class="col-3">
+                    <input type="text" class="form-control" placeholder="tag (e.g. #fname)"/>
+                </div>
+            </div>
+
+
+            <div class="row d-flex align-items-center">
+                <div class="ml-4">
+                    <img class="icon-effects\" src="/images/hamburger_white.svg">
+                </div>
+                <div class="col-5">
+                    <input type="text" class="form-control" placeholder="e.g. What is your first name?"/>
+                </div>
+                <div class="col-2">
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Text Answer</option>
+                        <option>Radio Button</option>
+                        <option>Checkbox</option>
+                    </select>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="text-white mr-2">Required?</span>
+                    <input type="checkbox" class="big-checkbox">
+                </div>
+                <div class="col-3">
+                    <input type="text" class="form-control" placeholder="tag (e.g. #fname)"/>
+                </div>
+            </div>
+
+
+            <div class="row d-flex align-items-center my-4">
+                <div class="ml-4">
+                    <img class="icon-effects\" src="/images/hamburger_white.svg">
+                </div>
+                <div class="col-5">
+                    <input type="text" class="form-control" placeholder="e.g. What is your first name?"/>
+                </div>
+                <div class="col-2">
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Text Answer</option>
+                        <option>Radio Button</option>
+                        <option>Checkbox</option>
+                    </select>
+                </div>
+                <div class="d-flex align-items-center">
+                    <span class="text-white mr-2">Required?</span>
+                    <input type="checkbox" class="big-checkbox">
+                </div>
+                <div class="col-3">
+                    <input type="text" class="form-control" placeholder="tag (e.g. #fname)"/>
+                </div>
+            </div>
+        </div>
+        <div class="row dflex">
+            <div class="ml-4">
+                <img id="add-question" class="icon-effects\" src="images/plus.png">
+            </div>
+        </div>
+    </div>
+
+        <div class="container py-3 my-3 section">
+            <div class="row">
+                <div class="col-12 text-white">Letter Boilerplate</div>
+            </div>
+            <div class="bg-light m-3">
+                <span id="tags-heading">All Tags: </span> 
+                <div id="tag-container" class="row d-flex align-items-center flex-row">
+                    <% for (var q=0; q < questions.length; q++) { %>
+                        <% let options = questions[q].options; %>
+                        <% if(options) { %>
+                            <% for (var o=0; o < options.length; o++) { %>
+                                <% if(options[o].tag) { %>
+                                    <button class="popup btn btn-light"  name="tag_buttons" value ="<%= options[o].tag %>"><%= options[o].tag %>
+                                        <span class="popup-text">
+                                            <%= questions[q].question %>
+                                        </span>
+                                    </button>
+                                <% } %>
+                            <% } %>
+                        <% } %>
+                        <% if(!options || questions[q].type === "Text" || questions[q].type === "Radio Button") { %>
+                            <button class="popup"  name="tag_buttons" value ="<%= questions[q].tag %>"><%= questions[q].tag %>
+                                <span class="popup-text">
+                                    <%= questions[q].question %>
+                                </span>
+                            </button>
+                        <% } %>
+                    <% } %>
+                    <br/>
+                </div>
+
+
+                <div class="error-container">
+                    <div id="letter-container">
+                        <div class="flex1">
+                            <trix-editor class="trix-content" id="letter-text-area"></trix-editor>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- end of bootstrap overhaul -->
     <p class="title"><%= title %></p>
     <div id="template-editor-container">
         <div class="error-container">
             <div id="name-container">
                 <h2 class="section-header">Template Name</h2>
-                <input id="name-container-text-field" type="text" class="text-field" placeholder="Enter a template name here..."
+                <input type="text" class="text-field" placeholder="Enter a template name here..."
                        value="<%= templateName %>"/>
             </div>
         </div>

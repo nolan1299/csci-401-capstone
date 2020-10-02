@@ -1,9 +1,23 @@
+.section{
+    border-radius: 15px;
+    background-color: #990000;
+}
+
+.big-checkbox {width: 30px; height: 30px;}
+
+::-webkit-input-placeholder {
+    font-style: italic;
+ }
+
+ #add-question{
+     width: 100%;
+ }
+
 .section-header {
     color: #FF473A;
     /*text-align: center;*/
     font-size: 15px;
     width: 200px;
-
 }
 
 .templates{
