@@ -19,11 +19,13 @@ router.get('/', function(req, res, next) {
         var templates = req.user.getTemplates().toObject();
         var tmp_metric = {};
         for (var i = 0; i < forms.length; i++) {
-            var tmp_id = forms[i].template._id;
-            if (!tmp_metric[tmp_id]) {
-                tmp_metric[tmp_id] = 0;
+            if (forms[i].template) {
+                var tmp_id = forms[i].template._id;
+                if (!tmp_metric[tmp_id]) {
+                    tmp_metric[tmp_id] = 0;
+                }
+                tmp_metric[tmp_id]++;
             }
-            tmp_metric[tmp_id]++;
         }
         for (var i = 0; i < templates.length; i++) {
             var tmp_id = templates[i]._id;
