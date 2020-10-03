@@ -77,7 +77,11 @@ router.post('/', function (req, res, next) {
     // otherwise provide localhost address
     const port = process.env.PORT || '3000';
     const domain = (port === "80" ? 'recommendation.usc.edu' : 'localhost:' + port);
-    var url = encodeURI('http://' + domain +'/form-entry/' + form.getLink());
+    const url = encodeURI('http://' + domain +'/form-entry/' + form.getLink());
+    
+    const email_username = process.env.EMAILUSER;
+    const email_password = process.env.EMAILPASS;
+    const email_sender = "'Letter of Recommendation Generator' <" + email_username + ">";
 
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
@@ -85,8 +89,8 @@ router.post('/', function (req, res, next) {
       port: 465,
       secure: true, // true for 465, false for other ports
       auth: {
-          user: 'letterofrecgenerator@gmail.com', // generated ethereal user
-          pass: 'siqtam-3dabqa-pepxaV'  // generated ethereal password
+          user: email_username, // generated ethereal user
+          pass: email_password  // generated ethereal password
       },
       tls:{
         rejectUnauthorized:false
@@ -95,7 +99,7 @@ router.post('/', function (req, res, next) {
 
     // setup email data with unicode symbols
     let mailOptions = {
-        from: '"Letter of Rec Generator" <letterofrecgenerator@gmail.com>', // sender address
+        from: email_sender, // sender address
         to: req.body.email, // list of receivers
         subject: req.body.subject_text, // Subject line
         text: req.body.body_text + ' ' + url, // plain text body
