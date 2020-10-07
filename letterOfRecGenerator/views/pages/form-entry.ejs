@@ -6,24 +6,40 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 <link rel="stylesheet" href="/stylesheets/style.css"/>
 <link rel="stylesheet" type="text/css" href="/css/form-entry.css"/>
-<link rel="stylesheet" type="text/css" href="/css/all.css"/>
 <script>
     var questions = <%- JSON.stringify(questions) %>
+    console.log(questions);
 </script>
 </head>
 <body>
-<div class="container-fluid" id="header"></div>
 <div class="container">
 <div class="row">
     <p id="form-title">LETTER OF RECOMMENDATION QUESTIONNAIRE</p>
 </div>
-<div class="row">
-    <p id="mandatory-question-reminder">Questions marked with an * are required. </p>
-</div>
 </div>
 
-<div class="container-fluid" id="form-background">
-<form id="recommendee-form" class="recommendee-form needs-validation" novalidate>
+<div id="outside">
+    <div class="row justify-content-md-center">
+        <div class="col-md-9 col-md-offset-3">
+            <% for (var q of questions) { %>
+                <div class="form-group center-block">
+                    <% if (q.optional) { %>
+                        <p id="question" class="question"><%= q.question %></p>
+                    <% } else { %>
+                        <div class="question-container">
+                            <p id="question" class="question"><%= q.question %></p>
+                            <p id="required" class="question">*</p>
+                        </div>
+                    <% } %>
+                    <% if (q.type === 'Text') { %>
+                        <span class="form-control" contenteditable="true"></span>
+                    <% } %>
+                </div>
+            <% } %>
+        </div>  
+    </div>
+
+<!-- <form id="recommendee-form" class="recommendee-form needs-validation" novalidate>
     <% for (var q of questions) { %>
         <div class="row">
             <% if (q.optional) { %>
@@ -136,7 +152,7 @@
             </div>
         </div>
         </div>
-</form>
+</form> -->
 </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

@@ -1,33 +1,5 @@
-.container-fluid {
-    background-color: #900000;
-}
-
-.container {
-    margin-left: 40px;
-    margin-top: 30px;
-}
-
-p.question {
-    margin-left: 30px;
-    margin-bottom: 20px;
-    background-color: #FFFFFF;
-    width: 450px;
-    height: 45px;
-    text-indent: 8px;
-    line-height: 45px;
-    font-size: 18px;
-}
-
-.input-submit {
-    width: 120px;
-    height: 40px;
-    border: none;
-    border-radius: 15px;
-    margin-right: 60px;
-}
-
-.confirm {
-    background-color: #900000;
+body {
+    background-color: #900000bb;
 }
 
 .add-organization {
@@ -69,17 +41,40 @@ table {
 }
 
 #form-background {
-    background-color: #900000;
     padding-top: 50px;
     padding-bottom: 30px;
     padding-right: 50px;
     margin-left: 50px;
-    width: 90%;
     scroll-behavior: auto;
 }
 
-#mandatory-question-reminder {
-    font-size: 20px;
-    margin-left: 15px;
+.form-group {
+    background-color: white;
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+.form-control {
+    max-width: 95%;
+}
+
+#outside {
+    margin: 20px;
+}
+
+#required {
     color: #900000;
+}
+
+.question-container {
+    padding-top: 20px;
+    margin-bottom: 30px;
+}
+.question {
+    margin-left: 5px;
+    padding-top: 10px;
+    display: inline;
+    font-weight: bold;
+
 }
