@@ -1,306 +1,195 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>LETTER OF RECOMMENDATION QUESTIONNAIRE</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-<link rel="stylesheet" href="/stylesheets/style.css"/>
-<link rel="stylesheet" type="text/css" href="/css/form-entry.css"/>
-<script>
-    var questions = <%- JSON.stringify(questions) %>
-    console.log(questions);
-</script>
+    <title>LETTER OF RECOMMENDATION QUESTIONNAIRE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/form-entry.css" />
+    <script>
+        var questions = <%- JSON.stringify(questions) %>
+        console.log(questions);
+    </script>
 </head>
+
 <body>
-<div class="container">
-<div class="row">
-    <p id="form-title">LETTER OF RECOMMENDATION QUESTIONNAIRE</p>
-</div>
-</div>
-
-<div class="container-fluid" id="outside">
-    <div class="row justify-content-md-center">
-        <div class="col-md-7 col-md-offset-5">
-            <% for (var q of questions) { %>
-                <div class="form-group center-block">
-                    <% if (q.optional) { %>
-                        <p class="question"><%= q.question %></p>
-                    <% } else { %>
+    <form>
+        <div class="container-fluid" id="outside">
+            <div class="row justify-content-md-center">
+                <div class="col-md-7 col-md-offset-5">
+                    <div id="form-title-container" class="form-group center-block">
+                        <p id="form-title">LETTER OF RECOMMENDATION QUESTIONNAIRE</p>
                         <div class="question-container">
-                            <p id="question" class="question"><%= q.question %></p>
-                            <p id="required" class="question">*</p>
+                            <p> Instructor: Jeffrey A. Miller</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                         </div>
-                    <% } %>
-                    <% if (q.type === 'Text') { %>
-                        <span class="form-control" contenteditable="true"></span>
-                    <% } %>
-                    <% if (q.type === 'Radio Button') { %>
-                        <% for (var option of q.options) { %>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
-                            <label class="form-check-label" for="gridRadios1">
-                              <%= option.option %>
-                            </label>
-                        </div>
-                        <% } %>
-                    <% } %>
-                    <% if (q.type === 'Checkbox') { %>
-                        <% for (var option of q.options) { %>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="gridRadios">
-                            <label class="form-check-label" for="gridRadios1">
-                              <%= option.option %>
-                            </label>
-                        </div>
-                        <% } %>
-                    <% } %>
-                </div>
-            <% } %>
-        </div>  
-    </div>
-
-<!-- <form id="recommendee-form" class="recommendee-form needs-validation" novalidate>
-    <% for (var q of questions) { %>
-        <div class="row">
-            <% if (q.optional) { %>
-                <p class="question"><%= q.question %></p>
-            <% } else { %>
-                <p class="question">*<%= q.question %></p>
-            <% } %>
-        </div>
-        <% switch(q.type) { case 'Text': if (!q.optional) { %>
-            <textarea required class="form-control" rows="1" id=<%= q.number %> name=<%= q.number %>></textarea>
-            <div class="invalid-feedback">This question is required.</div>
-        <% } else { %>
-            <textarea class="form-control" rows="1" id=<%= q.number %> name=<%= q.number %>></textarea>
-        <% } %>
-        <% break; case 'Radio Button': %>
-            <div class="form-check form-check-inline">
-            <% for (var option of q.options) { if (!q.optional) { %>
-                <input required class="form-check-input" type="radio" value="<%= option.fill %>" name=<%= q.number %>>
-                <label class="form-check-label"><%= option.option %></label>
-                <div class="invalid-feedback">This question is required.</div>
-            <% } else { %>
-                <input class="form-check-input" type="radio" value="<%= option.fill %>" name=<%= q.number %>>
-                <label class="form-check-label"><%= option.option %></label>
-            <% } } %>
-            </div>
-        <% break; case 'Checkbox': %>
-            <div class="form-check form-check-inline">
-                <% for (var option of q.options) { %>
-                <div class="col-md-8">
-                    <% if (!q.optional) { %>
-                        <input required class="form-check-input" type="checkbox" value="<%= option.fill %>" name=<%= q.number %>>
-                        <label class="form-check-label"><%= option.option %></label>
-                        <div class="invalid-feedback">This question is required.</div>
-                    <% } else { %>
-                        <input class="form-check-input" type="checkbox" value="<%= option.fill %>" name=<%= q.number %>>
-                        <label class="form-check-label"><%= option.option %></label>
-                    <% } %>
-                </div>
-                <% } %>
-            </div>
-            <% break; case 'Custom': %>
-                <div class="col-md-8">
-                    <div class="row no-gutters">
-                    <% if (!q.optional) { %>
-                        <div class="col-md-8">
-                            <table id="customTable">
-                                <tr>
-                                    <% for (var option of q.options) { %>
-                                        <td><input required type="text" name=<%= q.number %>></td>
-                                    <% } %>
-                                    <div class="invalid-feedback">This question is required.</div>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="col-md-4">
-                            <%
-                            var numOptions = q.options.length;
-                            var qNum = q.number;
-                            %>
-                            <button class="add-organization" type="button" onclick="addOrganizationRowHTML('<%= numOptions %>', '<%= qNum %>')">
-                                Add Organization
-                            </button>
-                        </div>
-                    <% } else { %>
-                        <div class="col-md-8">
-                            <table id="customTable">
-                                <tr>
-                                    <% for (var option of q.options) { %>
-                                        <td><input type="text" name=<%= q.number %>></td>
-                                        
-                                    <% } %>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="col-md-4">
-                            <%
-                            var numOptions = q.options.length;
-                            var qNum = q.number;
-                            %>
-                            <button class="add-organization" type="button" onclick="addOrganizationRowHTML('<%= numOptions %>', '<%= qNum %>')">
-                                Add Organization
-                            </button>
-                        </div>
-                    <% } %>
-                        
                     </div>
+                    <% for (var q of questions) { %>
+                        <div class="form-group center-block">
+                            <% if (q.optional) { %>
+                                <p class="question">
+                                    <%= q.question %>
+                                </p>
+                            <% } else { %>
+                            <div class="question-container">
+                                <p id="question" class="question">
+                                    <%= q.question %>
+                                </p>
+                                <p id="required" class="question">*</p>
+                            </div>
+                            <% } %>
+                            <% if (q.type === 'Text') { %>
+                                <span class="form-control" contenteditable="true"></span>
+                            <% } %>
+                            <% if (q.type === 'Radio Button') { %>
+                                <% for (var option of q.options) { %>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                                        <label class="form-check-label" for="gridRadios1"> <%= option.option %> </label>
+                                    </div>
+                                <% } %>
+                            <% } %>
+                            <% if (q.type === 'Checkbox') { %>
+                                <% for (var option of q.options) { %>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="gridRadios">
+                                        <label class="form-check-label" for="gridRadios1"> <%= option.option %> </label>
+                                    </div>
+                                <% } %>
+                            <% } %>
+                        </div>
+                    <% } %>
                 </div>
-            <% break; default: %>
-        <%}%>
-    <% } %>
-    <div class="d-flex flex-row-reverse">
-        <input class="input-submit" type="button" value="Submit" onclick="validate()"/>
-    </div>
-    <div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="confirmLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmLabel">Confirm Submission</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to submit these answers?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary confirm">Yes, I'm sure</button>
-            </div>
             </div>
         </div>
-        </div>
-</form> -->
-</div>
-</div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script>
-
-function validate()
-{
-    var form = document.getElementById('recommendee-form');
-    if(form.checkValidity() === false) {
-        console.log("not valid");
-        event.preventDefault();
-        event.stopPropagation();
-    }
-    else {
-        $("#confirm-submit").modal("show");
-    }
-    form.classList.add('was-validated');
-
-}
-
-
-// adds a new organization row
-function addOrganizationRowHTML(numOptions, qNum) {
-    let myTable = document.getElementById("customTable");
-    let row = myTable.insertRow(-1);
-
-    // create cells based on num qs
-    for(let i=0; i<numOptions; i++) {
-        let cell = row.insertCell(i);
-        let inputEle = document.createElement("input");
-        inputEle.type = "text";
-        inputEle.name = qNum;
-        cell.appendChild(inputEle);
-    }
-}
-
-function isOptional(number) {
-    return questions[number - 1].optional;
-}
-
-function addError(field, message) {
-    var container = field.parent();
-    var error = $('<div></div>');
-    var errorText = $('<p></p>');
-    field.addClass('error');
-    error.addClass('arrow-box');
-    errorText.addClass('arrow-text');
-    errorText.text('Error: ' + message);
-    error.append(errorText);
-    container.append(error);
-
-    return error;
-}
-
-function clearErrors() {
-    for (var i = 0; i < errors.length; i++) {
-        errors[i].error.remove();
-        errors[i].field.removeClass('error');
-    }
-
-    errors.length = 0;
-}
-
-/**
- * Student submits form; takes responses and serializes it
- * Fired when student presses confirm button in Confirm Submission Modal
- * @param id
- * @returns {boolean}
- */
-function submitForm(id) {
-
-    // takes all responses and serializes into an object
-    var responseData = $("#RecommendeeForm").serializeArray().reduce(function (obj, item) {
-        if (obj[item.name]) {
-            if (!Array.isArray(obj[item.name])) {
-                var arr = [obj[item.name], item.value];
-                obj[item.name] = arr;
+        <button class="btn btn-primary" type="submit">Submit form</button>
+    </form>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        function validate() {
+            var form = document.getElementById('recommendee-form');
+            if (form.checkValidity() === false) {
+                console.log("not valid");
+                event.preventDefault();
+                event.stopPropagation();
             } else {
-                obj[item.name].push(item.value)
+                $("#confirm-submit").modal("show");
             }
-        } else { // Joyce, Wang, she, her, org
-            obj[item.name] = item.value;
-        }
-        return obj;
-    }, {});
+            form.classList.add('was-validated');
 
-    // takes responseData and puts each response as an element in responseArray
-    var responseArray = [];
-    for (var i = 0; i < questions.length; i++) {
-        // if is checkbox or custom and is not as array, make it array
-        if (responseData[i + 1]) {
-            // push all as array
-            if (!Array.isArray(responseData[i + 1])) {
-                var arr = [responseData[i + 1]];
-                responseArray.push(arr);
-            } else {
-                responseArray.push(responseData[i + 1]);
+        }
+
+
+        // adds a new organization row
+        function addOrganizationRowHTML(numOptions, qNum) {
+            let myTable = document.getElementById("customTable");
+            let row = myTable.insertRow(-1);
+
+            // create cells based on num qs
+            for (let i = 0; i < numOptions; i++) {
+                let cell = row.insertCell(i);
+                let inputEle = document.createElement("input");
+                inputEle.type = "text";
+                inputEle.name = qNum;
+                cell.appendChild(inputEle);
             }
-            
-        } else {
-            responseArray.push('');
         }
-    }
-    // redirects to form-completed page on success, sends responseArray to server
-    $.ajax({
-        url: '/form-entry',
-        data: {
-            id: id,
-            responseData: responseArray
-        },
-        type: 'POST',
-        complete: function () {
-            console.log('complete');
-        },
-        success: function (form) {
-            console.log('success');
-            window.location.href = ('/form-completed');
-        },
-        error: function () {
-            console.log('error');
-        }
-    });
 
-    return false;
-}
-</script>
+        function isOptional(number) {
+            return questions[number - 1].optional;
+        }
+
+        function addError(field, message) {
+            var container = field.parent();
+            var error = $('<div></div>');
+            var errorText = $('<p></p>');
+            field.addClass('error');
+            error.addClass('arrow-box');
+            errorText.addClass('arrow-text');
+            errorText.text('Error: ' + message);
+            error.append(errorText);
+            container.append(error);
+
+            return error;
+        }
+
+        function clearErrors() {
+            for (var i = 0; i < errors.length; i++) {
+                errors[i].error.remove();
+                errors[i].field.removeClass('error');
+            }
+
+            errors.length = 0;
+        }
+
+        /**
+         * Student submits form; takes responses and serializes it
+         * Fired when student presses confirm button in Confirm Submission Modal
+         * @param id
+         * @returns {boolean}
+         */
+        function submitForm(id) {
+
+            // takes all responses and serializes into an object
+            var responseData = $("#RecommendeeForm").serializeArray().reduce(function(obj, item) {
+                if (obj[item.name]) {
+                    if (!Array.isArray(obj[item.name])) {
+                        var arr = [obj[item.name], item.value];
+                        obj[item.name] = arr;
+                    } else {
+                        obj[item.name].push(item.value)
+                    }
+                } else { // Joyce, Wang, she, her, org
+                    obj[item.name] = item.value;
+                }
+                return obj;
+            }, {});
+
+            // takes responseData and puts each response as an element in responseArray
+            var responseArray = [];
+            for (var i = 0; i < questions.length; i++) {
+                // if is checkbox or custom and is not as array, make it array
+                if (responseData[i + 1]) {
+                    // push all as array
+                    if (!Array.isArray(responseData[i + 1])) {
+                        var arr = [responseData[i + 1]];
+                        responseArray.push(arr);
+                    } else {
+                        responseArray.push(responseData[i + 1]);
+                    }
+
+                } else {
+                    responseArray.push('');
+                }
+            }
+            // redirects to form-completed page on success, sends responseArray to server
+            $.ajax({
+                url: '/form-entry',
+                data: {
+                    id: id,
+                    responseData: responseArray
+                },
+                type: 'POST',
+                complete: function() {
+                    console.log('complete');
+                },
+                success: function(form) {
+                    console.log('success');
+                    window.location.href = ('/form-completed');
+                },
+                error: function() {
+                    console.log('error');
+                }
+            });
+
+            return false;
+        }
+    </script>
 </body>
+
 </html>
