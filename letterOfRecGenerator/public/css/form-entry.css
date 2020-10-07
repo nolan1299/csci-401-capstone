@@ -1,38 +1,9 @@
 body {
-    background-color: #900000bb;
-}
-
-.add-organization {
-    width: 150px;
-    height: 45px;
-    border: none;
-    border-radius: 15px;
+    background-color: #900000d0;
 }
 
 .invalid-feedback {
     color: black;
-}
-
-input[type=text] {
-    height: 45px;
-    width: 95%;
-}
-
-textarea {
-    height: 45px;
-    width: 95%;
-}
-
-label {
-    color: #FFFFFF;
-}
-
-table {
-    width: 95%;
-}
-
-#header {
-    height: 100px;
 }
 
 #form-title {
@@ -40,27 +11,11 @@ table {
     margin-left: 15px;
 }
 
-#form-background {
-    padding-top: 50px;
-    padding-bottom: 30px;
-    padding-right: 50px;
-    margin-left: 50px;
-    scroll-behavior: auto;
-}
-
 .form-group {
     background-color: white;
     border-radius: 10px;
-    padding-left: 20px;
-    padding-bottom: 20px;
-}
+    padding:20px;
 
-.form-control {
-    max-width: 95%;
-}
-
-#outside {
-    margin: 20px;
 }
 
 #required {
@@ -68,13 +23,11 @@ table {
 }
 
 .question-container {
-    padding-top: 20px;
+    padding-top: 5px;
     margin-bottom: 30px;
 }
 .question {
     margin-left: 5px;
-    padding-top: 10px;
     display: inline;
     font-weight: bold;
-
 }
