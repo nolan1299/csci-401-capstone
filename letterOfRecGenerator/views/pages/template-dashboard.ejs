@@ -42,11 +42,27 @@
                 </form>
             </div>
         </div>
+        <div id="metrics_modal" class="modal">
+            <div class="modal-content metrics-modal">
+                <div class="close-container">
+                    <span class="close" onclick="closeMetricsModal()">&times;</span>
+                </div>
+                <p class="metrics_modal-title" id="metrics-modal-title">Metrics for </p>
+                <div class="metrics_modal-info">
+                    <p id="metrics-creation">Created: 10/9/2020 </p>
+                    <p id="metrics-lastused">Last Used: 10/9/2020</p>
+                    <p id="metrics-timesused">Times Used: </p>
+                </div>
+            </div>
+        </div>
         <table id="templates-table0">
             <thead>
                 <tr>
                     <td class="subtitle_cont">
                         <b class="subtitle">Recommendation Templates</b>
+                    </td>
+                    <td>
+                        <b>Number of Times Template Used</b>
                     </td>
                     <td>
                     </td>
@@ -56,7 +72,7 @@
                 <% if (!templates.length)  { %>
                     <tr>
                         <td>
-                            <div class="template-name">No Existing Recommendation Template</div>
+                            <div class="template-name">No Existing Recommendation Templates</div>
                         </td>
                     </tr>
                     <% } %>
@@ -71,7 +87,6 @@
         </div>
         <br>
         <br>
-
     </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -90,7 +105,7 @@
     // Get the modal
     var modal = document.getElementById('myModal');
     var modal_email = document.getElementById('myModal_email');
-
+    var metrics_modal = document.getElementById('metrics_modal')
     // When the user clicks on the button, open the modal
     function openModal() {
         modal.style.display = "block";
@@ -100,6 +115,10 @@
         modal_email.style.display = "block";
     }
 
+    function openMetricsModal() {
+        metrics_modal.style.display = "block";
+    }
+
     // When the user clicks on <span> (x), close the modal
     function closeModal() {
         modal.style.display = "none";
@@ -107,6 +126,10 @@
 
     function closeEmailModal() {
         modal_email.style.display = "none";
+    }
+
+    function closeMetricsModal() {
+        metrics_modal.style.display = "none";
     }
 
     function editTemplate(id) {
@@ -178,6 +201,15 @@
                 console.log('error');
             }
         });
+    }
+
+    function displayMetrics(i) {
+        var template_name = document.getElementById("metrics-modal-title");
+        template_name.innerText = "Metrics for " + data[0][i].name
+
+        var times_used = document.getElementById("metrics-timesused");
+        times_used.innerText = "Times used: " + data[0][i].metric
+        openMetricsModal();
     }
 
     // When the user clicks anywhere outside of the modal, close it
@@ -267,7 +299,7 @@
         var row = table.insertRow(row_count);
         var cells = [];
 
-        for (var j = 0; j < 2; j++) {
+        for (var j = 0; j < 3; j++) {
             cells.push(row.insertCell(j));
             cells[j].innerHTML = "";
         }
@@ -276,11 +308,13 @@
     function generateRecTemplateRow(row_count, i) {
         var table = document.getElementById("templates-table0");
         var row = table.insertRow(row_count);
-        var cells = [row.insertCell(0), row.insertCell(1)];
+        var cells = [row.insertCell(0), row.insertCell(1), row.insertCell(2)];
 
         cells[0].innerHTML = data[0][i].name;
-        cells[1].innerHTML = "<img class='icon' src='/images/pencil.png' onclick='editTemplate(\"" + data[0][i]._id + "\")'/>";
-        cells[1].innerHTML += "<img class='icon' src='/images/delete.png' onclick='deleteRow(\"" + data[0][i]._id + "\")'/>";
+        cells[1].innerHTML = "<p class='metrics'>" + data[0][i].metric + "</p>";
+        cells[2].innerHTML = "<img class='icon' src='/images/question_mark.png' onclick='displayMetrics(\"" + i + "\")'/>";
+        cells[2].innerHTML += "<img class='icon' src='/images/pencil.png' onclick='editTemplate(\"" + data[0][i]._id + "\")'/>";
+        cells[2].innerHTML += "<img class='icon' src='/images/delete.png' onclick='deleteRow(\"" + data[0][i]._id + "\")'/>";
     }
 
     function generateEmailTemplateRow(row_count, i) {
