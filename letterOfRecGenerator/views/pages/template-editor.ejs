@@ -123,58 +123,29 @@
         <div class="row">
             <div class="col-12 text-white">Letter Boilerplate</div>
         </div>
-        <div class="row bg-light m-3 d-flex d-flex align-items-center">
-            <div class="col-1">
-                <span>Tags: </span>
-            </div>
-            <div class="col-11 d-flex justify-content-center">
-                <button class="btn btn-primary m-3">Tag 1</button>
-                <button class="btn btn-primary m-3">Tag 1</button>
-                <button class="btn btn-primary m-3">Tag 1</button>
-                <button class="btn btn-primary m-3">Tag 1</button>
-            </div>
-            <div class="col-12 error-container">
-                <div id="letter-container" class="d-flex justify-content-center">
-                    <div class="">
-                        <trix-editor class="trix-content" id="letter-text-area"></trix-editor>
+        <div class="row bg-light m-3 p-3 ">
+            <div id='tags' class="d-flex align-items-center m-3 p-3">
+                <div class="col-1">
+                    <span>Tags: </span>
+                </div>
+                <div class="col-11 d-flex">
+                    <div>
+                        <button class="btn btn-outline-dark mr-3">#FNAME</button>
+                        <button class="btn btn-outline-dark mr-3">#LNAME</button>
+                        <button class="btn btn-outline-dark mr-3">#SUB_PRONOUN</button>
+                        <button class="btn btn-outline-dark mr-3">#OBJ_PRONOUN</button>
+                        <button class="btn btn-outline-dark mr-3">#OBJ_PRONOUN</button>
+                        <!-- <button class="btn btn-outline-dark m-3">#OBJ_PRONOUN</button> -->
+                        <!-- <button class="btn btn-outline-dark m-3">#OBJ_PRONOUN</button> -->
+                        <!-- <button class="btn btn-outline-dark m-3">#OBJ_PRONOUN</button> -->
+                        <!-- <button class="btn btn-outline-dark m-3">#OBJ_PRONOUN</button> -->
                     </div>
                 </div>
             </div>
-        </div>
-        
-        
-        <div class="row bg-dark m-3"></div>
-        <div class="row bg-light m-3">
-            <span id="tags-heading">All Tags: </span> 
-            <div id="tag-container" class="row d-flex align-items-center flex-row">
-                <% for (var q=0; q < questions.length; q++) { %>
-                    <% let options = questions[q].options; %>
-                    <% if(options) { %>
-                        <% for (var o=0; o < options.length; o++) { %>
-                            <% if(options[o].tag) { %>
-                                <button class="popup btn btn-light"  name="tag_buttons" value ="<%= options[o].tag %>"><%= options[o].tag %>
-                                    <span class="popup-text">
-                                        <%= questions[q].question %>
-                                    </span>
-                                </button>
-                            <% } %>
-                        <% } %>
-                    <% } %>
-                    <% if(!options || questions[q].type === "Text" || questions[q].type === "Radio Button") { %>
-                        <button class="popup"  name="tag_buttons" value ="<%= questions[q].tag %>"><%= questions[q].tag %>
-                            <span class="popup-text">
-                                <%= questions[q].question %>
-                            </span>
-                        </button>
-                    <% } %>
-                <% } %>
-                <br/>
-            </div>
-
-
-            <div class="error-container">
-                <div id="letter-container">
-                    <div class="flex1">
+            <!-- <div class="col col-1">Template:</div> -->
+            <div class="col col-12 error-container my-5">
+                <div id="letter-container" class="">
+                    <div class="">
                         <trix-editor class="trix-content" id="letter-text-area"></trix-editor>
                     </div>
                 </div>

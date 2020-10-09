@@ -20,6 +20,12 @@
     width: 200px;
 }
 
+#tags{
+    border: solid black;
+    /* margin-left: 15px; */
+    width: 100%;
+}
+
 .templates{
     background-color: #FFFFFF;
 }
@@ -154,9 +160,9 @@
 }
 
 #letter-container {
-    display: flex;
+    /* display: flex; */
     width: 100%;
-    margin: 30px 30px 20px 30px;
+    /* margin: 30px 30px 20px 30px; */
     /*justify-content: center;
     flex-direction: column;
     align-items: center;*/
@@ -165,12 +171,12 @@
 #letter-container #letter-text-area {
     /*margin-top: 50px;    */
     height: 300px;
-    /*width: 800px;*/
-    flex-basis: auto;
+    width: 100%;
+    /* flex-basis: auto; */
     border: solid black;
-    font-size: 13px;
+    font-size: 18px;
     overflow-y: scroll;
-    max-width: 750px;
+    /* max-width: 750px; */
 }
 
 #questions-container {
