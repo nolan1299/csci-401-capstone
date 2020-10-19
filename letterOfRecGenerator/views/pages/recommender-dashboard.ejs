@@ -461,7 +461,7 @@
                 + JSON.stringify({id: data[0][i]._id, email: data[0][i].email})
                 + ", '" + data[0][i].status + "\")'>";
         }
-        cells[5].innerHTML += "<img class='icon clickable' title='View Responses' src='/images/response.png' onclick='openResponses("
+        cells[5].innerHTML += "<img class='icon clickable' title='View Responses' src='/images/question_mark.png' onclick='openResponses("
             + JSON.stringify({id: data[0][i]._id})
             + ", \"" + data[0][i].status + "\")'>";
         cells[5].innerHTML += "<img class='icon clickable' title='Preview Letter' src='/images/preview.png' onclick='openLetterPreview("
