@@ -136,7 +136,7 @@
                 </div>
             </div>
         </div>`
-        var popover = $('#metrics').attr('data-content', metricsHtml).data('bs.popover');
+        var popover = $('.metrics').attr('data-content', metricsHtml).data('bs.popover');
 
          //toggle the popover for metrics
         $(document).ready(function(){
@@ -318,12 +318,12 @@
         var cells = [row.insertCell(0), row.insertCell(1)];
 
         cells[0].innerHTML = data[0][i].name;
-        cells[1].innerHTML = "<div class='actions' id='actions'>";
+        cells[1].innerHTML = "<div class='actions' id='actions-"+ i + "'>";
         
-        var actions = document.getElementById('actions');
+        var actions = document.getElementById('actions-' + i);
         actions.innerHTML += "<i class='fas fa-pencil-alt fa-lg' onclick='editTemplate(\"" + data[0][i]._id + "\")'></i>";
         actions.innerHTML += "<i class='fas fa-trash fa-lg' onclick='deleteRow(\"" + data[0][i]._id + "\")'></i>";
-        actions.innerHTML += "<i id='metrics' class='fas fa-chart-bar fa-lg' data-trigger=\"hover\" data-toggle=\"popover\" title=\"Metrics\"></i></div>";
+        actions.innerHTML += "<i class='metrics fas fa-chart-bar fa-lg' data-trigger=\"hover\" data-toggle=\"popover\" title=\"Metrics\"></i></div>";
         displayMetrics(i);
     }
 
