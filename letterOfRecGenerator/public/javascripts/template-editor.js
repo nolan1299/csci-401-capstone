@@ -10,7 +10,6 @@ var letterheadImgData = parseAttribute('letterheadImgData');
 var footerImgData = parseAttribute('footerImgData');
 var saveSwitchData = parseAttribute('saveSwitchData');
 const TRIX_EDITOR = "trix-editor";
-
 /**
  * Prototype class for Questions
  */
@@ -18,7 +17,7 @@ class Question {
     constructor(type, value, tag, optional = false, orgQuestion = false) {
         // Text, Radio Button, Checkbox
         this.type = type;
-        this.value = value;
+        this.value = value; 
         this.tag = tag;
         this.optional = optional;
         // local browser
@@ -445,8 +444,7 @@ function updateQuestions() {
     letter = element.value;
 
     // update individual questions
-    for (var i = 0; i < questions.length; i++) {
-        var question = questions[i];
+    for (const question of questions) {
         // grab the question element
         var query = "div[data-id='" + question.id + "'][class='question-outer-container']";
         var questionEl = document.querySelector(query);
