@@ -290,6 +290,12 @@ function clearTable(tableNumber) {
 }
 
 function generateTable(tableNumber) {
+    if (!data[tableNumber].length) {
+        // Exit function if there are no recommendations to show
+        const tb = document.querySelector('#table-body');
+        tb.innerHTML = ('<tr><td colspan="6" style="text-align: center;">No Existing Recommendations</td></tr>');
+        return;
+    }
     var row_count = 1;
 
     for (var i = (current_page[tableNumber] - 1) * records_per_page;
