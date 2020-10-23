@@ -454,6 +454,12 @@ document.getElementById('clear-selection').onclick = () => {
     search("");
 }
 
+document.getElementById('email-form').onsubmit = (e) => {
+    e.preventDefault();
+    document.getElementById('search-input').value = "";
+    search("");
+}
+
 // createPageButtons(0);
 
 
