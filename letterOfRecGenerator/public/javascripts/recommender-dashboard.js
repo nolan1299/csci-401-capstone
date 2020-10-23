@@ -445,6 +445,7 @@ document.getElementById('search-div').onsubmit = (e) => {
 
 document.getElementById('clear-selection').onclick = () => {
     document.getElementById('search-input').value = "";
+    search("");
 }
 
 // createPageButtons(0);
