@@ -417,28 +417,7 @@ function createPageButtons(tableNumber) {
 }
 
 // createPageButtons(0);
-$.ajax({
-    url: '/forms', data: { email: 'scottmai@usc.edu' }, success: function (response) {
-        data = response.forms;
-        console.log({ data });
 
-        createPageButtons(0);
-
-        // Show page 1 initially
-        changePage(0, 1);
-        
-
-        sortByTime(0);
-
-        $("#Edit").click(function (e) {
-            e.preventDefault();
-            document.getElementById('body-text').disabled = false;
-            document.getElementById('subject').disabled = false;
-            document.getElementById('Edit').disabled = true;
-            document.getElementById('Save').disabled = false;
-        });
-    }
-});
 
     // // Show page 1 initially
     // changePage(0, 1);
