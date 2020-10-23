@@ -16,6 +16,11 @@
     <div id="rec-header">
         <p class="title">Recommendations</p>
         <% if (templates.length) { %>
+            <form id="search-div" onsubmit="search()">
+                <input id="search-input" type="text" name="email" placeholder="Filter by Email">
+                <img id="clear-selection" src="images/clear_selection.png" alt="">
+                <button type="submit" id="search-btn">Search</button>
+            </form>
             <div class="add-btn" onclick="openModal()">+ Create Recommendation</div>
         <% } %>
     </div>

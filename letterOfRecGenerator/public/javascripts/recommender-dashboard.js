@@ -416,6 +416,15 @@ function createPageButtons(tableNumber) {
     }
 }
 
+function search(e){
+    e.preventDefault();
+    
+}
+
+document.getElementById('clear-selection').onclick = () => {
+    document.getElementById('search-input').value = "";
+}
+
 // createPageButtons(0);
 
 
