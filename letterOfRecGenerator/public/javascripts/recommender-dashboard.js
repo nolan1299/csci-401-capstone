@@ -416,9 +416,31 @@ function createPageButtons(tableNumber) {
     }
 }
 
-function search(e){
-    e.preventDefault();
+function search(email){
+    $.ajax({
+        url: '/forms', data: { email }, success: function (response) {
+            data = [response.forms];
+            console.log({ data });
+            createPageButtons(0);
+            // Show page 1 initially
+            changePage(0, 1);
+            sortByTime(0);
     
+            $("#Edit").click(function (e) {
+                e.preventDefault();
+                document.getElementById('body-text').disabled = false;
+                document.getElementById('subject').disabled = false;
+                document.getElementById('Edit').disabled = true;
+                document.getElementById('Save').disabled = false;
+            });
+        }
+    });
+}
+
+document.getElementById('search-div').onsubmit = (e) => {
+    e.preventDefault();
+    email = document.querySelector('#search-input').value;
+    search(email);
 }
 
 document.getElementById('clear-selection').onclick = () => {
