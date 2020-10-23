@@ -31,19 +31,26 @@ router.get('/', function(req, res, next) {
     if (!req.user) {
         res.render('login', {});
     }
-    req.user.getForms(function(err, forms) {
-        if (err) {
-            console.log(`error: ${err}`);
-        } else {
-            res.render('pages/recommender-dashboard', {
-                title: req.user.displayName,
-                templates: req.user.getTemplates(),
-                forms: forms,
-                subject: req.user.getLinkTemplateSubject(),
-                body: req.user.getLinkTemplateBody()
-            });
-        }
+    res.render('pages/recommender-dashboard', {
+        title: req.user.displayName,
+        templates: req.user.getTemplates(),
+        // forms: forms,
+        subject: req.user.getLinkTemplateSubject(),
+        body: req.user.getLinkTemplateBody()
     });
+    // req.user.getForms('scottmai@usc.edu', function(err, forms) {
+    //     if (err) {
+    //         console.log(`error: ${err}`);
+    //     } else {
+    //         res.render('pages/recommender-dashboard', {
+    //             title: req.user.displayName,
+    //             templates: req.user.getTemplates(),
+    //             forms: forms,
+    //             subject: req.user.getLinkTemplateSubject(),
+    //             body: req.user.getLinkTemplateBody()
+    //         });
+    //     }
+    // });
 });
 
 router.post('/', function(req, res, next) {

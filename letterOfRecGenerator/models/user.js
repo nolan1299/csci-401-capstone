@@ -250,8 +250,13 @@ UserSchema.methods.addForm = function(form, cb) {
     this.save(cb);
 };
 
-UserSchema.methods.getForms = function(cb) {
-    User.findOne({ '_id': this._id }).populate('forms').exec((err, user) => {
+UserSchema.methods.getForms = function(email, cb) {
+    User.findOne({ '_id': this._id }).
+        populate({
+            path: 'forms',
+            match: { email: email}
+        }).
+        exec((err, user) => {
         cb(err, user.forms);
     });
 };
