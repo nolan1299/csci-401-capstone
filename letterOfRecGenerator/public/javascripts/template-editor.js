@@ -10,6 +10,7 @@ var letterheadImgData = parseAttribute('letterheadImgData');
 var footerImgData = parseAttribute('footerImgData');
 var saveSwitchData = parseAttribute('saveSwitchData');
 const TRIX_EDITOR = "trix-editor";
+const questionTypes = ["Text Answer", "Radio Button", "Checkbox"];
 /**
  * Prototype class for Questions
  */
@@ -146,13 +147,18 @@ function displayQuestions() {
     var container = document.getElementById(QUESTIONS_CONTAINER_ID);
 
     // fill in with questions
-    container.innerHTML = "";
+    let questionsText = "";
     for (var i = 0; i < questions.length; i++) {
-        container.innerHTML += getQuestionHTML(questions[i]);
+        questionsText += getQuestionHTML(questions[i]);
     }
+    container.innerHTML = questionsText;
 
-    let list = document.getElementById(QUESTIONS_CONTAINER_ID);
+    // let list = document.getElementById(QUESTIONS_CONTAINER_ID);
     // Sortable.create(list);
+}
+
+function convertLtGt(s){
+    return s.replace('<', '&lt;').replace('>', '&gt;');
 }
 
 /**
@@ -161,6 +167,37 @@ function displayQuestions() {
  * @returns {string}
  */
 function getQuestionHTML(q) {
+    // var data_id_attribute = "data-id=\"" + q.id + "\"";
+    // var delete_onclick_attribute = "onclick=\"deleteQuestionWithWarning(" + q.id + ")\"";
+    // var multiple_choice_fields_html = getMultipleChoiceFieldsHTML(q);
+    
+    const outerDiv = $('<div class="row d-flex align-items-center my-4">');
+    outerDiv.append('<div class="ml-4"><img class="icon-effects" src="/images/hamburger_white.svg"></div>');
+    outerDiv.append(`<div class="col-5"><input type="text" class="form-control" placeholder="Enter new question here..." value="${q.value}"/></div>`);
+
+    const typeCol = $('<div class="col-2">');
+    const typeSelect = $('<select class="form-control" id="exampleFormControlSelect1">');
+    let selected = "";
+    for(const type of questionTypes){
+        selected = type === q.type ? " selected" : "";
+        typeSelect.append(`<option${selected}>${type}</option>`);
+    }
+    typeCol.append(typeSelect);
+    outerDiv.append(typeCol);
+
+    outerDiv.append('<div class="d-flex align-items-center"><span class="text-white mr-2">Required?</span><input type="checkbox" checked class="big-checkbox"></div>');
+    outerDiv.append(`<div class="col-3"><input type="text" class="form-control" placeholder="tag (e.g. #fname)" value="${convertLtGt(q.tag)}"/></div>`);
+
+    console.log(outerDiv.prop('outerHTML'))
+    return outerDiv.prop('outerHTML');
+}
+
+/**
+ * Creates HTML for the different question types
+ * @param q
+ * @returns {string}
+ */
+function getQuestionHTML_old(q) {
     var data_id_attribute = "data-id=\"" + q.id + "\"";
     var delete_onclick_attribute = "onclick=\"deleteQuestionWithWarning(" + q.id + ")\"";
     var multiple_choice_fields_html = getMultipleChoiceFieldsHTML(q);
@@ -395,7 +432,7 @@ function executeWarningModalFunction() {
 // to assign it a data_id
 function addTextAnswerQuestion() { 
     updateQuestions();
-    questions.push(new Question("Text", "", ""));
+    questions.push(new Question("Text Answer", "", ""));
     displayQuestions();
     hideAddQuestionModal();
     var question = document.querySelectorAll(".sortable-questions");
