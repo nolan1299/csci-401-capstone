@@ -34,51 +34,39 @@ $("#letter-text-area").focusout(function () {
     secondHalf = letterContentInnerHTML.substring(letterContentCursorPos);
 });
 
+// oh god oh no plz change me
 $(window).click(function (e) {
     renderAllTagButtons();
 });
 
 function renderAllTagButtons() {
     // clear old tag buttons
-    let tagsContainer = document.getElementById("tag-container");
-    while (tagsContainer.firstChild) {
-        tagsContainer.removeChild(tagsContainer.firstChild);
-    }
+    let tagsContainer = $("#tag-container");
+    tagsContainer.empty();
     // create new tags buttons
     let allQuestions = document.querySelectorAll(".question-container");
-    for (var i = 0; i < allQuestions.length; i++) {
-        let currQuestonEle = allQuestions[i];
+    for (let currQuestonEle of allQuestions) {
         let questionText = currQuestonEle.querySelector("[data-type='value']").value;
         let allTagsInQuestion = currQuestonEle.querySelectorAll("[data-type='tag']");
         for (var j = 0; j < allTagsInQuestion.length; j++) {
-            let currTagValue = allTagsInQuestion[j].value;
+            const currTagValue = allTagsInQuestion[j].value;
             // create button
-            let tagValue = currTagValue.substring(currTagValue.lastIndexOf("!") + 1, currTagValue.lastIndexOf(">"));
+            const tagValue = currTagValue.substring(currTagValue.lastIndexOf("!") + 1, currTagValue.lastIndexOf(">"));
             if (tagValue) {
-                let newButton = createTagButton(tagValue, questionText);
-                tagsContainer.appendChild(newButton);
+                const newButton = createTagButton(tagValue, questionText);
+                tagsContainer.append(newButton);
             }
         }
     }
 }
 
-function createTagButton(tagValue, questionText) {
-    // create button
-    let newButton = document.createElement("BUTTON");
-    newButton.type = "button";
-    newButton.value = "<!" + tagValue + ">";
-    newButton.value.trim();
-    newButton.innerHTML = "&lt;!" + tagValue + "&gt;";
-    newButton.name = "tag_buttons";
-    newButton.onclick = function () {
-
+function createTagButton(tagValue, questionText) {  
+    newButton = $(`<button class="btn btn-outline-dark mr-3">&lt;!${tagValue}&gt;</button>`);
+    newButton.on('click', function () {
         // if clicked and focused, add append to back
-
         if (letterContentCursorPos === -1) {
-
-            var val = $(this).val();
             var theDiv = document.getElementById("letter-text-area");
-            var content = document.createTextNode(" " + val);
+            var content = document.createTextNode(" <!" + tagValue + '>');
             theDiv.appendChild(content);
         } else {
             var entire = firstHalf + "&lt;!" + tagValue + "&gt;" + secondHalf;
@@ -89,11 +77,11 @@ function createTagButton(tagValue, questionText) {
             secondHalf = "";
         }
         return false;
-    };
+    });
 
     // create span child
     let newSpan = createSpanChild(questionText);
-    newButton.appendChild(newSpan);
+    newButton.append(newSpan);
     newButton.onmouseover = function () {
         newSpan.style.visibility = "visible";
     }
