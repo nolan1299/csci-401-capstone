@@ -171,9 +171,9 @@ function getQuestionHTML(q) {
     // var delete_onclick_attribute = "onclick=\"deleteQuestionWithWarning(" + q.id + ")\"";
     // var multiple_choice_fields_html = getMultipleChoiceFieldsHTML(q);
     
-    const outerDiv = $('<div class="row d-flex align-items-center my-4">');
+    const outerDiv = $(`<div class="row d-flex align-items-center my-4" data-id="${q.id}">`);
     outerDiv.append('<div class="ml-4"><img class="icon-effects" src="/images/hamburger_white.svg"></div>');
-    outerDiv.append(`<div class="col-5"><input type="text" class="form-control" placeholder="Enter new question here..." value="${q.value}"/></div>`);
+    outerDiv.append(`<div class="col-5"><input type="text" class="form-control" placeholder="Enter new question here..." value="${q.value}" data-type='value'/></div>`);
 
     const typeCol = $('<div class="col-2">');
     const typeSelect = $('<select class="form-control" id="exampleFormControlSelect1">');
@@ -186,9 +186,8 @@ function getQuestionHTML(q) {
     outerDiv.append(typeCol);
 
     outerDiv.append('<div class="d-flex align-items-center"><span class="text-white mr-2">Required?</span><input type="checkbox" checked class="big-checkbox"></div>');
-    outerDiv.append(`<div class="col-3"><input type="text" class="form-control" placeholder="tag (e.g. #fname)" value="${convertLtGt(q.tag)}"/></div>`);
+    outerDiv.append(`<div class="col-3"><input type="text" class="form-control" placeholder="tag (e.g. #fname)" value="${convertLtGt(q.tag)}" data-type='tag'/></div>`);
 
-    console.log(outerDiv.prop('outerHTML'))
     return outerDiv.prop('outerHTML');
 }
 
@@ -483,7 +482,7 @@ function updateQuestions() {
     // update individual questions
     for (const question of questions) {
         // grab the question element
-        var query = "div[data-id='" + question.id + "'][class='question-outer-container']";
+        var query = "div[data-id='" + question.id + "']";
         var questionEl = document.querySelector(query);
 
         question.value = questionEl.querySelector("[data-type='value']").value;
