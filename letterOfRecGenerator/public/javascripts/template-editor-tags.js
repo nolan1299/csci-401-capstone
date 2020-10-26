@@ -61,7 +61,7 @@ function renderAllTagButtons() {
 }
 
 function createTagButton(tagValue, questionText) {  
-    newButton = $(`<button class="btn btn-outline-dark mr-3">&lt;!${tagValue}&gt;</button>`);
+    newButton = $(`<button class="btn btn-outline-dark mr-3 my-1">&lt;!${tagValue}&gt;</button>`);
     newButton.on('click', function () {
         // if clicked and focused, add append to back
         if (letterContentCursorPos === -1) {

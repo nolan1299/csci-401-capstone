@@ -10,7 +10,7 @@ var letterheadImgData = parseAttribute('letterheadImgData');
 var footerImgData = parseAttribute('footerImgData');
 var saveSwitchData = parseAttribute('saveSwitchData');
 const TRIX_EDITOR = "trix-editor";
-const questionTypes = ["Text Answer", "Radio Button", "Checkbox"];
+const questionTypes = ["Text Answer", "Radio Button", "Checkbox", "Custom"];
 /**
  * Prototype class for Questions
  */
@@ -85,6 +85,7 @@ window.onload = function () {
                 console.log('success loading page');
                 displayQuestions();
                 //emphasizeTags();
+                renderAllTagButtons();
             },
             error: function () {
                 console.log('error');
@@ -94,6 +95,7 @@ window.onload = function () {
     } else {
         loadDefaultQuestions();
         displayQuestions();
+        renderAllTagButtons();
     }
 
 };
@@ -152,7 +154,6 @@ function displayQuestions() {
         questionsText += getQuestionHTML(questions[i]);
     }
     container.innerHTML = questionsText;
-
     // let list = document.getElementById(QUESTIONS_CONTAINER_ID);
     // Sortable.create(list);
 }
@@ -171,7 +172,7 @@ function getQuestionHTML(q) {
     // var delete_onclick_attribute = "onclick=\"deleteQuestionWithWarning(" + q.id + ")\"";
     // var multiple_choice_fields_html = getMultipleChoiceFieldsHTML(q);
     
-    const outerDiv = $(`<div class="row d-flex align-items-center my-4" data-id="${q.id}">`);
+    const outerDiv = $(`<div class="row question-container d-flex align-items-center my-4" data-id="${q.id}">`);
     outerDiv.append('<div class="ml-4"><img class="icon-effects" src="/images/hamburger_white.svg"></div>');
     outerDiv.append(`<div class="col-5"><input type="text" class="form-control" placeholder="Enter new question here..." value="${q.value}" data-type='value'/></div>`);
 

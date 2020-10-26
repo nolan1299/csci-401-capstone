@@ -21,7 +21,7 @@
         <% include ../partials/header %>
     </header>
     <!-- start of bootstrap overhaul -->
-    <p class="title"><%= title %></p>
+    <p id="name-container-text-field" class="title"><%= title %></p>
     <div class="container py-3 my-3 section">
         <div class="row my-3 section">
             <div class="col d-flex align-items-center" >
@@ -94,64 +94,7 @@
     </div>
 
     <!-- end of bootstrap overhaul -->
-    <p class="title"><%= title %></p>
     <div id="template-editor-container">
-        <div class="error-container">
-            <div id="name-container">
-                <h2 class="section-header">Template Name</h2>
-                <input type="text" class="text-field" placeholder="Enter a template name here..."
-                       value="<%= templateName %>"/>
-            </div>
-        </div>
-
-        <h2 id="custom-questions" class="section-header">Custom Questions</h2>
-        <button class="large-circle-button" onclick="addQuestion()">+ Add question</button>
-        <div id="questions-container"></div>
-
-        <div class="flex-display all-tags-cont">
-            <h2 id="tags-heading-main" class="section-header">Tags</h2>
-            <div class="flex1">
-                <p id="tag-heading">&lt!TAG_NAME&gt in the letter will be replaced by the corresponding question's answer.
-                    Tags can be nested in the replacement text of other questions.</p>
-                <p id="tags-heading">All Tags: </p>
-                <div id="tag-container">
-                    <% for (var q=0; q < questions.length; q++) { %>
-                        <% let options = questions[q].options; %>
-                        <% if(options) { %>
-                            <% for (var o=0; o < options.length; o++) { %>
-                                <% if(options[o].tag) { %>
-                                    <button class="popup"  name="tag_buttons" value ="<%= options[o].tag %>"><%= options[o].tag %>
-                                        <span class="popup-text">
-                                            <%= questions[q].question %>
-                                        </span>
-                                    </button>
-                                <% } %>
-                            <% } %>
-                        <% } %>
-                        <% if(!options || questions[q].type === "Text" || questions[q].type === "Radio Button") { %>
-                            <button class="popup"  name="tag_buttons" value ="<%= questions[q].tag %>"><%= questions[q].tag %>
-                                <span class="popup-text">
-                                    <%= questions[q].question %>
-                                </span>
-                            </button>
-                        <% } %>
-                    <% } %>
-                    <br/>
-                </div>
-                <br>
-
-            </div>
-        </div>
-
-        <div class="error-container">
-            <div id="letter-container">
-                <h2 id="letter-boilerplate" class="section-header">Letter Boilerplate</h2>
-                <div class="flex1">
-                    <trix-editor class="trix-content" id="letter-text-area"></trix-editor>
-                </div>
-            </div>
-        </div>
-
         <script>
         function sendFile(){
         // Form Data
