@@ -6,8 +6,6 @@
     <link rel="stylesheet" href="/css/template-editor.css"/>
     <link rel="stylesheet" type="text/css" href="/css/all.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="/javascripts/template-editor.js" id="<%= id %>"
-            letterheadImgData="<%= letterheadImage %>" footerImgData="<%= footerImage %>" saveSwitchData="<%= saveSwitch %>"></script>
     <script src="//sortablejs.github.io/Sortable/Sortable.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.1/trix.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.1/trix.js"></script>
@@ -256,12 +254,15 @@
             </div>
         <% }} %>
     </div>
-
 </div>
+
+<script type="text/javascript" src="/javascripts/template-editor.js" id="<%= id %>"
+            letterheadImgData="<%= letterheadImage %>" footerImgData="<%= footerImage %>" saveSwitchData="<%= saveSwitch %>"></script>
+<script type="text/javascript" src="/javascripts/template-editor-tags.js"></script>
 </body>
 
 <div id="add-question-modal">
-    <div class="content">
+    <div class="content">  
         <div class="flex-row">
             <h1>Select Question Type</h1>
         </div>
@@ -291,133 +292,3 @@
     </div>
 </div>
 </html>
-
-<script>
-    $("button[name='tag_buttons']").on("click", function (e) {
-        var val = $(this).val();
-        var theDiv = document.getElementById("letter-text-area");
-        var content = document.createTextNode(val);
-        theDiv.appendChild(content);
-    });
-</script>
-
-
-<script>
-
-    var letterContent = document.getElementById("letter-text-area");
-    var firstHalf = "";
-    var secondHalf = "";
-    var letterContentCursorPos = -1;
-
-    letterContent.onclick = function () {
-        // creates dummy node to find cursor position
-        var target = document.createTextNode("\u0001");
-        document.getSelection().getRangeAt(0).insertNode(target);
-        var position = letterContent.innerHTML.indexOf("\u0001");
-        target.parentNode.removeChild(target);
-
-        letterContentCursorPos = position;
-        var letterContentInnerHTML = letterContent.innerHTML;
-        firstHalf = letterContentInnerHTML.substring(0, letterContentCursorPos);
-        secondHalf = letterContentInnerHTML.substring(letterContentCursorPos);
-    };
-
-    letterContent.onkeyup = function () {
-        letterContentCursorPos = letterContent.innerHTML.length;
-    }
-
-    // so you can click tags directly after typing
-   $("#letter-text-area").focusout(function () {
-        var letterContentInnerHTML = letterContent.innerHTML;
-        firstHalf = letterContentInnerHTML.substring(0, letterContentCursorPos);
-        secondHalf = letterContentInnerHTML.substring(letterContentCursorPos);
-    });
-
-    $(window).click(function (e) {
-        renderAllTagButtons();
-    });
-
-    function renderAllTagButtons() {
-        // clear old tag buttons
-        let tagsContainer = document.getElementById("tag-container");
-        while (tagsContainer.firstChild) {
-            tagsContainer.removeChild(tagsContainer.firstChild);
-        }
-        // create new tags buttons
-        let allQuestions = document.querySelectorAll(".question-container");
-        for (var i = 0; i < allQuestions.length; i++) {
-            let currQuestonEle = allQuestions[i];
-            let questionText = currQuestonEle.querySelector("[data-type='value']").value;
-            let allTagsInQuestion = currQuestonEle.querySelectorAll("[data-type='tag']");
-            for (var j = 0; j < allTagsInQuestion.length; j++) {
-                let currTagValue = allTagsInQuestion[j].value;
-                // create button
-                let tagValue = currTagValue.substring(currTagValue.lastIndexOf("!") + 1, currTagValue.lastIndexOf(">"));
-                if (tagValue) {
-                    let newButton = createTagButton(tagValue, questionText);
-                    tagsContainer.appendChild(newButton);
-                }
-            }
-        }
-    }
-
-    function createTagButton(tagValue, questionText) {
-        // create button
-        let newButton = document.createElement("BUTTON");
-        newButton.type = "button";
-        newButton.value = "<!" + tagValue + ">";
-        newButton.value.trim();
-        newButton.innerHTML = "&lt;!" + tagValue + "&gt;";
-        newButton.name = "tag_buttons";
-        newButton.onclick = function () {
-
-            // if clicked and focused, add append to back
-
-            if (letterContentCursorPos === -1) {
-
-                var val = $(this).val();
-                var theDiv = document.getElementById("letter-text-area");
-                var content = document.createTextNode(" " + val);
-                theDiv.appendChild(content);
-            } else {
-                var entire = firstHalf + "&lt;!" + tagValue + "&gt;" + secondHalf;
-                letterContent.innerHTML = entire;
-
-                letterContentCursorPos = -1;
-                firstHalf = "";
-                secondHalf = "";
-            }
-            return false;
-        };
-
-        // create span child
-        let newSpan = createSpanChild(questionText);
-        newButton.appendChild(newSpan);
-        newButton.onmouseover = function() {
-            newSpan.style.visibility = "visible";
-        }
-        newButton.onmouseout = function() {
-            newSpan.style.visibility = "hidden";
-        }
-
-        return newButton;
-    }
-
-    function createSpanChild(questionText) {
-        let newSpan = document.createElement("span");
-        newSpan.className = "popup-text";
-        newSpan.style.visibility = "hidden";
-        newSpan.style.width = "200px";
-        newSpan.style.backgroundColor = "black";
-        newSpan.style.color = "#fff";
-        newSpan.style.textAlign = "center";
-        newSpan.style.padding = "5px 0";
-        newSpan.style.borderRadius = "6px";
-        newSpan.style.position = "absolute";
-        newSpan.style.zIndex = "1";
-        newSpan.style.marginLeft = "-100px";
-        newSpan.style.marginTop = "20px";
-        newSpan.innerHTML = questionText;
-        return newSpan;
-    }
-</script>

@@ -393,7 +393,7 @@ function executeWarningModalFunction() {
 
 // NOTE: need to push new question AFTER updateQuestions(), since display questions relies on a question being displayed once
 // to assign it a data_id
-function addTextAnswerQuestion() {
+function addTextAnswerQuestion() { 
     updateQuestions();
     questions.push(new Question("Text", "", ""));
     displayQuestions();
