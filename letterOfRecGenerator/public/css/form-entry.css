@@ -1,5 +1,5 @@
 body {
-    background-color: #9d2235;
+    background-color: #990000;
 }
 
 .invalid-feedback {
@@ -51,4 +51,5 @@ body {
 .btn:focus {
     background-color: #FFCC00 !important;
     border-color: #FFCC00 !important;
+    color: black;
 }
