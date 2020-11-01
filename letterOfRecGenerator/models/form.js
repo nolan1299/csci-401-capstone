@@ -134,179 +134,179 @@ FormSchema.statics.submitForm = function(id, responseData, cb) {
     let fieldsByForm = [];
     var customQuestionFound = false;
     console.log(responseData);
-//     FormSchema.statics.findForm(id, function(err, form) {
-//         if (err) {
-//             cb("error in FormSchema.statics.submitForm / .findForm " + err, null);
-//         } else {
-//             var responses = [];
+    FormSchema.statics.findForm(id, function(err, form) {
+        if (err) {
+            cb("error in FormSchema.statics.submitForm / .findForm " + err, null);
+        } else {
+            var responses = [];
 
-//             form['template']['questions'].forEach(function(question) {
+            form['template']['questions'].forEach(function(question) {
 
-//                 var response = responseData[question.number - 1];
-//                 /* If the question has a organizationFlag that is true,
-//                 attempt to extract the organizations (seperated with , )
-//                 and make additional Forms with the different organization names */
-//                 //If response is empty
-//                 if (!response || !response.length) {
-//                     responses.push({
-//                         tag: question.tag,
-//                         response: ''
-//                     });
-//                 } else if (question.type === "Radio Button" || question.type === "Text") {
-//                     responses.push({
-//                         tag: question.tag,
-//                         response: response[0]
-//                     });
-//                 } else if (question.type === "Custom") { // custom
-//                     customQuestionFound = true;
-//                     let questionOptions = question.options;
+                var response = responseData[question.number - 1];
+                /* If the question has a organizationFlag that is true,
+                attempt to extract the organizations (seperated with , )
+                and make additional Forms with the different organization names */
+                //If response is empty
+                if (!response || !response.length) {
+                    responses.push({
+                        tag: question.tag,
+                        response: ''
+                    });
+                } else if (question.type === "Radio Button" || question.type === "Text") {
+                    responses.push({
+                        tag: question.tag,
+                        response: response[0]
+                    });
+                } else if (question.type === "Custom") { // custom
+                    customQuestionFound = true;
+                    let questionOptions = question.options;
 
-//                     let allFields = [];
-//                     for (let i = 0; i < questionOptions.length; i++) {
-//                         let field = {
-//                             fieldName: questionOptions[i].option, // University
-//                             fieldTag: questionOptions[i].tag // <!Uni>
-//                         };
-//                         allFields.push(field);
-//                     }
+                    let allFields = [];
+                    for (let i = 0; i < questionOptions.length; i++) {
+                        let field = {
+                            fieldName: questionOptions[i].option, // University
+                            fieldTag: questionOptions[i].tag // <!Uni>
+                        };
+                        allFields.push(field);
+                    }
 
-//                     // num organizations = len / number of options
-//                     let numResponse = response.length;
-//                     let numOptions = questionOptions.length;
-//                     let numOrganizations = numResponse / numOptions;
-//                     totalForms = numOrganizations;
+                    // num organizations = len / number of options
+                    let numResponse = response.length;
+                    let numOptions = questionOptions.length;
+                    let numOrganizations = numResponse / numOptions;
+                    totalForms = numOrganizations;
 
-//                     for (let k = 0; k < numOrganizations; k++) {
-//                         fieldsByForm[k] = {
-//                             num: k,
-//                             fields: [] //
-//                         };
-//                     }
+                    for (let k = 0; k < numOrganizations; k++) {
+                        fieldsByForm[k] = {
+                            num: k,
+                            fields: [] //
+                        };
+                    }
 
-//                     let i = 0;
-//                     response.forEach(function(optionText) {
-//                         // i can be calculated -- hack-y
-//                         let formIndex = Math.floor(i / numOptions);
-//                         let optionIndex = i % numOptions;
-//                         let field = {
-//                             fieldName: allFields[optionIndex].fieldName,
-//                             fieldTag: allFields[optionIndex].fieldTag,
-//                             response: optionText
-//                         };
-//                         fieldsByForm[formIndex].fields.push(field);
-//                         i++;
-//                     });
+                    let i = 0;
+                    response.forEach(function(optionText) {
+                        // i can be calculated -- hack-y
+                        let formIndex = Math.floor(i / numOptions);
+                        let optionIndex = i % numOptions;
+                        let field = {
+                            fieldName: allFields[optionIndex].fieldName,
+                            fieldTag: allFields[optionIndex].fieldTag,
+                            response: optionText
+                        };
+                        fieldsByForm[formIndex].fields.push(field);
+                        i++;
+                    });
 
-//                     if (fieldsByForm.length) {
-//                         let allFieldsInForm = fieldsByForm[0].fields;
-//                         // For the 0th form, push in parsed fields from custom question
-//                         for (let k = 0; k < allFieldsInForm.length; k++) {
-//                             responses.push({
-//                                 tag: allFieldsInForm[k].fieldTag,
-//                                 response: allFieldsInForm[k].response
-//                             });
-//                         }
-//                     }
-//                 } else { // checkbox (?)
-//                     response.forEach(function(optionText) {
-//                         var option = question.options.find(function(option) {
-//                             return option.fill === optionText;
-//                         });
+                    if (fieldsByForm.length) {
+                        let allFieldsInForm = fieldsByForm[0].fields;
+                        // For the 0th form, push in parsed fields from custom question
+                        for (let k = 0; k < allFieldsInForm.length; k++) {
+                            responses.push({
+                                tag: allFieldsInForm[k].fieldTag,
+                                response: allFieldsInForm[k].response
+                            });
+                        }
+                    }
+                } else { // checkbox (?)
+                    response.forEach(function(optionText) {
+                        var option = question.options.find(function(option) {
+                            return option.fill === optionText;
+                        });
 
-//                         responses.push({
-//                             tag: option.tag, // can't read property tag of undefined
-//                             response: option.fill // can;t read porperty fill of undefined
-//                         });
-//                     });
-//                 }
-//             }); // for each question
+                        responses.push({
+                            tag: option.tag, // can't read property tag of undefined
+                            response: option.fill // can;t read porperty fill of undefined
+                        });
+                    });
+                }
+            }); // for each question
 
-//             // Finished going through each question
+            // Finished going through each question
 
-//             // set responses form 0th
-//             if (customQuestionFound) {
-//                 form.organization = fieldsByForm[0].fields[0].response; // fields[0] shoudl always correspond to <!ORG>
-//             }
-//             form.duplicated = true;
-//             form.status = 'Submitted';
+            // set responses form 0th
+            if (customQuestionFound) {
+                form.organization = fieldsByForm[0].fields[0].response; // fields[0] shoudl always correspond to <!ORG>
+            }
+            form.duplicated = true;
+            form.status = 'Submitted';
 
-//             form['meta']['submitted'] = Date.now();
+            form['meta']['submitted'] = Date.now();
 
-//             form['responses'] = responses;
-//             form.save().then(function(savedForm) {
-//                 // if there is more than one organization, then duplicate form
-//                 // for each other org, duplicate the form
-//                 for (let orgIndex = 1; orgIndex < totalForms; orgIndex++) {
-//                     /* Here we create duplicate forms and then add the form._id to the
-//                     owner of the original form, which is the user. */
-//                     var promise = Form.create({
-//                         email: savedForm.email,
-//                         status: savedForm.status,
-//                         email_sent: savedForm.email_sent,
-//                         template: savedForm.template,
-//                         link: savedForm.link,
-//                         responses: savedForm.responses,
-//                         meta: savedForm.meta,
-//                         letter: savedForm.letter,
-//                         duplicated: true,
-//                         organization: fieldsByForm[orgIndex].fields[0].response,
-//                         owner: savedForm.owner
-//                     });
+            form['responses'] = responses;
+            form.save().then(function(savedForm) {
+                // if there is more than one organization, then duplicate form
+                // for each other org, duplicate the form
+                for (let orgIndex = 1; orgIndex < totalForms; orgIndex++) {
+                    /* Here we create duplicate forms and then add the form._id to the
+                    owner of the original form, which is the user. */
+                    var promise = Form.create({
+                        email: savedForm.email,
+                        status: savedForm.status,
+                        email_sent: savedForm.email_sent,
+                        template: savedForm.template,
+                        link: savedForm.link,
+                        responses: savedForm.responses,
+                        meta: savedForm.meta,
+                        letter: savedForm.letter,
+                        duplicated: true,
+                        organization: fieldsByForm[orgIndex].fields[0].response,
+                        owner: savedForm.owner
+                    });
 
-//                     // for each orgIndex, push remaining here
-//                     promise.then(function(savedForm) {
-//                         savedFormIdArr.push(savedForm._id);
-//                         /* We update the response for organization to the right ones here */
-//                         FormSchema.statics.findForm(savedForm._id, function(err, foundForm) {
-//                             if (err) {
-//                                 console.log("error finding saved Form");
-//                             } else {
-//                                 let duplicateResponse = foundForm['responses'];
+                    // for each orgIndex, push remaining here
+                    promise.then(function(savedForm) {
+                        savedFormIdArr.push(savedForm._id);
+                        /* We update the response for organization to the right ones here */
+                        FormSchema.statics.findForm(savedForm._id, function(err, foundForm) {
+                            if (err) {
+                                console.log("error finding saved Form");
+                            } else {
+                                let duplicateResponse = foundForm['responses'];
 
-//                                 // setting correct tags, take in account for custom q
-//                                 if (fieldsByForm.length) {
-//                                     let allFieldsInForm = fieldsByForm[orgIndex].fields;
-//                                     for (let j = 0; j < duplicateResponse.length; j++) {
-//                                         for (let k = 0; k < allFieldsInForm.length; k++) {
-//                                             if (duplicateResponse[j].tag === allFieldsInForm[k].fieldTag) {
-//                                                 duplicateResponse[j].response = allFieldsInForm[k].response;
-//                                             }
-//                                         }
-//                                     }
-//                                 }
+                                // setting correct tags, take in account for custom q
+                                if (fieldsByForm.length) {
+                                    let allFieldsInForm = fieldsByForm[orgIndex].fields;
+                                    for (let j = 0; j < duplicateResponse.length; j++) {
+                                        for (let k = 0; k < allFieldsInForm.length; k++) {
+                                            if (duplicateResponse[j].tag === allFieldsInForm[k].fieldTag) {
+                                                duplicateResponse[j].response = allFieldsInForm[k].response;
+                                            }
+                                        }
+                                    }
+                                }
 
-//                                 foundForm.responses = duplicateResponse;
-//                                 foundForm.save();
-//                             }
-//                         });
-//                     }, function(rejected) {
-//                         console.log("rejected promise: " + rejected);
-//                     });
-//                 } // for each form
+                                foundForm.responses = duplicateResponse;
+                                foundForm.save();
+                            }
+                        });
+                    }, function(rejected) {
+                        console.log("rejected promise: " + rejected);
+                    });
+                } // for each form
 
 
 
-//                 //Adding form._id to user (who is the owner of the original form)
-//                 db.model('User').findOne({ _id: form.owner }).populate('forms').exec(function(err, user) {
-//                     if (err) {
-//                         console.log("error in form User.findOne");
-//                     } else {
-//                         if (savedFormIdArr.length > 0) {
-//                             for (let i = 0; i < savedFormIdArr.length; i++) {
-//                                 user.forms.push(savedFormIdArr[i]);
-//                             }
-//                             user.save();
-//                         }
-//                     }
-//                 });
-//             }, function(err) {
-//                 console.log("promise error: " + err);
-//             });
-//         }
-//         cb(err);
-//     });
-// };
-}
+                //Adding form._id to user (who is the owner of the original form)
+                db.model('User').findOne({ _id: form.owner }).populate('forms').exec(function(err, user) {
+                    if (err) {
+                        console.log("error in form User.findOne");
+                    } else {
+                        if (savedFormIdArr.length > 0) {
+                            for (let i = 0; i < savedFormIdArr.length; i++) {
+                                user.forms.push(savedFormIdArr[i]);
+                            }
+                            user.save();
+                        }
+                    }
+                });
+            }, function(err) {
+                console.log("promise error: " + err);
+            });
+        }
+        cb(err);
+    });
+};
+
 FormSchema.statics.setEmailSent = function(id, cb) {
     FormSchema.statics.findForm(id, function(err, form) {
         if (err) {

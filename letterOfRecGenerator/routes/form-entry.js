@@ -29,6 +29,7 @@ router.get('/:hash', function (req, res, next) {
  */
 router.post('/', function (req, res, next) {
     console.log(req.data);
+    console.log("Hello");
     Form.submitForm(req.body.id, req.body.responseData, function (err) {
         if (err) {
             res.send("unable to update responses of user form");

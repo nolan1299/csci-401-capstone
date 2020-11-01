@@ -67,7 +67,7 @@
                             <% if (q.type === 'Checkbox') { %>
                                 <% for (var option of q.options) { %>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="<%= q.number %>">
+                                        <input class="form-check-input" type="checkbox" value="<%= option.option %>" name="<%= q.number %>">
                                         <label class="form-check-label" for="<%= option.option %>"> <%= option.option %> </label>
                                     </div>
                                 <% } %>
@@ -106,7 +106,7 @@
                 removeButton.append("X");
 
                 listItem.append(removeButton);
-                $('#list_6').append(listItem);
+                $('#list_' + id).append(listItem);
             }
             input_elem.val('');
         }
@@ -147,22 +147,35 @@
             submission = $("#RecommendeeForm").serializeArray();
 
             customEntries = {}
-            $("li[class^='item']").each(function(index) {
-                questionPrompt = $(this).attr('class').substr(-1);
-                if (!customEntries[questionPrompt]) {
-                    customEntries[questionPrompt] = [];
+            $("li[class^='item']").each( (_, val) => {
+                console.log($(val));
+                let index = $(val).attr('class').substr(-1);
+                if (!customEntries[index]) {
+                    customEntries[index] = [];
                 }
-                customEntries[questionPrompt].push($(this).text());
+                customEntries[index].push($(val).text());
             });
-
             for (let prop in customEntries) {
                 submission[submission.length] = {name: prop, value: customEntries[prop]};
+            }
+            let new_submission = [];//Array(questions.length).fill([]);
+            for (let i = 0 ; i < questions.length ; i++) {
+                new_submission.push([]);
+            }
+            for (let question in submission) {
+                question_index = parseInt(submission[question].name);
+                let value = submission[question].value;
+                if (typeof(value) == "object") {
+                    new_submission[question_index - 1].push(...value);
+                } else {
+                    new_submission[question_index - 1].push(value);
+                }
             }
             $.ajax({
                 url: '/form-entry',
                 data: {
                     id: id,
-                    responseData: submission,
+                    responseData: new_submission,
                 },
                 type: 'POST',
                 complete: function() {
@@ -176,7 +189,7 @@
                     console.log('error');
                 }
             });
-            return true;
+            return false;
         }
     </script>
 </body>
