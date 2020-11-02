@@ -5,13 +5,12 @@
     <link rel="stylesheet" href="/stylesheets/style.css"/>
     <link rel="stylesheet" href="/css/template-editor.css"/>
     <link rel="stylesheet" type="text/css" href="/css/all.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> 
     <script src="//sortablejs.github.io/Sortable/Sortable.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.1/trix.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.1/trix.js"></script>
     <!-- <script type="text/javascript" src="http://livejs.com/live.js"></script> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
@@ -21,23 +20,26 @@
         <% include ../partials/header %>
     </header>
     <!-- start of bootstrap overhaul -->
-    <p id="name-container-text-field" class="title"><%= title %></p>
+    <p class="title"><%= title %></p>
     <div class="container py-3 my-3 section">
         <div class="row my-3 section">
-            <div class="col d-flex align-items-center" >
-                <div class="text-white">Template Name</div>
-                <div class="ml-2 col-6">
-                    <input type="text" class="form-control" value="<%= templateName %>" placeholder="e.g. Graduate School Recommendation Form"/>
-                </div>
+            <div class="col d-flex align-items-center error-container" >
+                <!-- <div class="error-container"> -->
+                    <div class="text-white section-header">Template Name</div>
+                    <div class="ml-2 col-6">
+                        <input id="name-container-text-field" type="text" class="form-control" value="<%= templateName %>" placeholder="e.g. Graduate School Recommendation Form"/>
+                    </div>
+                <!-- </div> -->
             </div>
         </div>
     </div>
     
     <div class="container py-3 my-3 section">
-        <div class="row">
-            <div class="col-12 text-white">Custom Questions</div>
-        </div>
+        <div class="row"><div class="col-12 text-white">Custom Questions</div></div>
         <div id="questions-container">
+            <div class="row">
+                <div class="col-12 text-white">Custom Questions</div>
+            </div>
             <div class="row d-flex align-items-center my-4">
                 <div class="ml-4">
                     <img class="icon-effects" src="/images/hamburger_white.svg">

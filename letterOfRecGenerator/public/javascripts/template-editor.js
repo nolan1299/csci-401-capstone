@@ -11,6 +11,7 @@ var footerImgData = parseAttribute('footerImgData');
 var saveSwitchData = parseAttribute('saveSwitchData');
 const TRIX_EDITOR = "trix-editor";
 const questionTypes = ["Text Answer", "Radio Button", "Checkbox", "Custom"];
+
 /**
  * Prototype class for Questions
  */
@@ -83,6 +84,7 @@ window.onload = function () {
                     questions.push(savedQuestion);
                 });
                 console.log('success loading page');
+                console.log({questions})
                 displayQuestions();
                 //emphasizeTags();
                 renderAllTagButtons();
@@ -149,7 +151,7 @@ function displayQuestions() {
     var container = document.getElementById(QUESTIONS_CONTAINER_ID);
 
     // fill in with questions
-    let questionsText = "";
+    let questionsText = '';
     for (var i = 0; i < questions.length; i++) {
         questionsText += getQuestionHTML(questions[i]);
     }
@@ -172,9 +174,9 @@ function getQuestionHTML(q) {
     // var delete_onclick_attribute = "onclick=\"deleteQuestionWithWarning(" + q.id + ")\"";
     // var multiple_choice_fields_html = getMultipleChoiceFieldsHTML(q);
     
-    const outerDiv = $(`<div class="row question-container d-flex align-items-center my-4" data-id="${q.id}">`);
+    const outerDiv = $(`<div class="question-container d-flex align-items-center my-4 error-container question-outer-container" data-id="${q.id}">`);
     outerDiv.append('<div class="ml-4"><img class="icon-effects" src="/images/hamburger_white.svg"></div>');
-    outerDiv.append(`<div class="col-5"><input type="text" class="form-control" placeholder="Enter new question here..." value="${q.value}" data-type='value'/></div>`);
+    outerDiv.append(`<div class="col-5"><input type="text" class="form-control" placeholder="Enter new question here..." value="${q.value}" data-type="value"/></div>`);
 
     const typeCol = $('<div class="col-2">');
     const typeSelect = $('<select class="form-control" id="exampleFormControlSelect1">');
@@ -185,11 +187,20 @@ function getQuestionHTML(q) {
     }
     typeCol.append(typeSelect);
     outerDiv.append(typeCol);
-
-    outerDiv.append('<div class="d-flex align-items-center"><span class="text-white mr-2">Required?</span><input type="checkbox" checked class="big-checkbox"></div>');
+    const checked = (q.optional ? '' : 'checked');
+    outerDiv.append(`<div class="d-flex align-items-center"><span class="text-white mr-2">Required?</span><input type="checkbox" ${checked} class="big-checkbox"></div>`);
     outerDiv.append(`<div class="col-3"><input type="text" class="form-control" placeholder="tag (e.g. #fname)" value="${convertLtGt(q.tag)}" data-type='tag'/></div>`);
 
-    return outerDiv.prop('outerHTML');
+
+    const errorContainer = $('<div class="row error-container"></div>');
+    const questionOuterContainer = $('<div class="question-outer-container"></div>');
+    const sortables = $('<div class="sortable-questions"></div>');
+    questionOuterContainer.append(outerDiv);
+    errorContainer.append(questionOuterContainer);
+    sortables.append(errorContainer);
+    // return outerDiv.prop('outerHTML');
+    return sortables.prop('outerHTML');
+
 }
 
 /**
@@ -325,7 +336,7 @@ function saveTemplate() {
             url: '/template-editor/update',
             data: {
                 id: id,
-                template: template
+                template
             },
             type: 'POST',
             cache: false,
@@ -378,6 +389,7 @@ function getQuestions() {
     var sortableQuestionsHTML = document.getElementById(QUESTIONS_CONTAINER_ID).getElementsByClassName("sortable-questions");
     var updatedQuestions = [];
     var newQuestionIndex = 0;
+    console.log({questions})
 
     for(var i=0; i<sortableQuestionsHTML.length; i++){
         var errorContainerHTML = sortableQuestionsHTML[i].getElementsByClassName("error-container");
@@ -387,6 +399,7 @@ function getQuestions() {
         newQuestion.setId(i);
         updatedQuestions.push(newQuestion);
     }
+    console.log({updatedQuestions});
 
     updatedQuestions.forEach(question => dbQuestions.push({
         number: questionNumber++,
@@ -398,7 +411,8 @@ function getQuestions() {
         organizationFlag: question.isOrganizationQuestion
 
     }));
-
+    console.log({dbQuestions})
+    // throw Error('two pretty best friends not found');
     return dbQuestions;
 }
 
@@ -598,7 +612,7 @@ function validate(template) {
 
     for (var i = 0; i < template.questions.length; i++) {
         var question = template.questions[i];
-        var query = "div[data-id='" + questions[i].id + "'][class='question-outer-container']";
+        var query = "div[data-id='" + questions[i].id + "'].question-outer-container";
         var questionHTML = document.querySelector(query);
 
         var totalFields = 3;
@@ -796,8 +810,7 @@ function addErrorListToErrorContainer(container) {
 }
 
 function getInnerContainer(container) {
-    for (var i = 0; i < container.children.length; i++) {
-        var child = container.children[i];
+    for (const child of container.children) {
 
         if (!child.classList) {
             continue;
