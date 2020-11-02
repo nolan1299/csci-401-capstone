@@ -250,29 +250,17 @@ UserSchema.methods.addForm = function(form, cb) {
     this.save(cb);
 };
 
-UserSchema.methods.getForms = function(email, cb) {
-    if(email.length > 0){
-        console.log('here')
+UserSchema.methods.getForms = function(match, cb) {
+        // console.log('here')
         User.findOne({ '_id': this._id }).
             populate({
                 path: 'forms',
-                match: { email }
+                match
             }).
             exec((err, user) => {
             cb(err, user.forms);
         });
-    }
-    else{
-        console.log('not here')
-        User.findOne({ '_id': this._id }).
-            populate({
-                path: 'forms',
-            }).
-            exec((err, user) => {
-            cb(err, user.forms);
-        });
-    }
-};
+    };
 
 UserSchema.methods.getForm = function(id, cb) {
     var flag = false;

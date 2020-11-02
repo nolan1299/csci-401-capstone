@@ -421,9 +421,11 @@ function createPageButtons(tableNumber) {
     }
 }
 
-function search(email){
+function search(match){
     $.ajax({
-        url: '/forms', data: { email }, success: function (response) {
+        url: '/forms', 
+        data: match, 
+        success: function (response) {
             data = [response.forms];
             console.log({ data });
             createPageButtons(0);
@@ -444,16 +446,33 @@ function search(email){
 
 document.getElementById('search-div').onsubmit = (e) => {
     e.preventDefault();
+    const match = {};
     email = document.querySelector('#search-input').value;
-    match = {email}
-    search(email);
+    if(email) {
+        match.email = email;
+    }
+    search(match);
 }
 
-// document.getElementById('advanced-search-btn').onclick = (e) => {
-//     e.preventDefault();
-//     email = document.querySelector('#search-input').value;
-
-// }
+document.getElementById('advanced-search-btn').onclick = (e) => {
+    e.preventDefault();
+    const match = {};
+    email = document.querySelector('#search-input').value;
+    template = document.querySelector('#template-input').value;
+    organization = document.querySelector('#org-input').value;
+    // startdate = document.querySelector('#startdate-input').vaue;
+    // enddate = document.querySelector('#enddate-input').value;
+    if(email) {
+        match.email = email;
+    }
+    if(template) {
+        match.template = template;
+    }
+    if(organization) {
+        match.organization = organization;
+    }
+    search(match);
+}
 
 // document.getElementById('clear-selection').onclick = () => {
 //     document.getElementById('search-input').value = "";

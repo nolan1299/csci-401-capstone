@@ -3,8 +3,8 @@ var router = express.Router();
 
 router.get('/', function (req, res, next) {
     const email = req.query.email;
-    console.log({email})
-    req.user.getForms(email, function(err, forms) {
+    console.log(req.query);
+    req.user.getForms(req.query, function(err, forms) {
         if (err) {
             console.log(`error: ${err}`);
         } else {
