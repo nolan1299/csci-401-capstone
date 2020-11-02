@@ -127,7 +127,6 @@ function sortByStatus(tableNumber) {
     clearTable(tableNumber);
     generateTable(tableNumber);
 }
-
 // When the user clicks on the button, open the modal
 function openModal() {
     var modal = document.getElementById('myModal');
@@ -446,19 +445,30 @@ function search(email){
 document.getElementById('search-div').onsubmit = (e) => {
     e.preventDefault();
     email = document.querySelector('#search-input').value;
+    match = {email}
     search(email);
 }
 
-document.getElementById('clear-selection').onclick = () => {
-    document.getElementById('search-input').value = "";
-    search("");
-}
+// document.getElementById('advanced-search-btn').onclick = (e) => {
+//     e.preventDefault();
+//     email = document.querySelector('#search-input').value;
 
-document.getElementById('email-form').onsubmit = (e) => {
-    e.preventDefault();
-    document.getElementById('search-input').value = "";
-    search("");
-}
+// }
+
+// document.getElementById('clear-selection').onclick = () => {
+//     document.getElementById('search-input').value = "";
+//     search("");
+// }
+
+// document.getElementById('email-form').onsubmit = (e) => {
+//     e.preventDefault();
+//     document.getElementById('search-input').value = "";
+//     search("");
+// }
+
+$( ".clr-btn" ).on('click', function() {
+    $( this ).parent().prev().val("");
+  });
 
 // createPageButtons(0);
 

@@ -2,11 +2,17 @@
 <html>
 <head>
     <title>Letter of Recommendation Generator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/style.css"/>
     <link rel="stylesheet" type="text/css" href="/css/all.css"/>
     <link rel="stylesheet" type="text/css" href="/css/table.css"/>
     <link rel="stylesheet" type="text/css" href="/css/modal.css"/>
     <link rel="stylesheet" type="text/css" href="/css/recommender-dashboard.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 <header>
@@ -16,13 +22,68 @@
     <div id="rec-header">
         <p class="title">Recommendations</p>
         <% if (templates.length) { %>
-            <form id="search-div">
-                <input id="search-input" type="text" name="email" placeholder="Filter by Email">
-                <img id="clear-selection" src="images/clear_selection.png" alt="">
-                <button type="submit" id="search-btn">Search</button>
+            <form class="form-inline" id="search-div">
+                <div class="form-row">
+                    <div class = "col">
+                        <div class="input-group search-bar col">
+                            <input id="search-input" type="text" class="form-control" name="email" placeholder="Filter by Email">
+                            <div class="input-group-append">
+                                <button class="btn clr-btn btn-outline-secondary" type="button">x</button>
+                            </div>
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-outline-secondary" id="search-btn">Search</button>
+                            </div>
+
+                        </div>                       
+                        <button class="btn-sm ml-auto mr-3 bg-transparent font-italic" style="border:none;" id="adv-search" type="button" data-toggle="collapse" data-target="#advanced-search" aria-expanded="false" aria-controls="advanced-search">
+                            + Advanced Search
+                        </button>
+                    </div>
+                    <!-- <div class="col">
+                        <button type="submit" class="btn" id="search-btn">Search</button>
+                    </div> -->
+                </div>               
             </form>
-            <div class="add-btn" onclick="openModal()">+ Create Recommendation</div>
+            
+            <button class="add-btn mr-2 btn" onclick="openModal()">+ Create Recommendation</button>
         <% } %>
+    </div>
+    <div class ="collapse" id="advanced-search">
+        <form class="form-inline" id="advanced-search-form">
+            <div class="form-row adv-search-options">
+                <div class="col">
+                    <div class="input-group col mt-2">
+                        <input id="template-input" type="text" class="form-control ml-auto" name="template" placeholder="Filter by Template">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary clr-btn" type="button">x</button>
+                        </div>   
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group col mt-2">
+                        <input id="org-input" type="text" class="form-control" name="org" placeholder="Filter by Organization">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary clr-btn" type="button">x</button>
+                        </div>   
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group col mt-2">
+                        <input id="startdate-input" type="date" class="form-control ml-auto" name="startdate" placeholder="Filter by Start Date">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary clr-btn" type="button">x</button>
+                        </div>   
+                    </div>
+                    <div class="input-group col mt-2 mb-2">
+                        <input id="enddate-input" type="date" class="form-control ml-auto" name="enddate" placeholder="Filter by End Date">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary clr-btn" type="button">x</button>
+                        </div> 
+                    </div>
+                    <button class="ml-auto mr-3 mb-2 btn" style='background-color: #FFFFFF;' id="advanced-search-btn">Search</button>
+                </div>
+            </div>             
+        </form>
     </div>
     <div id = "DefaultEmailModal" Class="modal">
         <div class="modal-content">
@@ -100,6 +161,7 @@
     </div>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
 <script src="/javascripts/recommender-dashboard.js"></script>
 <script>
     let email = "<%= email %>";
