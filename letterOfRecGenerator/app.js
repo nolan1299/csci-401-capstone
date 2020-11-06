@@ -43,7 +43,6 @@ const response = require('./routes/response');
 const emailLetterPreview = require('./routes/email-letter-preview');
 const docxVar = require('./routes/docx');
 const about = require('./routes/about');
-const index = recommenderDashboard;
 
 
 const app = express();
@@ -109,20 +108,20 @@ app.use('/logout', (req, res) => {
 });
 
 // Routes
-app.use('/', index);
+app.use('/', recommenderDashboard);
 app.use('/users', users);
 app.use('/template-editor', isAuthenticated, createTemplate);
 app.use('/email-template-editor',isAuthenticated, createEmailTemplate);
-app.use('/form-completed', formCompleted);
+app.use('/form-completed', isAuthenticated, formCompleted);
 app.use('/form-entry', formEntry);
-app.use('/letter-preview', letterPreview);
-app.use('/email-letter-preview', emailLetterPreview);
+app.use('/letter-preview', isAuthenticated, letterPreview);
+app.use('/email-letter-preview', isAuthenticated, emailLetterPreview);
 app.use('/login', login);
 app.use('/recommender-dashboard', isAuthenticated, recommenderDashboard);
 app.use('/template-dashboard', isAuthenticated, templateDashboard);
-app.use('/history', history);
-app.use('/archive', archive);
-app.use('/response', response);
+app.use('/history', isAuthenticated, history);
+app.use('/archive', isAuthenticated, archive);
+app.use('/response', isAuthenticated, response);
 app.use('/docx', docxVar);
 app.use('/about', isAuthenticated, about);
 
@@ -148,11 +147,14 @@ app.use(function (err, req, res, next) {
 });
 
 function isAuthenticated(req, res, next) {
+    console.log('trying to go to ' + req.url)
     if (req.user) {
-        return next();
+        next();
+    } 
+    else{
+        console.log('redirect :(')
+        res.redirect('/login');
     }
-
-    res.redirect('/login');
 }
 
 
