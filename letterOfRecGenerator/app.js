@@ -108,7 +108,14 @@ app.use('/logout', (req, res) => {
 });
 
 // Routes
-app.use('/', recommenderDashboard);
+app.all('/', (req, res) => {
+    if(req.user){
+        res.redirect('/recommender-dashboard');
+    }
+    else{
+        res.redirect('/login');
+    }
+});
 app.use('/users', users);
 app.use('/template-editor', isAuthenticated, createTemplate);
 app.use('/email-template-editor',isAuthenticated, createEmailTemplate);
@@ -147,12 +154,10 @@ app.use(function (err, req, res, next) {
 });
 
 function isAuthenticated(req, res, next) {
-    console.log('trying to go to ' + req.url)
     if (req.user) {
         next();
     } 
     else{
-        console.log('redirect :(')
         res.redirect('/login');
     }
 }
