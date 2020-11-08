@@ -177,7 +177,7 @@ function getQuestionHTML(q) {
                 <div class="question-container d-flex align-items-center my-4 error-container question-outer-container"
                     data-id="${q.id}">
                     <div class="ml-4"><img class="icon-effects" src="/images/hamburger_white.svg"></div>
-                    <div class="row col">
+                    <div class="row col ${q.type === questionTypes[1] || q.type === questionTypes[2] ? "multiple-choice-container" : ""}">
                         <div class="col col-5"><input type="text" class="form-control"
                                 placeholder="Enter new question here..." data-type="value" value="${q.value}"></div>
                         <div class="col col-2"><select class="form-control" id="exampleFormControlSelect1">
@@ -209,27 +209,27 @@ function getMultipleChoiceFieldsHTML(q) {
     if (q.type === "Radio Button"){
         for (const option of q.options){
             html += `<div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Radio Button Option" data-type="value" value="${option.option}"></div>
+                placeholder="Radio Button Option" data-type="mc-value" value="${option.option}"></div>
                 <div class="col col-3 mt-3"><input type="text" class="form-control"
-                    placeholder="Text to Replace Tag" data-type="value" value="${option.fill}"></div>
+                    placeholder="Text to Replace Tag" data-type="mc-value" value="${option.fill}"></div>
                 <div class="col col-6"></div>`;
         }
         if(q.options.length === 0){
             html = `<div class="col col-3 mt-3"><input type="text" class="form-control"
-            placeholder="Radio Button Option" data-type="value"></div>
+            placeholder="Radio Button Option" data-type="mc-value"></div>
             <div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Text to Replace Tag" data-type="value"></div>
+                placeholder="Text to Replace Tag" data-type="mc-value"></div>
             <div class="col col-6"></div>`;
         }
     }
     else if (q.type === "Checkbox"){
         for (const option of q.options){
             html += `<div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Checkbox Option." data-type="value" value="${option.option}"></div>
+                placeholder="Checkbox Option." data-type="mc-value" value="${option.option}"></div>
             <div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Text to Replace Tag" data-type="value" value="${option.fill}"></div>
+                placeholder="Text to Replace Tag" data-type="mc-value" value="${option.fill}"></div>
             <div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Tag (e.g. <!check-value>" data-type="value" value="${option.tag}"></div>
+                placeholder="Tag (e.g. <!check-value>" data-type="tag" value="${option.tag}"></div>
             <div class="col col-6"></div>`;
         }
         if(q.options.length === 0){
@@ -242,7 +242,6 @@ function getMultipleChoiceFieldsHTML(q) {
             <div class="col col-6"></div>`;
         }
     }
-    console.log(html)
     return html;
 }
 
@@ -551,12 +550,12 @@ function updateQuestions() {
 
         question.optional = !questionEl.querySelector("[type='checkbox']").checked;
 
-        var multipleChoices = questionEl.querySelectorAll("[class='multiple-choice-container']");
+        var multipleChoices = questionEl.querySelectorAll(".multiple-choice-container");
         for (var j = 0; j < multipleChoices.length; j++) {
             var mc = multipleChoices[j];
 
-            question.options[j].option = mc.querySelectorAll("[data-type='value']")[0].value;
-            question.options[j].fill = mc.querySelectorAll("[data-type='value']")[1].value;
+            question.options[j].option = mc.querySelectorAll("[data-type='mc-value']")[0].value;
+            question.options[j].fill = mc.querySelectorAll("[data-type='mc-value']")[1].value;
             if (question.type === "Checkbox" || question.type === CUSTOM_QUESTION_TYPE) {
                 question.options[j].tag = mc.querySelector("[data-type='tag']").value;
             }
