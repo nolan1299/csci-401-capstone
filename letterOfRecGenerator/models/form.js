@@ -210,7 +210,7 @@ FormSchema.statics.submitForm = function(id, responseData, cb) {
                 } else { // checkbox (?)
                     response.forEach(function(optionText) {
                         var option = question.options.find(function(option) {
-                            return option.fill === optionText;
+                            return option.option === optionText;
                         });
 
                         responses.push({
