@@ -171,59 +171,79 @@ function convertLtGt(s) {
  * @returns {string}
  */
 function getQuestionHTML(q) {
-    // var data_id_attribute = "data-id=\"" + q.id + "\"";
-    // var delete_onclick_attribute = "onclick=\"deleteQuestionWithWarning(" + q.id + ")\"";
-    // var multiple_choice_fields_html = getMultipleChoiceFieldsHTML(q);
-    const outerDiv = $(`<div class="sortable-questions">
-<div class="row error-container">
-    <div class="question-outer-container">
-        <div class="question-container d-flex align-items-center my-4 error-container question-outer-container"
-            data-id="${q.id}">
-            <div class="ml-4"><img class="icon-effects" src="/images/hamburger_white.svg"></div>
-            <div class="row col">
-                <div class="col col-5"><input type="text" class="form-control"
-                        placeholder="Enter new question here..." data-type="value" value="${q.value}"></div>
-                <div class="col col-2"><select class="form-control" id="exampleFormControlSelect1">
-                        <option ${questionTypes[0] === q.type ? " selected" : ""}>Text Answer</option>
-                        <option ${questionTypes[1] === q.type ? " selected" : ""}>Radio Button</option>
-                        <option ${questionTypes[2] === q.type ? " selected" : ""}>Checkbox</option>
-                        <option ${questionTypes[3] === q.type ? " selected" : ""}>Custom</option>
-                    </select></div>
-                <div class="d-flex align-items-center"><span
-                    class="text-white mr-2">Required?</span><input type="checkbox" ${q.optional ? '' : 'checked'}
-                    class="big-checkbox">
-                </div>
-                <div class="col-3"><input type="text" class="form-control"
-                    placeholder="tag (e.g. #fname)" value="${convertLtGt(q.tag)}" data-type="tag"></div>
+    return `<div class="sortable-questions">
+        <div class="row error-container">
+            <div class="question-outer-container">
+                <div class="question-container d-flex align-items-center my-4 error-container question-outer-container"
+                    data-id="${q.id}">
+                    <div class="ml-4"><img class="icon-effects" src="/images/hamburger_white.svg"></div>
+                    <div class="row col">
+                        <div class="col col-5"><input type="text" class="form-control"
+                                placeholder="Enter new question here..." data-type="value" value="${q.value}"></div>
+                        <div class="col col-2"><select class="form-control" id="exampleFormControlSelect1">
+                                <option ${questionTypes[0] === q.type ? " selected" : ""}>Text Answer</option>
+                                <option ${questionTypes[1] === q.type ? " selected" : ""}>Radio Button</option>
+                                <option ${questionTypes[2] === q.type ? " selected" : ""}>Checkbox</option>
+                                <option ${questionTypes[3] === q.type ? " selected" : ""}>Custom</option>
+                            </select></div>
+                        <div class="d-flex align-items-center"><span
+                            class="text-white mr-2">Required?</span><input type="checkbox" ${q.optional ? '' : 'checked'}
+                            class="big-checkbox">
+                        </div>
+                        
+                        ${q.type === "Checkbox" ? `<div class="col-3"></div>` : 
+                        `<div class="col-3"><input type="text" class="form-control"
+                            placeholder="tag (e.g. #fname)" value="${convertLtGt(q.tag)}" data-type="tag">
+                        </div>`}
+
+                        ${getMultipleChoiceFieldsHTML(q)}
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>`);
-    // const typeCol = $('<div class="col-2">');
-    // const typeSelect = $('<select class="form-control" id="exampleFormControlSelect1">');
-    // let selected = "";
-    // for (const type of questionTypes) {
-    //     selected = type === q.type ? " selected" : "";
-    //     typeSelect.append(`<option${selected}>${type}</option>`);
-    // }
-    // typeCol.append(typeSelect);
-    // outerDiv.append(typeCol);
-    // const checked = (q.optional ? '' : 'checked');
-    // outerDiv.append(`<div class="d-flex align-items-center"><span class="text-white mr-2">Required?</span><input type="checkbox" ${checked} class="big-checkbox"></div>`);
-    // outerDiv.append(`<div class="col-3"><input type="text" class="form-control" placeholder="tag (e.g. #fname)" value="${convertLtGt(q.tag)}" data-type='tag'/></div>`);
+        </div>`;
+}
 
-
-    const errorContainer = $('<div class="row error-container"></div>');
-    const questionOuterContainer = $('<div class="question-outer-container"></div>');
-    // const sortables = $('<div class="sortable-questions"></div>');
-    questionOuterContainer.append(outerDiv);
-    errorContainer.append(questionOuterContainer);
-    // sortables.append(errorContainer);
-    // return outerDiv.prop('outerHTML');
-    // outerDiv.append(errorContainer);
-    return outerDiv.prop('outerHTML');
-
+function getMultipleChoiceFieldsHTML(q) {
+    if (q.type !== "Radio Button" && q.type !== "Checkbox" && q.type !== "Custom") return "";
+    let html = "";
+    if (q.type === "Radio Button"){
+        for (const option of q.options){
+            html += `<div class="col col-3 mt-3"><input type="text" class="form-control"
+                placeholder="Radio Button Option" data-type="value" value="${option.option}"></div>
+                <div class="col col-3 mt-3"><input type="text" class="form-control"
+                    placeholder="Text to Replace Tag" data-type="value" value="${option.fill}"></div>
+                <div class="col col-6"></div>`;
+        }
+        if(q.options.length === 0){
+            html = `<div class="col col-3 mt-3"><input type="text" class="form-control"
+            placeholder="Radio Button Option" data-type="value"></div>
+            <div class="col col-3 mt-3"><input type="text" class="form-control"
+                placeholder="Text to Replace Tag" data-type="value"></div>
+            <div class="col col-6"></div>`;
+        }
+    }
+    else if (q.type === "Checkbox"){
+        for (const option of q.options){
+            html += `<div class="col col-3 mt-3"><input type="text" class="form-control"
+                placeholder="Checkbox Option." data-type="value" value="${option.option}"></div>
+            <div class="col col-3 mt-3"><input type="text" class="form-control"
+                placeholder="Text to Replace Tag" data-type="value" value="${option.fill}"></div>
+            <div class="col col-3 mt-3"><input type="text" class="form-control"
+                placeholder="Tag (e.g. <!check-value>" data-type="value" value="${option.tag}"></div>
+            <div class="col col-6"></div>`;
+        }
+        if(q.options.length === 0){
+            html = `<div class="col col-3 mt-3"><input type="text" class="form-control"
+                placeholder="Checkbox Option." data-type="value"></div>
+            <div class="col col-3 mt-3"><input type="text" class="form-control"
+                placeholder="Text to Replace Tag" data-type="value"></div>
+            <div class="col col-3 mt-3"><input type="text" class="form-control"
+                placeholder="Tag (e.g. <!check-value>" data-type="value"></div>
+            <div class="col col-6"></div>`;
+        }
+    }
+    console.log(html)
+    return html;
 }
 
 /**
@@ -277,7 +297,7 @@ function getQuestionHTML_old(q) {
 }
 
 // Note: the html needs to be nested within a question-container element in order to properly work
-function getMultipleChoiceFieldsHTML(q) {
+function getMultipleChoiceFieldsHTML_old(q) {
     if (q.type !== "Radio Button" && q.type !== "Checkbox" && q.type !== "Custom") return "";
 
     var option_placeholder = "Enter option here...";
