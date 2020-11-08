@@ -51,7 +51,7 @@
                                 <% if (q.optional) { %>
                                     <% for (var option of q.options) { %>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" value="<%= option.option %>" name="<%= q.number %>">
+                                            <input class="form-check-input" type="radio" value="<%= option.fill %>" name="<%= q.number %>">
                                             <label class="form-check-label" for="<%= option.option %>"> <%= option.option %> </label>
                                         </div>
                                     <% } %>
@@ -67,7 +67,7 @@
                             <% if (q.type === 'Checkbox') { %>
                                 <% for (var option of q.options) { %>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="<%= option.option %>" name="<%= q.number %>">
+                                        <input class="form-check-input" type="checkbox" value="<%= option.fill %>" name="<%= q.number %>">
                                         <label class="form-check-label" for="<%= option.option %>"> <%= option.option %> </label>
                                     </div>
                                 <% } %>
@@ -103,7 +103,6 @@
                 let removeButton = document.createElement("button");
                 removeButton.type = "button";
                 removeButton.onclick = removeCustom;
-                removeButton.append("X");
 
                 listItem.append(removeButton);
                 $('#list_' + id).append(listItem);
