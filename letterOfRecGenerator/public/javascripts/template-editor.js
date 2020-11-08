@@ -19,7 +19,7 @@ class Question {
     constructor(type, value, tag, optional = false, orgQuestion = false) {
         // Text, Radio Button, Checkbox
         this.type = type;
-        this.value = value; 
+        this.value = value;
         this.tag = tag;
         this.optional = optional;
         // local browser
@@ -39,7 +39,7 @@ class Question {
         this.options = options;
     }
 
-    setOrganizationQuestion (booleanValue) {
+    setOrganizationQuestion(booleanValue) {
         this.isOrganizationQuestion = booleanValue;
     }
 }
@@ -58,7 +58,7 @@ var tags = [];
 var warningModalFunction;
 
 window.onload = function () {
-    return;
+    // return;
     // setUpEventHandlers();
     document.getElementById(LETTER_TEXT_AREA_ID).addEventListener('paste', function (e) {
         e.preventDefault();
@@ -75,7 +75,7 @@ window.onload = function () {
     if (id) {
         $.ajax({
             url: '/template-editor/template',
-            data: {id, saveSwitchData},
+            data: { id, saveSwitchData },
             type: 'GET',
             success: function (data) {
                 document.getElementById(LETTER_TEXT_AREA_ID).innerHTML = data.letter;
@@ -85,7 +85,7 @@ window.onload = function () {
                     questions.push(savedQuestion);
                 });
                 console.log('success loading page');
-                console.log({questions})
+                console.log({ questions })
                 displayQuestions();
                 //emphasizeTags();
                 renderAllTagButtons();
@@ -161,7 +161,7 @@ function displayQuestions() {
     // Sortable.create(list);
 }
 
-function convertLtGt(s){
+function convertLtGt(s) {
     return s.replace('<', '&lt;').replace('>', '&gt;');
 }
 
@@ -174,33 +174,55 @@ function getQuestionHTML(q) {
     // var data_id_attribute = "data-id=\"" + q.id + "\"";
     // var delete_onclick_attribute = "onclick=\"deleteQuestionWithWarning(" + q.id + ")\"";
     // var multiple_choice_fields_html = getMultipleChoiceFieldsHTML(q);
-    
-    const outerDiv = $(`<div class="question-container d-flex align-items-center my-4 error-container question-outer-container" data-id="${q.id}">`);
-    outerDiv.append('<div class="ml-4"><img class="icon-effects" src="/images/hamburger_white.svg"></div>');
-    outerDiv.append(`<div class="col-5"><input type="text" class="form-control" placeholder="Enter new question here..." value="${q.value}" data-type="value"/></div>`);
-
-    const typeCol = $('<div class="col-2">');
-    const typeSelect = $('<select class="form-control" id="exampleFormControlSelect1">');
-    let selected = "";
-    for(const type of questionTypes){
-        selected = type === q.type ? " selected" : "";
-        typeSelect.append(`<option${selected}>${type}</option>`);
-    }
-    typeCol.append(typeSelect);
-    outerDiv.append(typeCol);
-    const checked = (q.optional ? '' : 'checked');
-    outerDiv.append(`<div class="d-flex align-items-center"><span class="text-white mr-2">Required?</span><input type="checkbox" ${checked} class="big-checkbox"></div>`);
-    outerDiv.append(`<div class="col-3"><input type="text" class="form-control" placeholder="tag (e.g. #fname)" value="${convertLtGt(q.tag)}" data-type='tag'/></div>`);
+    const outerDiv = $(`<div class="sortable-questions">
+<div class="row error-container">
+    <div class="question-outer-container">
+        <div class="question-container d-flex align-items-center my-4 error-container question-outer-container"
+            data-id="${q.id}">
+            <div class="ml-4"><img class="icon-effects" src="/images/hamburger_white.svg"></div>
+            <div class="row col">
+                <div class="col col-5"><input type="text" class="form-control"
+                        placeholder="Enter new question here..." data-type="value" value="${q.value}"></div>
+                <div class="col col-2"><select class="form-control" id="exampleFormControlSelect1">
+                        <option ${questionTypes[0] === q.type ? " selected" : ""}>Text Answer</option>
+                        <option ${questionTypes[1] === q.type ? " selected" : ""}>Radio Button</option>
+                        <option ${questionTypes[2] === q.type ? " selected" : ""}>Checkbox</option>
+                        <option ${questionTypes[3] === q.type ? " selected" : ""}>Custom</option>
+                    </select></div>
+                <div class="d-flex align-items-center"><span
+                    class="text-white mr-2">Required?</span><input type="checkbox" ${q.optional ? '' : 'checked'}
+                    class="big-checkbox">
+                </div>
+                <div class="col-3"><input type="text" class="form-control"
+                    placeholder="tag (e.g. #fname)" value="${convertLtGt(q.tag)}" data-type="tag"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>`);
+    // const typeCol = $('<div class="col-2">');
+    // const typeSelect = $('<select class="form-control" id="exampleFormControlSelect1">');
+    // let selected = "";
+    // for (const type of questionTypes) {
+    //     selected = type === q.type ? " selected" : "";
+    //     typeSelect.append(`<option${selected}>${type}</option>`);
+    // }
+    // typeCol.append(typeSelect);
+    // outerDiv.append(typeCol);
+    // const checked = (q.optional ? '' : 'checked');
+    // outerDiv.append(`<div class="d-flex align-items-center"><span class="text-white mr-2">Required?</span><input type="checkbox" ${checked} class="big-checkbox"></div>`);
+    // outerDiv.append(`<div class="col-3"><input type="text" class="form-control" placeholder="tag (e.g. #fname)" value="${convertLtGt(q.tag)}" data-type='tag'/></div>`);
 
 
     const errorContainer = $('<div class="row error-container"></div>');
     const questionOuterContainer = $('<div class="question-outer-container"></div>');
-    const sortables = $('<div class="sortable-questions"></div>');
+    // const sortables = $('<div class="sortable-questions"></div>');
     questionOuterContainer.append(outerDiv);
     errorContainer.append(questionOuterContainer);
-    sortables.append(errorContainer);
+    // sortables.append(errorContainer);
     // return outerDiv.prop('outerHTML');
-    return sortables.prop('outerHTML');
+    // outerDiv.append(errorContainer);
+    return outerDiv.prop('outerHTML');
 
 }
 
@@ -234,15 +256,15 @@ function getQuestionHTML_old(q) {
     }
 
     var html = "<div class=\"sortable-questions\"> <h2 class=\"question-header\"> <b>Question Type: </b>" + question_type_label + "</h2>" + "<img class=\"icon-effects\" src=\"/images/outline-reorder-24px.svg\">" + "<div class=\"error-container\"><div class=\"question-outer-container\"" + data_id_attribute + ">";
-     // "required" checkbox
+    // "required" checkbox
     html += "<div class=\"required-checkbox-container\">" + "<p>Required?" + "<input type=\"checkbox\" ";
     html += (q.optional ? "" : "checked");
     html += ">" + "</p></div>";
 
     // question box
-    html += [ "<div class=\"question-container\"> <b>Question:</b>" +
-    getTextAreaHTML(placeholder, q.value) +
-    multiple_choice_fields_html ];
+    html += ["<div class=\"question-container\"> <b>Question:</b>" +
+        getTextAreaHTML(placeholder, q.value) +
+        multiple_choice_fields_html];
 
     if (q.type !== "Checkbox" && q.type !== "Custom") {
         html += "<span class=\"line\"></span> <b>Tag:</b>" + getTagTextInputHTML(q.tag);
@@ -348,7 +370,7 @@ function saveTemplate() {
                 console.log('success in SaveTemplate');
                 window.location.href = '/template-dashboard'
             },
-            error: function (err){
+            error: function (err) {
                 console.log('error in saveTemplate:' + err);
                 var textField = document.getElementById(NAME_CONTAINER_TEXT_FIELD_ID);
                 addError(textField, 0, 'template name already exists');
@@ -361,7 +383,7 @@ function saveTemplate() {
         console.log("creating template");
         $.ajax({
             url: '/template-editor/create',
-            data: {template: template},
+            data: { template: template },
             type: 'POST',
             complete: function () {
                 console.log('complete');
@@ -390,9 +412,9 @@ function getQuestions() {
     var sortableQuestionsHTML = document.getElementById(QUESTIONS_CONTAINER_ID).getElementsByClassName("sortable-questions");
     var updatedQuestions = [];
     var newQuestionIndex = 0;
-    console.log({questions})
+    console.log({ questions })
 
-    for(var i=0; i<sortableQuestionsHTML.length; i++){
+    for (var i = 0; i < sortableQuestionsHTML.length; i++) {
         var errorContainerHTML = sortableQuestionsHTML[i].getElementsByClassName("error-container");
         var questionsOuterContainer = errorContainerHTML[0].getElementsByClassName("question-outer-container");
         var newQuestion = new Question(questions[i].type, questions[i].value, questions[i].tag, questions[i].optional, questions[i].isOrganizationQuestion);
@@ -400,7 +422,7 @@ function getQuestions() {
         newQuestion.setId(i);
         updatedQuestions.push(newQuestion);
     }
-    console.log({updatedQuestions});
+    console.log({ updatedQuestions });
 
     updatedQuestions.forEach(question => dbQuestions.push({
         number: questionNumber++,
@@ -412,7 +434,7 @@ function getQuestions() {
         organizationFlag: question.isOrganizationQuestion
 
     }));
-    console.log({dbQuestions})
+    console.log({ dbQuestions })
     // throw Error('two pretty best friends not found');
     return dbQuestions;
 }
@@ -445,7 +467,7 @@ function executeWarningModalFunction() {
 
 // NOTE: need to push new question AFTER updateQuestions(), since display questions relies on a question being displayed once
 // to assign it a data_id
-function addTextAnswerQuestion() { 
+function addTextAnswerQuestion() {
     updateQuestions();
     questions.push(new Question("Text Answer", "", ""));
     displayQuestions();
@@ -583,7 +605,7 @@ function deleteMultipleChoiceField(el, data_id) {
 }
 
 function findAncestor(el, cls) {
-    while ((el = el.parentElement) && !el.classList.contains(cls)) ;
+    while ((el = el.parentElement) && !el.classList.contains(cls));
     return el;
 }
 
@@ -869,8 +891,8 @@ function emphasizeTags() {
     var letterHTML = document.getElementById(LETTER_TEXT_AREA_ID).innerHTML;
     var letterHTMLWithTagEmphasis = letterHTML.replace(/&lt;\![a-z0-9_]+&gt;/gi, function (match) {
         if (unknownTags.find(function (tag) {
-                return tag === match;
-            })) {
+            return tag === match;
+        })) {
             return '<span class="tag-unknown">' + match + '</span>';
         }
 
