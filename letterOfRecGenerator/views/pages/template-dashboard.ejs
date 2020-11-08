@@ -108,10 +108,9 @@
     }
 
     function displayMetrics(i) {
-        console.log(i)
         var timesUsed = data[0][i].metric;
         var creationDate = convertToDate(data[0][i].creation_date);
-        
+        var lastUsedDate = convertToDate(data[0][i].last_used);
         var metricsHtml = `
         <div class="row text-center">
             <div class="col-xs-4 metric">
@@ -126,7 +125,7 @@
                 <div class="row">
                     <div class="col-12">
                         <p class="metric-title">last used</p>
-                        <p class="metric-text">10/12/2020</p>
+                        <p class="metric-text">${lastUsedDate}</p>
                     </div>
                 </div>
             </div>
@@ -152,6 +151,10 @@
     }
 
     function convertToDate(date) {
+        if (date == 0)
+        {
+            return "N/A"
+        }
         var date = new Date(date);
         let month = date.getMonth()+1;
         let day = date.getDate();
