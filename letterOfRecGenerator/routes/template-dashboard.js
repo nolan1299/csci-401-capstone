@@ -29,6 +29,8 @@ router.get('/', function(req, res, next) {
         }
         for (var i = 0; i < templates.length; i++) {
             var tmp_id = templates[i]._id;
+            let creation_date = templates[i]._id.getTimestamp();
+            templates[i].creation_date = creation_date;
             templates[i].metric = tmp_metric[tmp_id.toString()] ?
                 tmp_metric[tmp_id.toString()] :
                 0;
