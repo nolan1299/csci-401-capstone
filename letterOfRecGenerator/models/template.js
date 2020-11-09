@@ -58,6 +58,6 @@ TemplateSchema.methods.getTags = function () {
     return allTags;
 };
 
-var Template = db.model('Template', TemplateSchema);
+var Template = db.model('Template', TemplateSchema, 'Template');
 
 module.exports = Template;

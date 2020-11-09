@@ -250,8 +250,8 @@ UserSchema.methods.addForm = function(form, cb) {
     this.save(cb);
 };
 
-UserSchema.methods.getForms = function(match, cb) {
-        // console.log('here')
+UserSchema.methods.getForms = function(cb, match={}) {
+        console.log(match['template']);
         User.findOne({ '_id': this._id }).
             populate({
                 path: 'forms',

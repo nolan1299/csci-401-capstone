@@ -1,3 +1,5 @@
+//const Template = require("../../models/template");
+
 var current_page = [1];
 var records_per_page = 10;
 let data;
@@ -453,23 +455,40 @@ document.getElementById('search-div').onsubmit = (e) => {
     }
     search(match);
 }
-
+// $('.filter-input').on('input', e => {
+    
+// }
 document.getElementById('advanced-search-btn').onclick = (e) => {
     e.preventDefault();
     const match = {};
+    const dateMatch = {};
     email = document.querySelector('#search-input').value;
     template = document.querySelector('#template-input').value;
     organization = document.querySelector('#org-input').value;
-    // startdate = document.querySelector('#startdate-input').vaue;
-    // enddate = document.querySelector('#enddate-input').value;
+    startdate = document.querySelector('#startdate-input').value;
+    enddate = document.querySelector('#enddate-input').value;
     if(email) {
         match.email = email;
     }
     if(template) {
+        // console.log('got here');
+        // const match_id = Template.findOne({name: template});
         match.template = template;
     }
     if(organization) {
         match.organization = organization;
+    }
+
+    if (startdate || enddate) {
+        
+        if (startdate) {
+            dateMatch.$gte = startdate;
+        }
+        if (enddate) {
+            dateMatch.$lte = enddate;
+        }
+
+        match['meta.sent'] = dateMatch;
     }
     search(match);
 }
