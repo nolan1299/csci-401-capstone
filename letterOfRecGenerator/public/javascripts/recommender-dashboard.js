@@ -422,44 +422,7 @@ function createPageButtons(tableNumber) {
             + tableNumber + ', ' + i + ')">' + i + '</button>';
     }
 }
-
-function search(match){
-    $.ajax({
-        url: '/forms', 
-        data: match, 
-        success: function (response) {
-            data = [response.forms];
-            console.log({ data });
-            createPageButtons(0);
-            // Show page 1 initially
-            changePage(0, 1);
-            sortByTime(0);
-    
-            $("#Edit").click(function (e) {
-                e.preventDefault();
-                document.getElementById('body-text').disabled = false;
-                document.getElementById('subject').disabled = false;
-                document.getElementById('Edit').disabled = true;
-                document.getElementById('Save').disabled = false;
-            });
-        }
-    });
-}
-
-document.getElementById('search-div').onsubmit = (e) => {
-    e.preventDefault();
-    const match = {};
-    email = document.querySelector('#search-input').value;
-    if(email) {
-        match.email = email;
-    }
-    search(match);
-}
-// $('.filter-input').on('input', e => {
-    
-// }
-document.getElementById('advanced-search-btn').onclick = (e) => {
-    e.preventDefault();
+function readFilterInputs() {
     const match = {};
     const dateMatch = {};
     email = document.querySelector('#search-input').value;
@@ -493,6 +456,50 @@ document.getElementById('advanced-search-btn').onclick = (e) => {
     search(match);
 }
 
+function search(match){
+    $.ajax({
+        url: '/forms', 
+        data: match, 
+        success: function (response) {
+            data = [response.forms];
+            console.log({ data });
+            createPageButtons(0);
+            // Show page 1 initially
+            changePage(0, 1);
+            sortByTime(0);
+    
+            $("#Edit").click(function (e) {
+                e.preventDefault();
+                document.getElementById('body-text').disabled = false;
+                document.getElementById('subject').disabled = false;
+                document.getElementById('Edit').disabled = true;
+                document.getElementById('Save').disabled = false;
+            });
+        }
+    });
+}
+
+document.getElementById('search-div').onsubmit = (e) => {
+    e.preventDefault();
+    const match = {};
+    email = document.querySelector('#search-input').value;
+    if(email) {
+        match.email = email;
+    }
+    search(match);
+}
+$('.filter-input').on('focusout', e => {
+    e.preventDefault();
+    readFilterInputs();
+});
+
+document.getElementById('advanced-search-form').onsubmit = (e) => {
+    e.preventDefault();
+    readFilterInputs();
+}
+
+
+
 // document.getElementById('clear-selection').onclick = () => {
 //     document.getElementById('search-input').value = "";
 //     search("");
@@ -506,6 +513,7 @@ document.getElementById('advanced-search-btn').onclick = (e) => {
 
 $( ".clr-btn" ).on('click', function() {
     $( this ).parent().prev().val("");
+    readFilterInputs();
   });
 
 // createPageButtons(0);
