@@ -58,7 +58,7 @@ var tags = [];
 var warningModalFunction;
 
 window.onload = function () {
-    // return;
+    return;
     // setUpEventHandlers();
     document.getElementById(LETTER_TEXT_AREA_ID).addEventListener('paste', function (e) {
         e.preventDefault();
