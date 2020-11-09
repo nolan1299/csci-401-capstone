@@ -11,8 +11,11 @@
 }
 
 #tmp-header {
-    display: inline-block;
+    display: flex;
+    background-color: white;
     width: 100%;
+    justify-content: space-between;
+    align-items: baseline;
 }
 
 #templates-table0 td,
@@ -30,16 +33,16 @@
     cursor: pointer;
     /* display: table-cell; */
     font-size: 15px;
-    height: 20px;
-    width: 180px;
+    /* height: 20px; */
+    width: 250px;
     /* border: 0.1px solid black; */
     position: relative;
     float: right;
-    right: 8px;
+    /* right: 8px;
     padding: 9px 0px 5px;
     text-align: center;
     margin-top: 20px;
-    margin-right: 1.5em;
+    margin-right: 1.5em; */
 }
 
 .add-btn:hover {

@@ -74,8 +74,8 @@
     cursor: pointer;
     /* display: table-cell; */
     font-size: 15px;
-    /* height: 20px;
-    width: 180px; */
+    /* height: 60px; */
+    width: 250px;
     /* border: 0.1px solid black; */
     position: relative;
     float: right;
@@ -84,6 +84,12 @@
     text-align: center;
     margin-top: 20px;
     margin-right: 1.5em; */
+}
+
+.search-x {
+    background-color: white;
+    border-style: solid solid solid none !important;
+    border-color:rgb(206, 212, 218) !important; 
 }
 
 .add-btn:hover {
