@@ -1,18 +1,29 @@
-#templates-page0, #templates-page1 {
+#templates-page0,
+#templates-page1 {
     padding: 20px;
     display: flex;
 }
 
-#templates-buttons0, #templates-buttons1 {
+#templates-buttons0,
+#templates-buttons1 {
     display: flex;
     margin: auto;
 }
 
-#templates-table0 td, #templates-table1 td {
+#tmp-header {
+    display: flex;
+    background-color: white;
+    width: 100%;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+#templates-table0 td,
+#templates-table1 td {
     height: 60px;
 }
 
-.templates{
+.templates {
     background-color: #FFFFFF;
 }
 
@@ -20,30 +31,32 @@
     background-color: #990000;
     color: white;
     cursor: pointer;
-    /* display: table-cell; */
     font-size: 15px;
-    height: 20px;
-    width:180px;
-    /* border: 0.1px solid black; */
+    width: 250px;
     position: relative;
     float: right;
-    right: 8px;
-    padding: 9px 0px 5px;
-    text-align: center;
-    margin-top: 20px;
 }
 
 .add-btn:hover {
     color: #FFCC00;
 }
 
+.actions {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
+
 /* The Close Button */
+
 .close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
     line-height: 20px;
+    padding-right: .75em;
+    padding-top: .5em;
 }
 
 .close:hover,
@@ -57,32 +70,38 @@
     height: 20px;
 }
 
+.container {
+    background-color: white;
+}
+
 .input-form {
     padding-top: 25px;
     text-align: center;
+    margin-left: 5%;
+
 }
 
 .input-submit {
     background-color: #990000;
     font-size: 18px;
-    margin-top: 50px;
-    width: 100px;
-    height: 40px;
+    width: 6.75em;
+    height: 2.5em;
     transition: 0.6s;
     border-radius: 0;
     border: none;
     color: white;
     float: right;
     opacity: 1.0;
+    margin-top: 2.5em;
+    margin-bottom: 2.5em;
+    margin-right: 5%;
+    border-radius: 10px;
 }
 
 .input-submit:hover {
     cursor: pointer;
     color: #FFCC00;
-    /* opacity: 0.6; */
 }
-
-
 
 .image-container {
     position: absolute;
@@ -115,5 +134,31 @@ img.icon:hover {
 
 .template-modal {
     margin-top: 15%;
-    height: 230px;
+}
+
+.metric {
+    background-color: #990000;
+    border-radius: 15px;
+    margin: 10px;
+    padding: 10px 10px 10px;
+    height: fit-content;
+}
+
+.popover {
+    max-width: 100%;
+    width: max-content;
+}
+
+.popover-body {
+    margin: 0px 10px;
+}
+
+.metric-title {
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 5px;
+}
+
+.metric-text {
+    color: white;
+    margin-bottom: 5px;
 }

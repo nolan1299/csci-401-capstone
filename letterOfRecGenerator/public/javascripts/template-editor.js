@@ -75,7 +75,7 @@ window.onload = function () {
     if (id) {
         $.ajax({
             url: '/template-editor/template',
-            data: { id, saveSwitchData },
+            data: {id, saveSwitchData},
             type: 'GET',
             success: function (data) {
                 document.getElementById(LETTER_TEXT_AREA_ID).innerHTML = data.letter;
@@ -427,7 +427,7 @@ function saveTemplate() {
         console.log("creating template");
         $.ajax({
             url: '/template-editor/create',
-            data: { template: template },
+            data: {template: template},
             type: 'POST',
             complete: function () {
                 console.log('complete');

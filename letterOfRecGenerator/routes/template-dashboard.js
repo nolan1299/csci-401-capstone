@@ -18,17 +18,26 @@ router.get('/', function(req, res, next) {
 
         var templates = req.user.getTemplates().toObject();
         var tmp_metric = {};
+        var last_used = {};
         for (var i = 0; i < forms.length; i++) {
-            var tmp_id = forms[i].template._id;
-            if (!tmp_metric[tmp_id]) {
-                tmp_metric[tmp_id] = 0;
+            if (forms[i].template) {
+                var tmp_id = forms[i].template._id;
+                if (!tmp_metric[tmp_id]) {
+                    tmp_metric[tmp_id] = 0;
+                }
+                tmp_metric[tmp_id]++;
+                last_used[tmp_id] = forms[i]._id.getTimestamp();
             }
-            tmp_metric[tmp_id]++;
         }
         for (var i = 0; i < templates.length; i++) {
             var tmp_id = templates[i]._id;
+            let creation_date = templates[i]._id.getTimestamp();
+            templates[i].creation_date = creation_date;
             templates[i].metric = tmp_metric[tmp_id.toString()] ?
                 tmp_metric[tmp_id.toString()] :
+                0;
+            templates[i].last_used = last_used[tmp_id.toString()] ?
+                last_used[tmp_id.toString()] :
                 0;
         }
 
