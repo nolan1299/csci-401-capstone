@@ -204,7 +204,7 @@ function getQuestionHTML(q) {
 }
 
 function getMultipleChoiceFieldsHTML(q) {
-    if (q.type !== "Radio Button" && q.type !== "Checkbox" && q.type !== "Custom") return "";
+    // if (q.type === "Text Answer") return "";
     let html = "";
     if (q.type === "Radio Button"){
         for (const option of q.options){
@@ -221,6 +221,7 @@ function getMultipleChoiceFieldsHTML(q) {
                 placeholder="Text to Replace Tag" data-type="mc-value"></div>
             <div class="col col-6"></div>`;
         }
+        html += `<div class="col mt-3"><button class="btn btn-light btn-sm" onclick="addMultipleChoiceField(${q.id})">Add Option</button></div>`
     }
     else if (q.type === "Checkbox"){
         for (const option of q.options){
@@ -230,7 +231,7 @@ function getMultipleChoiceFieldsHTML(q) {
                 placeholder="Text to Replace Tag" data-type="mc-value" value="${option.fill}"></div>
             <div class="col col-3 mt-3"><input type="text" class="form-control"
                 placeholder="Tag (e.g. <!check-value>" data-type="tag" value="${option.tag}"></div>
-            <div class="col col-6"></div>`;
+            <div class="col col-3"></div>`;
         }
         if(q.options.length === 0){
             html = `<div class="col col-3 mt-3"><input type="text" class="form-control"
@@ -241,6 +242,7 @@ function getMultipleChoiceFieldsHTML(q) {
                 placeholder="Tag (e.g. <!check-value>" data-type="value"></div>
             <div class="col col-6"></div>`;
         }
+        html += `<div class="col mt-3"><button class="btn btn-light btn-sm" onclick="addMultipleChoiceField(${q.id})">Add Option</button></div>`
     }
     return html;
 }
