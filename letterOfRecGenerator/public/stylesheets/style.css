@@ -10,7 +10,7 @@
 }
 
 body {
-  font-family: National;
+  font-family: 'National' !important;
   margin: 0px;
 }
 

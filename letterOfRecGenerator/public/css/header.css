@@ -52,6 +52,7 @@ header #lrg a:hover {
 }
 
 header a{
+    font-family: 'National';
     font-size: 15px;
     color: white;
     font-weight: 200;
