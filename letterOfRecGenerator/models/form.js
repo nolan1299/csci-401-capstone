@@ -133,7 +133,7 @@ FormSchema.statics.submitForm = function(id, responseData, cb) {
     var totalForms = 1;
     let fieldsByForm = [];
     var customQuestionFound = false;
-
+    console.log(responseData);
     FormSchema.statics.findForm(id, function(err, form) {
         if (err) {
             cb("error in FormSchema.statics.submitForm / .findForm " + err, null);

@@ -4,9 +4,24 @@
         <title><%= title %></title>
         <link rel="stylesheet" href="/stylesheets/style.css" />
         <link rel="stylesheet" type="text/css" href="/css/form-entry.css" />
+        <link rel="stylesheet" href="/stylesheets/style.css" />
     </head>
     <body>
         <div class="header"></div>
-        <p class="title"><%= title %></p>
+        <form style="width: 50%; margin: auto"  id="RecommendeeForm">
+            <div class="container-fluid" id="outside">
+                <div class="row justify-content-md-center">
+                    <div class="col-md-7 col-md-offset-5">
+                        <div id="form-title-container" class="form-group center-block">
+                            <p id="form-title">LETTER OF RECOMMENDATION QUESTIONNAIRE</p>
+                            <div class="question-container">
+                                <p id="form-title" class="title"><%= title %></p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </body>
 </html>

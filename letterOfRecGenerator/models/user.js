@@ -264,21 +264,21 @@ UserSchema.methods.getForms = function(cb, match={}) {
 
 UserSchema.methods.getForm = function(id, cb) {
     var flag = false;
-    User.findOne({ id: this.id }).populate({
-        path: 'forms',
-        match: { _id: id }
+    User.findOne({ '_id': this._id }).populate({
+        path:'forms',
+        match: {_id: id}
     }).populate({
         path: 'deactivatedForms',
-        match: { _id: id }
-    }).exec(function(err, user) {
-        if (user.deactivatedForms.length == 1) {
-            cb(err, user.deactivatedForms[0]);
-        } else if (user.forms.length == 1) {
-            cb(err, user.forms[0]);
-        } else {
+        match: { _id: id}
+    }).exec((err, user) => {
+        if (!user || (!user.deactivatedForms && !user.forms)) {
             console.log("problem in getForm");
-        }
-    })
+        } else if (user.deactivatedForms && user.deactivatedForms.length == 1) {
+            cb(err, user.deactivatedForms[0]);
+        } else {
+            cb(err, user.forms[0]);
+        }    
+    });
 };
 
 UserSchema.methods.getDeactivatedForms = function(cb) {
@@ -289,12 +289,11 @@ UserSchema.methods.getDeactivatedForms = function(cb) {
 };
 
 UserSchema.methods.getDeactivatedForm = function(id, cb) {
-    console.log("inside deactiveateForm");
-    User.findOne({ id: this.id }).populate({
+    User.findOne({ '_id': this._id }).populate({
         path: 'deactivatedForms',
         match: { _id: id }
     }).exec(function(err, user) {
-        if (user.deactivatedForms.length != 1) {
+        if (!user || !user.deactivatedForms || user.deactivatedForms.length != 1) {
             console.log('error in getDeactForm');
         } else {
             cb(err, user.deactivatedForms[0]);

@@ -5,7 +5,7 @@ var Form = require('../models/form');
 /* GET form entry page. */
 router.get('/:hash', function (req, res, next) {
     Form.findFromLink(req.params.hash, function (err, form) {
-        if (err) {
+        if (err || !form) {
             res.send("Form not found.");
         } else {
             if (!form.meta.submitted) {
