@@ -49,6 +49,11 @@
     color: #FFCC00;
 }
 
+.actions {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+}
 
 /* The Close Button */
 
@@ -69,6 +74,10 @@
 
 .close-container {
     height: 20px;
+}
+
+.container {
+    background-color: white;
 }
 
 .input-form {
@@ -128,4 +137,31 @@ img.icon:hover {
 .template-modal {
     margin-top: 15%;
     height: 230px;
+}
+
+.metric {
+    background-color: #990000;
+    border-radius: 15px;
+    margin: 10px;
+    padding: 10px 10px 10px;
+    height: fit-content;
+}
+
+.popover {
+    max-width: 100%;
+    width: max-content;
+}
+
+.popover-body {
+    margin: 0px 10px;
+}
+
+.metric-title {
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 5px;
+}
+
+.metric-text {
+    color: white;
+    margin-bottom: 5px;
 }
