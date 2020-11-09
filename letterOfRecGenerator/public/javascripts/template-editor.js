@@ -58,7 +58,7 @@ var tags = [];
 var warningModalFunction;
 
 window.onload = function () {
-    return;
+    // return;
     // setUpEventHandlers();
     document.getElementById(LETTER_TEXT_AREA_ID).addEventListener('paste', function (e) {
         e.preventDefault();
@@ -197,6 +197,9 @@ function getQuestionHTML(q) {
                         </div>`}
 
                         ${getMultipleChoiceFieldsHTML(q)}
+                    </div>
+                    <div class="mr-4" onclick="deleteQuestionWithWarning(${q.id})">
+                        <img class="remove-btn" src="/images/remove_white.png" alt="Remove">
                     </div>
                 </div>
             </div>
