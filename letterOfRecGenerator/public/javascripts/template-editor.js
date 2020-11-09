@@ -177,7 +177,7 @@ function getQuestionHTML(q) {
                 <div class="question-container d-flex align-items-center my-4 error-container question-outer-container"
                     data-id="${q.id}">
                     <div class="ml-4"><img class="icon-effects" src="/images/hamburger_white.svg"></div>
-                    <div class="row col ${q.type === questionTypes[1] || q.type === questionTypes[2] ? "multiple-choice-container" : ""}">
+                    <div class="row col d-flex align-items-end ${q.type === questionTypes[1] || q.type === questionTypes[2] ? "multiple-choice-container" : ""}">
                         <div class="col col-5"><input type="text" class="form-control"
                                 placeholder="Enter new question here..." data-type="value" value="${q.value}"></div>
                         <div class="col col-2"><select class="form-control" id="exampleFormControlSelect1">
@@ -198,9 +198,9 @@ function getQuestionHTML(q) {
 
                         ${getMultipleChoiceFieldsHTML(q)}
                     </div>
-                    <div class="mr-4" onclick="deleteQuestionWithWarning(${q.id})">
-                        <img class="remove-btn" src="/images/remove_white.png" alt="Remove">
-                    </div>
+                </div>
+                <div class="mr-4 mt-4">
+                    <img class="remove-question-btn" src="/images/remove_white.png" alt="Remove" onclick="deleteQuestionWithWarning(${q.id})">
                 </div>
             </div>
         </div>`;
@@ -209,41 +209,58 @@ function getQuestionHTML(q) {
 function getMultipleChoiceFieldsHTML(q) {
     // if (q.type === "Text Answer") return "";
     let html = "";
+    let option;
     if (q.type === "Radio Button"){
-        for (const option of q.options){
-            html += `<div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Radio Button Option" data-type="mc-value" value="${option.option}"></div>
-                <div class="col col-3 mt-3"><input type="text" class="form-control"
-                    placeholder="Text to Replace Tag" data-type="mc-value" value="${option.fill}"></div>
-                <div class="col col-6"></div>`;
+        for(let i = 0; i < q.options.length; i++){
+            option = q.options[i];
+            html += `<div class="col col-3 mt-3"> <input type="text" class="form-control form-control-sm"
+                placeholder="Radio Button Option" data-type="mc-option" value="${option.option}"></div>
+                <div class="col col-3 mt-3"><input type="text" class="form-control form-control-sm"
+                    placeholder="Text to Replace Tag" data-type="mc-fill" value="${option.fill}"></div>
+                <div class="col col-1 pb-1">
+                    <img class="remove-option-btn" src="/images/remove_white.png" onclick="deleteMultipleChoiceFieldWithWarning(this,${i})" alt="Remove">
+                </div>
+                <div class="col col-5"></div>`;
         }
         if(q.options.length === 0){
             html = `<div class="col col-3 mt-3"><input type="text" class="form-control"
-            placeholder="Radio Button Option" data-type="mc-value"></div>
+            placeholder="Radio Button Option" data-type="mc-option"></div>
             <div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Text to Replace Tag" data-type="mc-value"></div>
-            <div class="col col-6"></div>`;
+                placeholder="Text to Replace Tag" data-type="mc-fill"></div>
+            <div class="col col-1 pb-1">
+                <img class="remove-option-btn" src="/images/remove_white.png" onclick="deleteMultipleChoiceFieldWithWarning(this,0)" alt="Remove">
+            </div>
+            <div class="col col-5"></div>`;
         }
-        html += `<div class="col mt-3"><button class="btn btn-light btn-sm" onclick="addMultipleChoiceField(${q.id})">Add Option</button></div>`
+        
+        html += `<div class="col mt-3"><button class="btn btn-light btn-sm" onclick="addMultipleChoiceField(${q.id})">
+            Add Option</button></div>`
     }
     else if (q.type === "Checkbox"){
-        for (const option of q.options){
+        for(let i = 0; i < q.options.length; i++){
+            option = q.options[i];
             html += `<div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Checkbox Option." data-type="mc-value" value="${option.option}"></div>
+                placeholder="Checkbox Option." data-type="mc-option" value="${option.option}"></div>
             <div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Text to Replace Tag" data-type="mc-value" value="${option.fill}"></div>
+                placeholder="Text to Replace Tag" data-type="mc-fill" value="${option.fill}"></div>
             <div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Tag (e.g. <!check-value>" data-type="tag" value="${option.tag}"></div>
-            <div class="col col-3"></div>`;
+                placeholder="Tag (e.g. <!check-value>" data-type="mc-tag" value="${option.tag}"></div>
+            <div class="col col-1 pb-1">
+                <img class="remove-option-btn" src="/images/remove_white.png" onclick="deleteMultipleChoiceFieldWithWarning(this,${i})" alt="Remove">
+            </div>
+            <div class="col col-2"></div>`;
         }
         if(q.options.length === 0){
             html = `<div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Checkbox Option." data-type="value"></div>
+                placeholder="Checkbox Option." data-type="mc-option"></div>
             <div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Text to Replace Tag" data-type="value"></div>
+                placeholder="Text to Replace Tag" data-type="mc-fill"></div>
             <div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Tag (e.g. <!check-value>" data-type="value"></div>
-            <div class="col col-6"></div>`;
+                placeholder="Tag (e.g. <!check-value>" data-type="mc-tag"></div>
+            <div class="col col-1 pb-1">
+                <img class="remove-option-btn" src="/images/remove_white.png" onclick="deleteMultipleChoiceFieldWithWarning(this,0)" alt="Remove">
+            </div>
+            <div class="col col-2"></div>`;
         }
         html += `<div class="col mt-3"><button class="btn btn-light btn-sm" onclick="addMultipleChoiceField(${q.id})">Add Option</button></div>`
     }
@@ -549,22 +566,34 @@ function updateQuestions() {
 
         question.value = questionEl.querySelector("[data-type='value']").value;
         // Checkbox questions do not have a general tag (as there are tags associated with each option instead)
-        if (question.type !== "Checkbox" || question.type !== CUSTOM_QUESTION_TYPE) {
+        if (question.type !== "Checkbox" && question.type !== CUSTOM_QUESTION_TYPE) {
             question.tag = questionEl.querySelector("[data-type='tag']").value;
         }
 
         question.optional = !questionEl.querySelector("[type='checkbox']").checked;
 
-        var multipleChoices = questionEl.querySelectorAll(".multiple-choice-container");
-        for (var j = 0; j < multipleChoices.length; j++) {
-            var mc = multipleChoices[j];
+        const options = questionEl.querySelectorAll("[data-type='mc-option']");
+        const fills = questionEl.querySelectorAll("[data-type='mc-fill']");
+        const tags = questionEl.querySelectorAll("[data-type='mc-tag']");
 
-            question.options[j].option = mc.querySelectorAll("[data-type='mc-value']")[0].value;
-            question.options[j].fill = mc.querySelectorAll("[data-type='mc-value']")[1].value;
+        for (let j = 0; j < options.length; j++){
+            question.options[j].option = options[j].value;
+            question.options[j].fill = fills[j].value;
             if (question.type === "Checkbox" || question.type === CUSTOM_QUESTION_TYPE) {
-                question.options[j].tag = mc.querySelector("[data-type='tag']").value;
+                question.options[j].tag = tags[j].value;
             }
         }
+
+        // var multipleChoices = questionEl.querySelector(".multiple-choice-container");
+        // for (var j = 0; j < multipleChoices.length; j++) {
+        //     var mc = multipleChoices[j];
+
+        //     question.options[j].option = mc.querySelectorAll("[data-type='mc-option-" + j + "']").value;
+        //     question.options[j].fill = mc.querySelectorAll("[data-type='mc-fill-" + j + "']").value;
+        //     if (question.type === "Checkbox" || question.type === CUSTOM_QUESTION_TYPE) {
+        //         question.options[j].tag = mc.querySelector("[data-type='mc-tag-" + j + "']").value;
+        //     }
+        // }
     }
 }
 
@@ -706,7 +735,7 @@ function validate(template) {
         if (question.type === 'Checkbox' || question.type === CUSTOM_QUESTION_TYPE) {
             for (var j = 0; j < question.options.length; j++) {
                 var option = question.options[j];
-                var query = "div[data-id='" + j + "'][class='multiple-choice-container']";
+                var query = "div[data-id='" + j + "'] .multiple-choice-container";
                 var optionHTML = questionHTML.querySelector(query);
 
                 if (isNotValid(option.option)) {

@@ -13,9 +13,14 @@
      width: 32px;
  }
 
- .remove-btn{
-    width: 40px;
-    height: 40px;
+ .remove-option-btn{
+    width: 26px;
+    height: 26px;
+ }
+
+ .remove-question-btn{
+    width: 36px;
+    height: 36px;
  }
 
 /* .section-header {
