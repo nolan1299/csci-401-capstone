@@ -31,18 +31,20 @@
             <div class="add-btn mr-2 btn" onclick="openModal()">+ Create Template</div>
         </div>
         <div id="myModal" class="modal">
-            <div class="modal-content template-modal">
-                <div class="close-container">
-                    <span class="close" onclick="closeModal()">&times;</span>
-                </div>
-                <p class="modal-title">Create a New Recommendation Template</p>
-                <form class="input-form" method="GET" action="/template-editor">
-                    <div class="template-name-cont">
-                        <label class="input-label"> Template Name: </label>
-                        <input class="input-text" type="text" name="title" autofocus>
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="close-container">
+                        <span class="close" onclick="closeModal()">&times;</span>
                     </div>
-                    <input class="input-submit" type="submit" value="Create">
-                </form>
+                    <p class="modal-title">Create a New Recommendation Template</p>
+                    <form class="input-form" method="GET" action="/template-editor">
+                        <div class="template-name-cont">
+                            <label class="input-label"> Template Name: </label>
+                            <input class="input-text" type="text" name="title" autofocus>
+                        </div>
+                        <input class="input-submit" type="submit" value="Create">
+                    </form>
+                </div>
             </div>
         </div>
         <table id="templates-table0">
