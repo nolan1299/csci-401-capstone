@@ -180,11 +180,14 @@ function getQuestionHTML(q) {
                     <div class="row col d-flex align-items-end ${q.type === questionTypes[1] || q.type === questionTypes[2] ? "multiple-choice-container" : ""}">
                         <div class="col col-5"><input type="text" class="form-control"
                                 placeholder="Enter new question here..." data-type="value" value="${q.value}"></div>
-                        <div class="col col-2"><select class="form-control" id="exampleFormControlSelect1">
-                                <option ${questionTypes[0] === q.type ? " selected" : ""}>Text Answer</option>
+                        <div class="col col-2">
+                            <select class="form-control" onchange="changeQuestionType(${q.id}, this)">
+                                ${questionTypes[3] !== q.type ? `
+                                <option ${questionTypes[0] === q.type ? " selected='true'" : ""}>Text Answer</option>
                                 <option ${questionTypes[1] === q.type ? " selected" : ""}>Radio Button</option>
-                                <option ${questionTypes[2] === q.type ? " selected" : ""}>Checkbox</option>
-                                <option ${questionTypes[3] === q.type ? " selected" : ""}>Custom</option>
+                                <option ${questionTypes[2] === q.type ? " selected" : ""}>Checkbox</option>` 
+                                
+                                :`<option selected>Custom</option>`}
                             </select></div>
                         <div class="d-flex align-items-center"><span
                             class="text-white mr-2">Required?</span><input type="checkbox" ${q.optional ? '' : 'checked'}
@@ -551,6 +554,15 @@ function addCustomQuestion() {
     hideAddQuestionModal();
 
     // add a field
+}
+
+function changeQuestionType(id, selectEl){
+    for (let option of selectEl.children){
+        if(option.selected){
+            questions[id].type = option.value;
+        }
+    }
+    displayQuestions();
 }
 
 function updateQuestions() {
