@@ -204,7 +204,7 @@ function deleteRow(id) {
         type: 'POST',
         complete: function () {
             console.log('complete');
-            window.location.reload(false);
+            readFilterInputs();
         },
         error: function () {
             console.log('error');
