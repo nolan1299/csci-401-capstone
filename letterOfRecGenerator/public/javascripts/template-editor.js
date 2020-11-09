@@ -244,7 +244,7 @@ function getMultipleChoiceFieldsHTML(q) {
             <div class="col col-3 mt-3"><input type="text" class="form-control"
                 placeholder="Text to Replace Tag" data-type="mc-fill" value="${option.fill}"></div>
             <div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Tag (e.g. <!check-value>" data-type="mc-tag" value="${option.tag}"></div>
+                placeholder="Tag (e.g. <!check-value>" data-type="tag" value="${option.tag}"></div>
             <div class="col col-1 pb-1">
                 <img class="remove-option-btn" src="/images/remove_white.png" onclick="deleteMultipleChoiceFieldWithWarning(this,${i})" alt="Remove">
             </div>
@@ -256,7 +256,7 @@ function getMultipleChoiceFieldsHTML(q) {
             <div class="col col-3 mt-3"><input type="text" class="form-control"
                 placeholder="Text to Replace Tag" data-type="mc-fill"></div>
             <div class="col col-3 mt-3"><input type="text" class="form-control"
-                placeholder="Tag (e.g. <!check-value>" data-type="mc-tag"></div>
+                placeholder="Tag (e.g. <!check-value>" data-type="tag"></div>
             <div class="col col-1 pb-1">
                 <img class="remove-option-btn" src="/images/remove_white.png" onclick="deleteMultipleChoiceFieldWithWarning(this,0)" alt="Remove">
             </div>
@@ -574,7 +574,7 @@ function updateQuestions() {
 
         const options = questionEl.querySelectorAll("[data-type='mc-option']");
         const fills = questionEl.querySelectorAll("[data-type='mc-fill']");
-        const tags = questionEl.querySelectorAll("[data-type='mc-tag']");
+        const tags = questionEl.querySelectorAll("[data-type='tag']");
 
         for (let j = 0; j < options.length; j++){
             question.options[j].option = options[j].value;
@@ -717,7 +717,7 @@ function validate(template) {
         if (question.type === 'Radio Button') {
             for (var j = 0; j < question.options.length; j++) {
                 var option = question.options[j];
-                var query = "div[data-id='" + j + "'][class='multiple-choice-container']";
+                var query = "div[data-id='" + j + "'] .multiple-choice-container";
                 var optionHTML = questionHTML.querySelector(query);
 
                 if (isNotValid(option.option)) {
